@@ -80,6 +80,29 @@ UInt64:  UInt32:low UInt32:high
 ```
 
 #### String Values
+Strings are aligned to 32 bit word boundaries and are padded with 1 to 4 NULL bytes.  This means that the buffer length for a string will always be a mulitple of 4 bytes.  The following shows the format of the string value.
+
+```
+[Length: UInt32] [Buffer]
+```
+
+The **Length** is stored as a count of the number of words (4 byte groups) used to store the string followed by 1 to 4 bytes of NULL padding.
+
+```
+Padding => '\0x00' | '\0x00\0x00' | '\0x00\0x00\0x00' | '\0x00\0x00\0x00\0x00'
+```
+
+A string which is not NULL or empty wil have a **Length**, characters and following NULL padding.
+
+```
+[Length: UInt32] [Characters] [Padding]
+```
+
+A NULL string or empty string will have a **Length** of 0 and no buffer or padding.
+
+```
+[Length: 0]
+```
 
 ## Notes (.gcda) Record Formats
 
