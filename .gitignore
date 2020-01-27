@@ -1,3 +1,17 @@
-.DS_Store
-._.DS_Store
+# Ignore All
+*
+
+# UnIgnore all with extensions
+!*.*
+
+# UnIgnore all directories
+!*/
+
+*.DS_Store
 ._*
+
+*.d
+*.o
+*.gcda
+*.gcno
+*.info

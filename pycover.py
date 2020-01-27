@@ -797,7 +797,7 @@ def vprint(content=""):
         print(content)
 
 class GCovInfoBranch:
-    def _init_(self, lineno, blockno, branchno, taken=None):
+    def __init__(self, lineno, blockno, branchno, taken=None):
         self.line_number = lineno
         self.block_number = blockno
         self.branch_number = branchno
@@ -811,7 +811,7 @@ class GCovInfoBranch:
         return
 
 class GCovInfoFunction:
-    def _init_(self, funcname, lineno, executionCount=0):
+    def __init__(self, funcname, lineno, executionCount=0):
         self.function_name = funcname
         self.line_number = lineno
         self.execution_count = executionCount
@@ -821,7 +821,7 @@ class GCovInfoFunction:
         return
 
 class GCovInfoLine:
-    def _init_(self, lineno, executionCount=0, checkSum=None):
+    def __init__(self, lineno, executionCount=0, checkSum=None):
         self.line_number = lineno
         self.execution_count = executionCount
         self.check_sum = checkSum
@@ -834,7 +834,7 @@ class GCovInfoLine:
         self.check_sum = checkSum
 
 class GCovInfoSourcefileWriter:
-    def _init_(self, sourcefile, testname=None):
+    def __init__(self, sourcefile, testname=None):
         self.test_name = ""
         self.sourcefile = sourcefile
         self.branch_traces = []
@@ -931,7 +931,7 @@ class GCovInfoSourcefileWriter:
         return
 
 class GCovInfoFileWriter:
-    def _init_(self, traceFile, testname=None):
+    def __init__(self, traceFile, testname=None):
         """
             Valid 'testname' values consist of letters, numerical digits, and the underscore character.
         """
@@ -957,7 +957,7 @@ class GCovInfoFileWriter:
 
             keyLookupDictionary[origSrc] = fullSrc
 
-        keyList = keyLookupDictionary.keys()
+        keyList = [k for k in keyLookupDictionary.keys()]
         keyList.sort()
 
         for okey in keyList:
@@ -1247,7 +1247,7 @@ class GCovIOFileHeader():
         uint32:version 
         uint32:stamp
     """
-    def _init_(self, magic, version, stamp):
+    def __init__(self, magic, version, stamp):
         self.magic = magic
         self.version = version
         self.stamp = stamp
@@ -1257,7 +1257,7 @@ class GCovIORecordHeader():
     """
         uint32:tag uint32:length
     """
-    def _init_(self, tag, length):
+    def __init__(self, tag, length):
         self.tag = tag
         self.length = length
         return
@@ -1287,12 +1287,12 @@ class GCovIORecord():
 
             NullString => [Length: 0]
     """
-    def _init_(self, tag, length, itemsData):
+    def __init__(self, tag, length, itemsData):
         self.header = GCovIORecordHeader(tag, length)
         self.items_data=itemsData
         return
 
-    def _str_(self):
+    def __str__(self):
         tagKey = self.header.tag
         tagType = str(tagKey)
         if tagKey in GCovIOConst.GCOVIO_TAGTYPE_STR:
@@ -1327,7 +1327,7 @@ class GCovIO():
 
         Padding: '' | 'x00' | 'x00x00' | 'x00x00x00'
     """
-    def _init_(self, filename=None, header=None, records=None):
+    def __init__(self, filename=None, header=None, records=None):
         self.pack_str32 = GCovIOConst.PACKUINT32
 
         self.filename = filename
@@ -1345,7 +1345,7 @@ class GCovIO():
         fileHandle = None
 
         try:
-            fileHandle = open(self.filename, 'r')
+            fileHandle = open(self.filename, 'rb')
 
             fileSize = os.fstat(fileHandle.fileno()).st_size
 
@@ -1408,7 +1408,7 @@ class GCovIO():
                 extraBytes = ""
 
                 for byte in extraBuffer:
-                    extraBytes += "0x%x " % (ord(byte))
+                    extraBytes += "0x%x " % byte
 
                 vprint ("extraBytes=%s" % extraBytes)
 
@@ -1536,7 +1536,7 @@ class GCovIO():
             strend = cpos + strlen
 
             buffSlice = buffer[cpos: strend]
-            val = buffSlice.rstrip('\000')
+            val = buffSlice.rstrip(b'\x00').decode()
 
             cpos = cpos + strlen
 
@@ -1603,7 +1603,7 @@ class GCovIO():
         return
 
 class GCovCoverageMapItem:
-    def _init_(self, dataLeaf, funcGraphs):
+    def __init__(self, dataLeaf, funcGraphs):
         self.data_leaf = dataLeaf
         self.function_graphs = {}
         self.sources_map = {}
@@ -1623,13 +1623,13 @@ class GCovCoverageMapItem:
         self.program_traces = None
 
 class GCovTraceSummary:
-    def _init_(self, funcTraces, objectTraces, programTraces):
+    def __init__(self, funcTraces, objectTraces, programTraces):
         self.func_traces = funcTraces
         self.object_traces = objectTraces
         self.program_traces = programTraces
 
 class GCovFunctionTrace:
-    def _init_(self, ident, checksum, counters = None):
+    def __init__(self, ident, checksum, counters = None):
         self.indent = ident
         self.check_sum = checksum
         self.counters = counters
@@ -1642,7 +1642,7 @@ class GCovFunctionTrace:
 class GCovDataCounterBaseRecord:
     """
     """
-    def _init_(self, header, counters):
+    def __init__(self, header, counters):
         self.header = header
         self.counters = counters
 
@@ -1650,7 +1650,7 @@ class GCovDataFunctionAnnouncementRecord():
     """
         header uint32:ident uint32:checksum
     """
-    def _init_(self, header, ident, checksum):
+    def __init__(self, header, ident, checksum):
         self.header = header
         self.indent = ident
         self.check_sum = checksum
@@ -1658,7 +1658,7 @@ class GCovDataFunctionAnnouncementRecord():
 
 class GCovDataObjectSummaryRecord():
     """"""
-    def _init_(self, header, checksum, num, runs, sum, max, summax):
+    def __init__(self, header, checksum, num, runs, sum, max, summax):
         self.header = header
         self.check_sum = checksum
         self.num = num
@@ -1670,7 +1670,7 @@ class GCovDataObjectSummaryRecord():
 
 class GCovDataProgramSummaryRecord():
     """"""
-    def _init_(self, header, checksum, num, runs, sum, max, summax):
+    def __init__(self, header, checksum, num, runs, sum, max, summax):
         self.header = header
         self.check_sum = checksum
         self.num = num
@@ -1699,8 +1699,8 @@ class GCovDataFile(GCovIO):
             uint64:max uint64:sum_max
     """
 
-    def _init_(self, filename=None):
-        GCovIO._init_(self, filename)
+    def __init__(self, filename=None):
+        GCovIO.__init__(self, filename)
 
         self.trace_summary = None
         return
@@ -1885,7 +1885,7 @@ class GCovGraphArc():
     """
         uint32:dest_block uint32:flags
     """
-    def _init_(self, destBlock, flags):
+    def __init__(self, destBlock, flags):
         self.dest_block = destBlock
         self.flags = flags
         self.arc_id = None
@@ -1917,7 +1917,7 @@ class GCovGraphLine():
     """
         uint32:line_no string:(filename | linestr | NULL)
     """
-    def _init_(self, number, content):
+    def __init__(self, number, content):
         self.number = number
         self.content = content
 
@@ -1930,7 +1930,7 @@ class GCovGraphLine():
 class GCovGraphBlock():
     """
     """
-    def _init_(self, blockNumber, flags):
+    def __init__(self, blockNumber, flags):
         self.block_number = blockNumber
         self.flags = flags
         self.lines = None
@@ -1964,7 +1964,7 @@ class GCovGraphFunction():
           unit: header uint32:checksum string:source
           function-graph: announce_function basic_blocks {arcs | lines}*
     """
-    def _init_(self, functionAnnouncement):
+    def __init__(self, functionAnnouncement):
         self.indent = functionAnnouncement.indent
         self.check_sum = functionAnnouncement.check_sum
         self.name = functionAnnouncement.name
@@ -2416,7 +2416,7 @@ class GCovNotesArcSetRecord():
     """
         arcs: header uint32:block_no arc*
     """
-    def _init_(self, header, blockNumber, arcs):
+    def __init__(self, header, blockNumber, arcs):
         self.header = header
         self.block_number = blockNumber
         self.arcs = arcs
@@ -2431,7 +2431,7 @@ class GCovNotesLineSetRecord():
             line:  uint32:line_no | uint32:0 string:filename
             termline: uint32:0 string:NULL
     """
-    def _init_(self, header, blockNumber, lines):
+    def __init__(self, header, blockNumber, lines):
         self.header = header
         self.block_number = blockNumber
         self.lines = lines
@@ -2441,7 +2441,7 @@ class GCovNotesLineSetRecord():
         return
 
 class GCovNotesBasicBlocksRecord():
-    def _init_(self, header, flagSet):
+    def __init__(self, header, flagSet):
         self.header = header
         self.flagset = flagSet
         return
@@ -2455,7 +2455,7 @@ class GCovNotesFunctionAnnouncementRecord():
     """
         header uint32:ident uint32:checksum string:name string:source uint32:lineno
     """
-    def _init_(self, header, ident, checksum, name, source, lineno):
+    def __init__(self, header, ident, checksum, name, source, lineno):
         self.header = header
         self.indent = ident
         self.check_sum = checksum
@@ -2488,8 +2488,8 @@ class GCovNotesFile(GCovIO):
 
     """
 
-    def _init_(self, filename=None):
-        GCovIO._init_(self, filename)
+    def __init__(self, filename=None):
+        GCovIO.__init__(self, filename)
         self.graphs = None
         return
 
@@ -2691,14 +2691,14 @@ class GCovNotesFile(GCovIO):
 
 class GCovScanContext:
 
-    def _init_(self, includeFilters, excludeFilters):
+    def __init__(self, includeFilters, excludeFilters):
         self.include_filters = includeFilters
         self.exclude_filters = excludeFilters
         self.files_found = []
 
-class GCovProcessor():
+class GCovProcessor:
 
-    def _init_(self, basePathDataList = None, basePathGraphList=None, basePathCodeList=None, 
+    def __init__(self, basePathDataList = None, basePathGraphList=None, basePathCodeList=None, 
                  basePathIncludeList=None, includeFilter=None, excludeFilter=None):
         self.base_path_data_list = basePathDataList
         self.base_path_graph_list = basePathGraphList
@@ -2780,7 +2780,8 @@ class GCovProcessor():
 
             scanContext = GCovScanContext(self.include_filters, self.exclude_filters)
 
-            os.path.walk(absBasePathData, self._Scan_For_DataFiles, scanContext)
+            for currentDir, dirList, fileList in os.walk(absBasePathData):
+                self._Scan_For_DataFiles(scanContext, currentDir, fileList)
 
             dataFileList = scanContext.files_found
 
@@ -3024,8 +3025,8 @@ def operation_capture(cmdOptions, cmdArgs):
                 raise OptParseError("The directory specified as the graph path does not exist. path=%s" % chkpath)
 
     sourceBasePathList = None
-    if cmdOptions.sourcePATHS is not None:
-        sourceBasePathList = cmdOptions.sourcePATHS
+    if cmdOptions.SOURCEPATHS is not None:
+        sourceBasePathList = cmdOptions.SOURCEPATHS
 
         for chkpath in sourceBasePathList:
             if not os.path.exists(chkpath):
@@ -3211,7 +3212,7 @@ def pycover_main():
 
     return
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     try:
         pycover_main()
     except:
