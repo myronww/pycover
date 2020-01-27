@@ -11,15 +11,23 @@ The following section describes the '.gcno' and '.gcda' that the 'pycover.py' sc
 ## Notes (.gcno) and Data (.gcda) Common File Format
 
 ### High Level Format
+GCov outputs data as .gcda and .gcno files.  These files share a common overall file formate.  The basic format of a gcov file consists of a single file header followed by a series of records like so:
+
 ```
 [FileHeader] [Record] ... (up-to-end of file)
 ```
 
 ### File Header Description
+The file header is made of three data items.
 
 ```
 [magic] [version] [stamp]
 ```
+
+The magic ident is different for the notes and the data files.  The magic ident can be used to determine the endianness of the file, when reading.  The version is the same for both files and is derived from gcc's version number.  The stamp value is used to synchronize note and data files and to synchronize merging within with a data file.  It need not be an absolute time stamp, merely a ticker that increments fast enough and cycles slow enough to distinguish different compile/run/compile cycles.
+
+Although the ident and version are formally 32 bit numbers, they are derived from 4 character ASCII strings.  The version number consists of the single character major version number, a two character minor version number (leading zero for versions less than 10) and a single character indicating the status of the release.  That will be 'e' experimental, 'p' pre-release and 'r' for release.  Because, by good fortune, these are in alphabetical order, string collating can be used to compare version strings.  Be aware that the 'e' designation will (naturally) be unstable and might be imcompatible with itself.  For gcc 3.4 experimental, it would be '304e' (0x33303465).  When the major version reaches 10, the letters A-Z will be used.  Assuming minor increments releases every 6 months, we have to make a major increment every 50 years.  Assuming major increments releases every 5 years, we're ok for the next 155 years -- thats good enough for me also.
+
 
 ### Record Description
 
@@ -91,7 +99,6 @@ The line set records prived an association between the basic blocks of a functio
 [LineNo: UINT32 = (line number)] [Source: STRING (NULL)]
 [LineNo: UINT32 = 0] [Source: STRING(NULL)]
 ```
-
 
 ## Data (.gcda) Record Formats
 
