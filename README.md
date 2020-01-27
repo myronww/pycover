@@ -80,10 +80,8 @@ An 'Arc' item consists of:
 ```
 GCOV code coverage is arc based coverage.  The arcs are used to construct a directed graph that depicts the possible program flow paths between the basic blocks that make up a function.  The basic blocks correspond to the nodes in the graph and the arcs correspond to the edges or paths between the nodes in the graph.
 
-
-
 #### Line Set
-
+The line set records prived an association between the basic blocks of a function and the lines of the source file that correspond to the basic blocks.  There is not necessarily a 'Line Set' record for every basic block.  There are some implicit basic blocks in a 'gcov' function graph that do not have corresponding 'Line Set' entries.  There are three kinds of basic blocks that apply to every function graph and these are the (entry), (return), and (exit) blocks.  All calls to a function must pass through the (entry) block.  All paths out of a function that do not involve an exception go through the (return) block.  All exception based exit paths go to the exit block as well as the return block.
 ```
 [Record Header: (tag, length)] [BlockNo: UInt32] [Line] ... (up-to-end of record)
 ```
@@ -104,11 +102,23 @@ GCOV code coverage is arc based coverage.  The arcs are used to construct a dire
 
 ![Directed Graph Legend](images/directed-graph-legend.gif)
 
+```cpp
+int global_value = 0;
+
+void graph_simpleblock()
+{
+    global_value = global_value + 1;
+}
+```
+
+![Simple Block](images/simple-block.gif)
+
+
 ![Simple Call](images/simple-call.gif)
 
 ![Simple Branch](images/simple-branch.gif)
 
-![Simple Block](images/simple-block.gif)
+
 
 ![Multiple Branches](images/multiple-branches.gif)
 
