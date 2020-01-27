@@ -219,6 +219,7 @@ The directed graphs depicted below detail how GCOV records information about the
 ![Directed Graph Legend](images/directed-graph-legend.gif)
 
 ## Simple Block
+This example is the simplest possible function.  It is a function with no branches or calls.
 
 ```cpp
 int global_value = 0;
@@ -231,8 +232,12 @@ void graph_simpleblock()
 
 ![Simple Block](images/simple-block.gif)
 
+The function results in three blocks and two ARCs.  The information in the GCNO file which describes the graph for this function has only one **Line Set** record and two **Arc Set** records.  The first block, the **Entry** block is implied and has no code associated with it, so there is no **Line Set** record for it.  The last block, the **Exit** block is also implied and so has no **Line Set** record associated with it.
+
+The two **Arc Set** records depict the paths from the implied entry block 0 to the code block 1, then from code block 1 to the exit block 2.  The ARC from block 1 to block 2 carries the GCOV_ARC_ON_TREE flag so this arc does not have an assicated counter for it in the GCDA file counter data.  The count for this ARC is determined by solving the directed graph.
+
+
 ## Simple Branch
-This example is the simplest possible function.  It is a function with no branches or calls.
 
 ```cpp
 int global_value = 0;
@@ -246,10 +251,6 @@ void graph_simplebranch(int taken)
 }
 ```
 ![Simple Branch](images/simple-branch.gif)
-
-The function results in three blocks and two ARCs.  The information in the GCNO file which describes the graph for this function has only one **Line Set** record and two **Arc Set** records.  The first block, the **Entry** block is implied and has no code associated with it, so there is no **Line Set** record for it.  The last block, the **Exit** block is also implied and so has no **Line Set** record associated with it.
-
-The two **Arc Set** records depict the paths from the implied entry block 0 to the code block 1, then from code block 1 to the exit block 2.  The ARC from block 1 to block 2 carries the GCOV_ARC_ON_TREE flag so this arc does not have an assicated counter for it in the GCDA file counter data.  The count for this ARC is determined by solving the directed graph.
 
 ## Simple Call
 
