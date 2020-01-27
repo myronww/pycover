@@ -47,7 +47,7 @@ The **Record Header** can be further broken apart as a **Tag** that indicates th
 ```
 [Tag: UInt32] [Length: UInt32]
 ```
-**Tag*** - is a unsigned 32 bit integer that is descriptive of the type of record.  The tag value is split into 4 8-bit fields, one for each of four possible levels.  The most significant is allocated first.  Unused levels are zero.  Active levels are odd-valued, so that the LSB of the level is one.  A sub-level incorporates the values of its superlevels.  This formatting allows you to determine the tag hierarchy, without understanding the tags themselves, and is similar to the standard section numbering used in technical documents.
+**Tag** - is a unsigned 32 bit integer that is descriptive of the type of record.  The tag value is split into 4 8-bit fields, one for each of four possible levels.  The most significant is allocated first.  Unused levels are zero.  Active levels are odd-valued, so that the LSB of the level is one.  A sub-level incorporates the values of its superlevels.  This formatting allows you to determine the tag hierarchy, without understanding the tags themselves, and is similar to the standard section numbering used in technical documents.
 
 | Tag Values |    Category     |
 |------------|-----------------|
@@ -55,13 +55,31 @@ The **Record Header** can be further broken apart as a **Tag** that indicates th
 | 41..9f     | Notes File Tags |
 | a1..ff     | Data File Tags  |
 
-**Length*** - is a unsigned 32 bit integer that indicates the word length of the buffer that follows.  The word size is 4 bytes so a length of 5 would mean the buffer is 4 *** 5 bytes in size.
+**Length** - is a unsigned 32 bit integer that indicates the word length of the buffer that follows.  The word size is 4 bytes so a length of 5 would mean the buffer is 4 ** 5 bytes in size.
 
 #### Record Buffer
+The record buffer represents a collection of value fields the structure of which is determined by the type indicated in the header.
 
 ```
 [Item] [Item] [Item] ... (up-to-end of buffer)
 ```
+The record item fields can be either a UINT32 (32 bit unsigned integer), UINT64 (two 32 bit unsigned integer words), or a STRING (length, four byte aligned buffer)
+
+#### Numerical Values
+The numerical values in a GCOV file are recorded as 32 bit unsigned integers and use the endianness of the machine generating the file.
+
+```
+UInt32:   byte3 byte2 byte1 byte0  (big-endian)
+UInt32:   byte0 byte1 byte2 byte3  (little-endian)
+```
+
+The 64 bit numbers are stored as two 32 bit integers, with the least significant 32 bit word stored first.
+
+```
+UInt64:  UInt32:low UInt32:high
+```
+
+#### String Values
 
 ## Notes (.gcda) Record Formats
 
