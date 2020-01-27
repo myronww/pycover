@@ -39,10 +39,63 @@ The following section describes the '.gcno' and '.gcda' that the 'pycover.py' sc
 [Item] [Item] [Item] ... (up-to-end of buffer)
 ```
 
-### Notes (.gcda) Record Formats
+## Notes (.gcda) Record Formats
 
-### Data (.gcda) Record Formats
+```
+[Unit] [Function Graph: SECTION] [Function Graph: SECTION] ... (up-to-end of file)
+```
 
+### Unit Record
+
+```
+[Checksum: UINT32] [Source: STRING]
+```
+
+### Function Graph Record
+
+```
+[Function Announcement] [Basic Blocks] [Arc Set (one per basic block)] [Line Set (zero or more to end-of-record)]
+```
+
+#### Function Announcement
+
+#### Basic Blocks
+The 'Basic Blocks' record indicates the number of blocks thar are applicable to the previously announced function.  The record contains a series of 'Flag' entries that are 'UINT32' values that provide information about the corresponding blocks.  There is a one to one correspondence between the 'Flag' entries and the number of blocks in a functions.  The 'Basic Blocks' record is a good way to determine the number of blocks that apply to a function.  The record length is used to determine the number of flag entries.  A record length of 5 would mean there are 5 'Flag' entries that follow and thus 5 blocks associated with the function.
+
+```
+[Record Header: (tag, length)] [Flag: UInt32] ... (up-to-end of record)
+```
+
+#### Arc Set
+There is exactly one 'Arc Set' record for every basic block in a function.  The 'Arc Set' records are not ordered for a given function but can be matched to a functions basic block using the 'BlockNo' field.  The 'BlockNo' field is a zero indexed value from 0 to (block count -1) that is the index of the block that the 'Arc Set' information applies to.  The 'Arc Set' record is an enumeration of the arcs that are applicable for blocks and the flags that apply for each block.
+
+```
+[Record Header: (tag, length)] [BlockNo: UInt32] [Arc] ... (up-to-end of record)
+```
+
+An 'Arc' item consists of:
+
+```
+[DestBlock: UINT32] [Flags: UINT32]
+```
+GCOV code coverage is arc based coverage.  The arcs are used to construct a directed graph that depicts the possible program flow paths between the basic blocks that make up a function.  The basic blocks correspond to the nodes in the graph and the arcs correspond to the edges or paths between the nodes in the graph.
+
+
+
+#### Line Set
+
+```
+[Record Header: (tag, length)] [BlockNo: UInt32] [Line] ... (up-to-end of record)
+```
+
+```
+[LineNo: UINT32 = 0] [Source: STRING]
+[LineNo: UINT32 = (line number)] [Source: STRING (NULL)]
+[LineNo: UINT32 = 0] [Source: STRING(NULL)]
+```
+
+
+## Data (.gcda) Record Formats
 
 ## Info (.info) File Format
 
