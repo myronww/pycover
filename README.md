@@ -102,6 +102,8 @@ The line set records prived an association between the basic blocks of a functio
 
 ![Directed Graph Legend](images/directed-graph-legend.gif)
 
+## Simple Block
+
 ```cpp
 int global_value = 0;
 
@@ -113,14 +115,83 @@ void graph_simpleblock()
 
 ![Simple Block](images/simple-block.gif)
 
+## Simple Branch
+
+```cpp
+int global_value = 0;
+
+void graph_simplebranch(int taken)
+{
+    if (taken > 0)
+    {
+        global_value = global_value + 1;
+    }
+}
+```
+![Simple Branch](images/simple-branch.gif)
+
+## Simple Call
+
+```cpp
+int global_value = 0;
+
+void graph_simplecall()
+{
+    puts("Simple call block...");
+}
+```
 
 ![Simple Call](images/simple-call.gif)
 
-![Simple Branch](images/simple-branch.gif)
+## Mutliple Branches
 
+```cpp
+int global_value = 0;
 
+void graph_multiplebranches(int pathSelect)
+{
+    if (pathSelect == 0)
+    {
+        global_value = global_value + 1;
+    }
+    else if (pathSelect == 1)
+    {
+        global_value = global_value + 2;
+    }
+    else
+    {
+        global_value = global_value + 3;
+    }
+
+    return;
+}
+```
 
 ![Multiple Branches](images/multiple-branches.gif)
+
+## Mutliple Branches with Calls
+
+```cpp
+int global_value = 0;
+
+void graph_multiplebranches_withcalls(int pathSelect)
+{
+    if (pathSelect == 0)
+    {
+        puts("Took path if...");
+    }
+    else if (pathSelect == 1)
+    {
+        puts("Took path else if...");
+    }
+    else
+    {
+        puts("Took path else...");
+    }
+
+    return;
+}
+```
 
 ![Multiple Branches with Calls](images/multiple-branches-with-calls.gif)
 

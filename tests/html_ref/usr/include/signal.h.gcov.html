@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>LCOV - branch_counts_ref.info - /usr/include/signal.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">usr/include</a> - signal.h<span style="font-size: 80%;"> (source / <a href="signal.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">branch_counts_ref.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2012-07-10</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * Copyright (c) 2000 Apple Computer, Inc. All rights reserved.
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * @APPLE_LICENSE_HEADER_START@
+<span class="lineNum">       5 </span>                :            :  * 
+<span class="lineNum">       6 </span>                :            :  * This file contains Original Code and/or Modifications of Original Code
+<span class="lineNum">       7 </span>                :            :  * as defined in and that are subject to the Apple Public Source License
+<span class="lineNum">       8 </span>                :            :  * Version 2.0 (the 'License'). You may not use this file except in
+<span class="lineNum">       9 </span>                :            :  * compliance with the License. Please obtain a copy of the License at
+<span class="lineNum">      10 </span>                :            :  * http://www.opensource.apple.com/apsl/ and read it before using this
+<span class="lineNum">      11 </span>                :            :  * file.
+<span class="lineNum">      12 </span>                :            :  * 
+<span class="lineNum">      13 </span>                :            :  * The Original Code and all software distributed under the License are
+<span class="lineNum">      14 </span>                :            :  * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+<span class="lineNum">      15 </span>                :            :  * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+<span class="lineNum">      16 </span>                :            :  * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+<span class="lineNum">      17 </span>                :            :  * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+<span class="lineNum">      18 </span>                :            :  * Please see the License for the specific language governing rights and
+<span class="lineNum">      19 </span>                :            :  * limitations under the License.
+<span class="lineNum">      20 </span>                :            :  * 
+<span class="lineNum">      21 </span>                :            :  * @APPLE_LICENSE_HEADER_END@
+<span class="lineNum">      22 </span>                :            :  */
+<span class="lineNum">      23 </span>                :            : /*-
+<span class="lineNum">      24 </span>                :            :  * Copyright (c) 1991, 1993
+<span class="lineNum">      25 </span>                :            :  *      The Regents of the University of California.  All rights reserved.
+<span class="lineNum">      26 </span>                :            :  *
+<span class="lineNum">      27 </span>                :            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">      28 </span>                :            :  * modification, are permitted provided that the following conditions
+<span class="lineNum">      29 </span>                :            :  * are met:
+<span class="lineNum">      30 </span>                :            :  * 1. Redistributions of source code must retain the above copyright
+<span class="lineNum">      31 </span>                :            :  *    notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      32 </span>                :            :  * 2. Redistributions in binary form must reproduce the above copyright
+<span class="lineNum">      33 </span>                :            :  *    notice, this list of conditions and the following disclaimer in the
+<span class="lineNum">      34 </span>                :            :  *    documentation and/or other materials provided with the distribution.
+<span class="lineNum">      35 </span>                :            :  * 3. All advertising materials mentioning features or use of this software
+<span class="lineNum">      36 </span>                :            :  *    must display the following acknowledgement:
+<span class="lineNum">      37 </span>                :            :  *      This product includes software developed by the University of
+<span class="lineNum">      38 </span>                :            :  *      California, Berkeley and its contributors.
+<span class="lineNum">      39 </span>                :            :  * 4. Neither the name of the University nor the names of its contributors
+<span class="lineNum">      40 </span>                :            :  *    may be used to endorse or promote products derived from this software
+<span class="lineNum">      41 </span>                :            :  *    without specific prior written permission.
+<span class="lineNum">      42 </span>                :            :  *
+<span class="lineNum">      43 </span>                :            :  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+<span class="lineNum">      44 </span>                :            :  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      45 </span>                :            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+<span class="lineNum">      46 </span>                :            :  * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+<span class="lineNum">      47 </span>                :            :  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+<span class="lineNum">      48 </span>                :            :  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+<span class="lineNum">      49 </span>                :            :  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+<span class="lineNum">      50 </span>                :            :  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+<span class="lineNum">      51 </span>                :            :  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+<span class="lineNum">      52 </span>                :            :  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+<span class="lineNum">      53 </span>                :            :  * SUCH DAMAGE.
+<span class="lineNum">      54 </span>                :            :  *
+<span class="lineNum">      55 </span>                :            :  *      @(#)signal.h    8.3 (Berkeley) 3/30/94
+<span class="lineNum">      56 </span>                :            :  */
+<span class="lineNum">      57 </span>                :            : 
+<span class="lineNum">      58 </span>                :            : #ifndef _USER_SIGNAL_H
+<span class="lineNum">      59 </span>                :            : #define _USER_SIGNAL_H
+<span class="lineNum">      60 </span>                :            : 
+<span class="lineNum">      61 </span>                :            : #include &lt;sys/cdefs.h&gt;
+<span class="lineNum">      62 </span>                :            : #include &lt;_types.h&gt;
+<span class="lineNum">      63 </span>                :            : #include &lt;sys/signal.h&gt;
+<span class="lineNum">      64 </span>                :            : 
+<span class="lineNum">      65 </span>                :            : #ifndef _PTHREAD_T
+<span class="lineNum">      66 </span>                :            : typedef __darwin_pthread_t      pthread_t;
+<span class="lineNum">      67 </span>                :            : #define _PTHREAD_T
+<span class="lineNum">      68 </span>                :            : #endif
+<span class="lineNum">      69 </span>                :            : 
+<span class="lineNum">      70 </span>                :            : #if !defined(_ANSI_SOURCE) &amp;&amp; (!defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE))
+<span class="lineNum">      71 </span>                :            : extern __const char *__const sys_signame[NSIG];
+<span class="lineNum">      72 </span>                :            : extern __const char *__const sys_siglist[NSIG];
+<span class="lineNum">      73 </span>                :            : #endif
+<span class="lineNum">      74 </span>                :            : 
+<span class="lineNum">      75 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">      76 </span>                :            : int     raise(int);
+<span class="lineNum">      77 </span>                :            : __END_DECLS
+<span class="lineNum">      78 </span>                :            : 
+<span class="lineNum">      79 </span>                :            : #ifndef _ANSI_SOURCE
+<span class="lineNum">      80 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">      81 </span>                :            : void    (*bsd_signal(int, void (*)(int)))(int);
+<span class="lineNum">      82 </span>                :            : int     kill(pid_t, int) __DARWIN_ALIAS(kill);
+<span class="lineNum">      83 </span>                :            : int     killpg(pid_t, int) __DARWIN_ALIAS(killpg);
+<span class="lineNum">      84 </span>                :            : int     pthread_kill(pthread_t, int);
+<span class="lineNum">      85 </span>                :            : int     pthread_sigmask(int, const sigset_t *, sigset_t *) __DARWIN_ALIAS(pthread_sigmask);
+<span class="lineNum">      86 </span>                :            : int     sigaction(int, const struct sigaction * __restrict,
+<span class="lineNum">      87 </span>                :            :             struct sigaction * __restrict);
+<span class="lineNum">      88 </span>                :            : int     sigaddset(sigset_t *, int);
+<span class="lineNum">      89 </span>                :            : int     sigaltstack(const stack_t * __restrict, stack_t * __restrict)  __DARWIN_ALIAS(sigaltstack);
+<span class="lineNum">      90 </span>                :            : int     sigdelset(sigset_t *, int);
+<span class="lineNum">      91 </span>                :            : int     sigemptyset(sigset_t *);
+<span class="lineNum">      92 </span>                :            : int     sigfillset(sigset_t *);
+<span class="lineNum">      93 </span>                :            : int     sighold(int);
+<span class="lineNum">      94 </span>                :            : int     sigignore(int);
+<span class="lineNum">      95 </span>                :            : int     siginterrupt(int, int);
+<span class="lineNum">      96 </span>                :            : int     sigismember(const sigset_t *, int);
+<span class="lineNum">      97 </span>                :            : int     sigpause(int) __DARWIN_ALIAS_C(sigpause);
+<span class="lineNum">      98 </span>                :            : int     sigpending(sigset_t *);
+<span class="lineNum">      99 </span>                :            : int     sigprocmask(int, const sigset_t * __restrict, sigset_t * __restrict);
+<span class="lineNum">     100 </span>                :            : int     sigrelse(int);
+<span class="lineNum">     101 </span>                :            : void    (*sigset(int, void (*)(int)))(int); 
+<span class="lineNum">     102 </span>                :            : int     sigsuspend(const sigset_t *) __DARWIN_ALIAS_C(sigsuspend);
+<span class="lineNum">     103 </span>                :            : int     sigwait(const sigset_t * __restrict, int * __restrict) __DARWIN_ALIAS_C(sigwait);
+<span class="lineNum">     104 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     105 </span>                :            : void    psignal(unsigned int, const char *);
+<span class="lineNum">     106 </span>                :            : int     sigblock(int);
+<span class="lineNum">     107 </span>                :            : int     sigsetmask(int);
+<span class="lineNum">     108 </span>                :            : int     sigvec(int, struct sigvec *, struct sigvec *);
+<span class="lineNum">     109 </span>                :            : #endif  /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */
+<span class="lineNum">     110 </span>                :            : __END_DECLS
+<span class="lineNum">     111 </span>                :            : 
+<span class="lineNum">     112 </span>                :            : /* List definitions after function declarations, or Reiser cpp gets upset. */
+<span class="lineNum">     113 </span>                :            : #if defined(__i386__) || defined(__x86_64__)
+<span class="lineNum">     114 </span>                :            : /* The left shift operator on intel is modulo 32 */
+<a name="115"><span class="lineNum">     115 </span>                :            : static __inline int</a>
+<span class="lineNum">     116 </span>                :            : __sigbits(int __signo)
+<span class="lineNum">     117 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     118 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     return __signo &gt; __DARWIN_NSIG ? 0 : (1 &lt;&lt; (__signo - 1));</span>
+<span class="lineNum">     119 </span>                :            : }
+<span class="lineNum">     120 </span>                :            : #else /* !__i386__ &amp;&amp; !__x86_64__ */
+<span class="lineNum">     121 </span>                :            : #define __sigbits(signo)        (1 &lt;&lt; ((signo) - 1))
+<span class="lineNum">     122 </span>                :            : #endif /* __i386__ || __x86_64__ */
+<span class="lineNum">     123 </span>                :            : 
+<span class="lineNum">     124 </span>                :            : #define sigaddset(set, signo)   (*(set) |= __sigbits(signo), 0)
+<span class="lineNum">     125 </span>                :            : #define sigdelset(set, signo)   (*(set) &amp;= ~__sigbits(signo), 0)
+<span class="lineNum">     126 </span>                :            : #define sigismember(set, signo) ((*(set) &amp; __sigbits(signo)) != 0)
+<span class="lineNum">     127 </span>                :            : #define sigemptyset(set)        (*(set) = 0, 0)
+<span class="lineNum">     128 </span>                :            : #define sigfillset(set)         (*(set) = ~(sigset_t)0, 0)
+<span class="lineNum">     129 </span>                :            : #endif  /* !_ANSI_SOURCE */
+<span class="lineNum">     130 </span>                :            : 
+<span class="lineNum">     131 </span>                :            : #endif  /* !_USER_SIGNAL_H */
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.9</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

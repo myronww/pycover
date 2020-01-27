@@ -1,0 +1,532 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>LCOV - branch_counts_ref.info - /usr/include/stdio.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">usr/include</a> - stdio.h<span style="font-size: 80%;"> (source / <a href="stdio.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">branch_counts_ref.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2012-07-10</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * Copyright (c) 2000, 2005, 2007, 2009 Apple Inc. All rights reserved.
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * @APPLE_LICENSE_HEADER_START@
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * This file contains Original Code and/or Modifications of Original Code
+<span class="lineNum">       7 </span>                :            :  * as defined in and that are subject to the Apple Public Source License
+<span class="lineNum">       8 </span>                :            :  * Version 2.0 (the 'License'). You may not use this file except in
+<span class="lineNum">       9 </span>                :            :  * compliance with the License. Please obtain a copy of the License at
+<span class="lineNum">      10 </span>                :            :  * http://www.opensource.apple.com/apsl/ and read it before using this
+<span class="lineNum">      11 </span>                :            :  * file.
+<span class="lineNum">      12 </span>                :            :  *
+<span class="lineNum">      13 </span>                :            :  * The Original Code and all software distributed under the License are
+<span class="lineNum">      14 </span>                :            :  * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+<span class="lineNum">      15 </span>                :            :  * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+<span class="lineNum">      16 </span>                :            :  * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+<span class="lineNum">      17 </span>                :            :  * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+<span class="lineNum">      18 </span>                :            :  * Please see the License for the specific language governing rights and
+<span class="lineNum">      19 </span>                :            :  * limitations under the License.
+<span class="lineNum">      20 </span>                :            :  *
+<span class="lineNum">      21 </span>                :            :  * @APPLE_LICENSE_HEADER_END@
+<span class="lineNum">      22 </span>                :            :  */
+<span class="lineNum">      23 </span>                :            : /*-
+<span class="lineNum">      24 </span>                :            :  * Copyright (c) 1990, 1993
+<span class="lineNum">      25 </span>                :            :  *      The Regents of the University of California.  All rights reserved.
+<span class="lineNum">      26 </span>                :            :  *
+<span class="lineNum">      27 </span>                :            :  * This code is derived from software contributed to Berkeley by
+<span class="lineNum">      28 </span>                :            :  * Chris Torek.
+<span class="lineNum">      29 </span>                :            :  *
+<span class="lineNum">      30 </span>                :            :  * Redistribution and use in source and binary forms, with or without
+<span class="lineNum">      31 </span>                :            :  * modification, are permitted provided that the following conditions
+<span class="lineNum">      32 </span>                :            :  * are met:
+<span class="lineNum">      33 </span>                :            :  * 1. Redistributions of source code must retain the above copyright
+<span class="lineNum">      34 </span>                :            :  *    notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      35 </span>                :            :  * 2. Redistributions in binary form must reproduce the above copyright
+<span class="lineNum">      36 </span>                :            :  *    notice, this list of conditions and the following disclaimer in the
+<span class="lineNum">      37 </span>                :            :  *    documentation and/or other materials provided with the distribution.
+<span class="lineNum">      38 </span>                :            :  * 3. All advertising materials mentioning features or use of this software
+<span class="lineNum">      39 </span>                :            :  *    must display the following acknowledgement:
+<span class="lineNum">      40 </span>                :            :  *      This product includes software developed by the University of
+<span class="lineNum">      41 </span>                :            :  *      California, Berkeley and its contributors.
+<span class="lineNum">      42 </span>                :            :  * 4. Neither the name of the University nor the names of its contributors
+<span class="lineNum">      43 </span>                :            :  *    may be used to endorse or promote products derived from this software
+<span class="lineNum">      44 </span>                :            :  *    without specific prior written permission.
+<span class="lineNum">      45 </span>                :            :  *
+<span class="lineNum">      46 </span>                :            :  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+<span class="lineNum">      47 </span>                :            :  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+<span class="lineNum">      48 </span>                :            :  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+<span class="lineNum">      49 </span>                :            :  * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+<span class="lineNum">      50 </span>                :            :  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+<span class="lineNum">      51 </span>                :            :  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+<span class="lineNum">      52 </span>                :            :  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+<span class="lineNum">      53 </span>                :            :  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+<span class="lineNum">      54 </span>                :            :  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+<span class="lineNum">      55 </span>                :            :  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+<span class="lineNum">      56 </span>                :            :  * SUCH DAMAGE.
+<span class="lineNum">      57 </span>                :            :  *
+<span class="lineNum">      58 </span>                :            :  *      @(#)stdio.h     8.5 (Berkeley) 4/29/95
+<span class="lineNum">      59 </span>                :            :  */
+<span class="lineNum">      60 </span>                :            : 
+<span class="lineNum">      61 </span>                :            : #ifndef _STDIO_H_
+<span class="lineNum">      62 </span>                :            : #define _STDIO_H_
+<span class="lineNum">      63 </span>                :            : 
+<span class="lineNum">      64 </span>                :            : #include &lt;_types.h&gt;
+<span class="lineNum">      65 </span>                :            : 
+<span class="lineNum">      66 </span>                :            : #ifndef _VA_LIST
+<span class="lineNum">      67 </span>                :            : #define _VA_LIST
+<span class="lineNum">      68 </span>                :            : /* DO NOT REMOVE THIS COMMENT: fixincludes needs to see:
+<span class="lineNum">      69 </span>                :            :  * __gnuc_va_list and include &lt;stdarg.h&gt; */
+<span class="lineNum">      70 </span>                :            : typedef __darwin_va_list        va_list;
+<span class="lineNum">      71 </span>                :            : #endif
+<span class="lineNum">      72 </span>                :            : 
+<span class="lineNum">      73 </span>                :            : #ifndef _OFF_T
+<span class="lineNum">      74 </span>                :            : #define _OFF_T
+<span class="lineNum">      75 </span>                :            : typedef __darwin_off_t          off_t;
+<span class="lineNum">      76 </span>                :            : #endif
+<span class="lineNum">      77 </span>                :            : 
+<span class="lineNum">      78 </span>                :            : #ifndef _SIZE_T
+<span class="lineNum">      79 </span>                :            : #define _SIZE_T
+<span class="lineNum">      80 </span>                :            : typedef __darwin_size_t         size_t;
+<span class="lineNum">      81 </span>                :            : #endif
+<span class="lineNum">      82 </span>                :            : 
+<span class="lineNum">      83 </span>                :            : #ifndef NULL
+<span class="lineNum">      84 </span>                :            : #define NULL __DARWIN_NULL
+<span class="lineNum">      85 </span>                :            : #endif /* ! NULL */
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>                :            : typedef __darwin_off_t          fpos_t;
+<span class="lineNum">      88 </span>                :            : 
+<span class="lineNum">      89 </span>                :            : #define _FSTDIO                 /* Define for new stdio with functions. */
+<span class="lineNum">      90 </span>                :            : 
+<span class="lineNum">      91 </span>                :            : /*
+<span class="lineNum">      92 </span>                :            :  * NB: to fit things in six character monocase externals, the stdio
+<span class="lineNum">      93 </span>                :            :  * code uses the prefix `__s' for stdio objects, typically followed
+<span class="lineNum">      94 </span>                :            :  * by a three-character attempt at a mnemonic.
+<span class="lineNum">      95 </span>                :            :  */
+<span class="lineNum">      96 </span>                :            : 
+<span class="lineNum">      97 </span>                :            : /* stdio buffers */
+<span class="lineNum">      98 </span>                :            : struct __sbuf {
+<span class="lineNum">      99 </span>                :            :         unsigned char   *_base;
+<span class="lineNum">     100 </span>                :            :         int             _size;
+<span class="lineNum">     101 </span>                :            : };
+<span class="lineNum">     102 </span>                :            : 
+<span class="lineNum">     103 </span>                :            : /* hold a buncha junk that would grow the ABI */
+<span class="lineNum">     104 </span>                :            : struct __sFILEX;
+<span class="lineNum">     105 </span>                :            : 
+<span class="lineNum">     106 </span>                :            : /*
+<span class="lineNum">     107 </span>                :            :  * stdio state variables.
+<span class="lineNum">     108 </span>                :            :  *
+<span class="lineNum">     109 </span>                :            :  * The following always hold:
+<span class="lineNum">     110 </span>                :            :  *
+<span class="lineNum">     111 </span>                :            :  *      if (_flags&amp;(__SLBF|__SWR)) == (__SLBF|__SWR),
+<span class="lineNum">     112 </span>                :            :  *              _lbfsize is -_bf._size, else _lbfsize is 0
+<span class="lineNum">     113 </span>                :            :  *      if _flags&amp;__SRD, _w is 0
+<span class="lineNum">     114 </span>                :            :  *      if _flags&amp;__SWR, _r is 0
+<span class="lineNum">     115 </span>                :            :  *
+<span class="lineNum">     116 </span>                :            :  * This ensures that the getc and putc macros (or inline functions) never
+<span class="lineNum">     117 </span>                :            :  * try to write or read from a file that is in `read' or `write' mode.
+<span class="lineNum">     118 </span>                :            :  * (Moreover, they can, and do, automatically switch from read mode to
+<span class="lineNum">     119 </span>                :            :  * write mode, and back, on &quot;r+&quot; and &quot;w+&quot; files.)
+<span class="lineNum">     120 </span>                :            :  *
+<span class="lineNum">     121 </span>                :            :  * _lbfsize is used only to make the inline line-buffered output stream
+<span class="lineNum">     122 </span>                :            :  * code as compact as possible.
+<span class="lineNum">     123 </span>                :            :  *
+<span class="lineNum">     124 </span>                :            :  * _ub, _up, and _ur are used when ungetc() pushes back more characters
+<span class="lineNum">     125 </span>                :            :  * than fit in the current _bf, or when ungetc() pushes back a character
+<span class="lineNum">     126 </span>                :            :  * that does not match the previous one in _bf.  When this happens,
+<span class="lineNum">     127 </span>                :            :  * _ub._base becomes non-nil (i.e., a stream has ungetc() data iff
+<span class="lineNum">     128 </span>                :            :  * _ub._base!=NULL) and _up and _ur save the current values of _p and _r.
+<span class="lineNum">     129 </span>                :            :  *
+<span class="lineNum">     130 </span>                :            :  * NB: see WARNING above before changing the layout of this structure!
+<span class="lineNum">     131 </span>                :            :  */
+<span class="lineNum">     132 </span>                :            : typedef struct __sFILE {
+<span class="lineNum">     133 </span>                :            :         unsigned char *_p;      /* current position in (some) buffer */
+<span class="lineNum">     134 </span>                :            :         int     _r;             /* read space left for getc() */
+<span class="lineNum">     135 </span>                :            :         int     _w;             /* write space left for putc() */
+<span class="lineNum">     136 </span>                :            :         short   _flags;         /* flags, below; this FILE is free if 0 */
+<span class="lineNum">     137 </span>                :            :         short   _file;          /* fileno, if Unix descriptor, else -1 */
+<span class="lineNum">     138 </span>                :            :         struct  __sbuf _bf;     /* the buffer (at least 1 byte, if !NULL) */
+<span class="lineNum">     139 </span>                :            :         int     _lbfsize;       /* 0 or -_bf._size, for inline putc */
+<span class="lineNum">     140 </span>                :            : 
+<span class="lineNum">     141 </span>                :            :         /* operations */
+<span class="lineNum">     142 </span>                :            :         void    *_cookie;       /* cookie passed to io functions */
+<span class="lineNum">     143 </span>                :            :         int     (*_close)(void *);
+<span class="lineNum">     144 </span>                :            :         int     (*_read) (void *, char *, int);
+<span class="lineNum">     145 </span>                :            :         fpos_t  (*_seek) (void *, fpos_t, int);
+<span class="lineNum">     146 </span>                :            :         int     (*_write)(void *, const char *, int);
+<span class="lineNum">     147 </span>                :            : 
+<span class="lineNum">     148 </span>                :            :         /* separate buffer for long sequences of ungetc() */
+<span class="lineNum">     149 </span>                :            :         struct  __sbuf _ub;     /* ungetc buffer */
+<span class="lineNum">     150 </span>                :            :         struct __sFILEX *_extra; /* additions to FILE to not break ABI */
+<span class="lineNum">     151 </span>                :            :         int     _ur;            /* saved _r when _r is counting ungetc data */
+<span class="lineNum">     152 </span>                :            : 
+<span class="lineNum">     153 </span>                :            :         /* tricks to meet minimum requirements even when malloc() fails */
+<span class="lineNum">     154 </span>                :            :         unsigned char _ubuf[3]; /* guarantee an ungetc() buffer */
+<span class="lineNum">     155 </span>                :            :         unsigned char _nbuf[1]; /* guarantee a getc() buffer */
+<span class="lineNum">     156 </span>                :            : 
+<span class="lineNum">     157 </span>                :            :         /* separate buffer for fgetln() when line crosses buffer boundary */
+<span class="lineNum">     158 </span>                :            :         struct  __sbuf _lb;     /* buffer for fgetln() */
+<span class="lineNum">     159 </span>                :            : 
+<span class="lineNum">     160 </span>                :            :         /* Unix stdio files get aligned to block boundaries on fseek() */
+<span class="lineNum">     161 </span>                :            :         int     _blksize;       /* stat.st_blksize (may be != _bf._size) */
+<span class="lineNum">     162 </span>                :            :         fpos_t  _offset;        /* current lseek offset (see WARNING) */
+<span class="lineNum">     163 </span>                :            : } FILE;
+<span class="lineNum">     164 </span>                :            : 
+<span class="lineNum">     165 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">     166 </span>                :            : #if __DARWIN_UNIX03
+<span class="lineNum">     167 </span>                :            : extern FILE *__stdinp;
+<span class="lineNum">     168 </span>                :            : extern FILE *__stdoutp;
+<span class="lineNum">     169 </span>                :            : extern FILE *__stderrp;
+<span class="lineNum">     170 </span>                :            : #else /* !__DARWIN_UNIX03 */
+<span class="lineNum">     171 </span>                :            : extern FILE __sF[];
+<span class="lineNum">     172 </span>                :            : #endif /* __DARWIN_UNIX03 */
+<span class="lineNum">     173 </span>                :            : __END_DECLS
+<span class="lineNum">     174 </span>                :            : 
+<span class="lineNum">     175 </span>                :            : #define __SLBF  0x0001          /* line buffered */
+<span class="lineNum">     176 </span>                :            : #define __SNBF  0x0002          /* unbuffered */
+<span class="lineNum">     177 </span>                :            : #define __SRD   0x0004          /* OK to read */
+<span class="lineNum">     178 </span>                :            : #define __SWR   0x0008          /* OK to write */
+<span class="lineNum">     179 </span>                :            :         /* RD and WR are never simultaneously asserted */
+<span class="lineNum">     180 </span>                :            : #define __SRW   0x0010          /* open for reading &amp; writing */
+<span class="lineNum">     181 </span>                :            : #define __SEOF  0x0020          /* found EOF */
+<span class="lineNum">     182 </span>                :            : #define __SERR  0x0040          /* found error */
+<span class="lineNum">     183 </span>                :            : #define __SMBF  0x0080          /* _buf is from malloc */
+<span class="lineNum">     184 </span>                :            : #define __SAPP  0x0100          /* fdopen()ed in append mode */
+<span class="lineNum">     185 </span>                :            : #define __SSTR  0x0200          /* this is an sprintf/snprintf string */
+<span class="lineNum">     186 </span>                :            : #define __SOPT  0x0400          /* do fseek() optimisation */
+<span class="lineNum">     187 </span>                :            : #define __SNPT  0x0800          /* do not do fseek() optimisation */
+<span class="lineNum">     188 </span>                :            : #define __SOFF  0x1000          /* set iff _offset is in fact correct */
+<span class="lineNum">     189 </span>                :            : #define __SMOD  0x2000          /* true =&gt; fgetln modified _p text */
+<span class="lineNum">     190 </span>                :            : #define __SALC  0x4000          /* allocate string space dynamically */
+<span class="lineNum">     191 </span>                :            : #define __SIGN  0x8000          /* ignore this file in _fwalk */
+<span class="lineNum">     192 </span>                :            : 
+<span class="lineNum">     193 </span>                :            : /*
+<span class="lineNum">     194 </span>                :            :  * The following three definitions are for ANSI C, which took them
+<span class="lineNum">     195 </span>                :            :  * from System V, which brilliantly took internal interface macros and
+<span class="lineNum">     196 </span>                :            :  * made them official arguments to setvbuf(), without renaming them.
+<span class="lineNum">     197 </span>                :            :  * Hence, these ugly _IOxxx names are *supposed* to appear in user code.
+<span class="lineNum">     198 </span>                :            :  *
+<span class="lineNum">     199 </span>                :            :  * Although numbered as their counterparts above, the implementation
+<span class="lineNum">     200 </span>                :            :  * does not rely on this.
+<span class="lineNum">     201 </span>                :            :  */
+<span class="lineNum">     202 </span>                :            : #define _IOFBF  0               /* setvbuf should set fully buffered */
+<span class="lineNum">     203 </span>                :            : #define _IOLBF  1               /* setvbuf should set line buffered */
+<span class="lineNum">     204 </span>                :            : #define _IONBF  2               /* setvbuf should set unbuffered */
+<span class="lineNum">     205 </span>                :            : 
+<span class="lineNum">     206 </span>                :            : #define BUFSIZ  1024            /* size of buffer used by setbuf */
+<span class="lineNum">     207 </span>                :            : #define EOF     (-1)
+<span class="lineNum">     208 </span>                :            : 
+<span class="lineNum">     209 </span>                :            : /*
+<span class="lineNum">     210 </span>                :            :  * FOPEN_MAX is a minimum maximum, and is the number of streams that
+<span class="lineNum">     211 </span>                :            :  * stdio can provide without attempting to allocate further resources
+<span class="lineNum">     212 </span>                :            :  * (which could fail).  Do not use this for anything.
+<span class="lineNum">     213 </span>                :            :  */
+<span class="lineNum">     214 </span>                :            :                                 /* must be == _POSIX_STREAM_MAX &lt;limits.h&gt; */
+<span class="lineNum">     215 </span>                :            : #define FOPEN_MAX       20      /* must be &lt;= OPEN_MAX &lt;sys/syslimits.h&gt; */
+<span class="lineNum">     216 </span>                :            : #define FILENAME_MAX    1024    /* must be &lt;= PATH_MAX &lt;sys/syslimits.h&gt; */
+<span class="lineNum">     217 </span>                :            : 
+<span class="lineNum">     218 </span>                :            : /* System V/ANSI C; this is the wrong way to do this, do *not* use these. */
+<span class="lineNum">     219 </span>                :            : #ifndef _ANSI_SOURCE
+<span class="lineNum">     220 </span>                :            : #define P_tmpdir        &quot;/var/tmp/&quot;
+<span class="lineNum">     221 </span>                :            : #endif
+<span class="lineNum">     222 </span>                :            : #define L_tmpnam        1024    /* XXX must be == PATH_MAX */
+<span class="lineNum">     223 </span>                :            : #define TMP_MAX         308915776
+<span class="lineNum">     224 </span>                :            : 
+<span class="lineNum">     225 </span>                :            : #ifndef SEEK_SET
+<span class="lineNum">     226 </span>                :            : #define SEEK_SET        0       /* set file offset to offset */
+<span class="lineNum">     227 </span>                :            : #endif
+<span class="lineNum">     228 </span>                :            : #ifndef SEEK_CUR
+<span class="lineNum">     229 </span>                :            : #define SEEK_CUR        1       /* set file offset to current plus offset */
+<span class="lineNum">     230 </span>                :            : #endif
+<span class="lineNum">     231 </span>                :            : #ifndef SEEK_END
+<span class="lineNum">     232 </span>                :            : #define SEEK_END        2       /* set file offset to EOF plus offset */
+<span class="lineNum">     233 </span>                :            : #endif
+<span class="lineNum">     234 </span>                :            : 
+<span class="lineNum">     235 </span>                :            : #if __DARWIN_UNIX03
+<span class="lineNum">     236 </span>                :            : #define stdin   __stdinp
+<span class="lineNum">     237 </span>                :            : #define stdout  __stdoutp
+<span class="lineNum">     238 </span>                :            : #define stderr  __stderrp
+<span class="lineNum">     239 </span>                :            : #else /* !__DARWIN_UNIX03 */
+<span class="lineNum">     240 </span>                :            : #define stdin   (&amp;__sF[0])
+<span class="lineNum">     241 </span>                :            : #define stdout  (&amp;__sF[1])
+<span class="lineNum">     242 </span>                :            : #define stderr  (&amp;__sF[2])
+<span class="lineNum">     243 </span>                :            : #endif /* __DARWIN_UNIX03 */
+<span class="lineNum">     244 </span>                :            : 
+<span class="lineNum">     245 </span>                :            : /*
+<span class="lineNum">     246 </span>                :            :  * Functions defined in ANSI C standard.
+<span class="lineNum">     247 </span>                :            :  */
+<span class="lineNum">     248 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">     249 </span>                :            : void     clearerr(FILE *);
+<span class="lineNum">     250 </span>                :            : int      fclose(FILE *);
+<span class="lineNum">     251 </span>                :            : int      feof(FILE *);
+<span class="lineNum">     252 </span>                :            : int      ferror(FILE *);
+<span class="lineNum">     253 </span>                :            : int      fflush(FILE *);
+<span class="lineNum">     254 </span>                :            : int      fgetc(FILE *);
+<span class="lineNum">     255 </span>                :            : int      fgetpos(FILE * __restrict, fpos_t *);
+<span class="lineNum">     256 </span>                :            : char    *fgets(char * __restrict, int, FILE *);
+<span class="lineNum">     257 </span>                :            : #if defined(__DARWIN_10_6_AND_LATER) &amp;&amp; (defined(_DARWIN_UNLIMITED_STREAMS) || defined(_DARWIN_C_SOURCE))
+<span class="lineNum">     258 </span>                :            : FILE    *fopen(const char * __restrict, const char * __restrict) __DARWIN_EXTSN(fopen);
+<span class="lineNum">     259 </span>                :            : #else /* &lt; 10.6 || !_DARWIN_UNLIMITED_STREAMS &amp;&amp; !_DARWIN_C_SOURCE */
+<span class="lineNum">     260 </span>                :            : FILE    *fopen(const char * __restrict, const char * __restrict) __DARWIN_10_6_AND_LATER_ALIAS(__DARWIN_ALIAS(fopen));
+<span class="lineNum">     261 </span>                :            : #endif /* &gt;= 10.6 &amp;&amp;_(DARWIN_UNLIMITED_STREAMS || _DARWIN_C_SOURCE) */
+<span class="lineNum">     262 </span>                :            : int      fprintf(FILE * __restrict, const char * __restrict, ...) __DARWIN_LDBL_COMPAT(fprintf);
+<span class="lineNum">     263 </span>                :            : int      fputc(int, FILE *);
+<span class="lineNum">     264 </span>                :            : int      fputs(const char * __restrict, FILE * __restrict) __DARWIN_ALIAS(fputs);
+<span class="lineNum">     265 </span>                :            : size_t   fread(void * __restrict, size_t, size_t, FILE * __restrict);
+<span class="lineNum">     266 </span>                :            : FILE    *freopen(const char * __restrict, const char * __restrict,
+<span class="lineNum">     267 </span>                :            :             FILE * __restrict) __DARWIN_ALIAS(freopen);
+<span class="lineNum">     268 </span>                :            : int      fscanf(FILE * __restrict, const char * __restrict, ...) __DARWIN_LDBL_COMPAT(fscanf);
+<span class="lineNum">     269 </span>                :            : int      fseek(FILE *, long, int);
+<span class="lineNum">     270 </span>                :            : int      fsetpos(FILE *, const fpos_t *);
+<span class="lineNum">     271 </span>                :            : long     ftell(FILE *);
+<span class="lineNum">     272 </span>                :            : size_t   fwrite(const void * __restrict, size_t, size_t, FILE * __restrict) __DARWIN_ALIAS(fwrite);
+<span class="lineNum">     273 </span>                :            : int      getc(FILE *);
+<span class="lineNum">     274 </span>                :            : int      getchar(void);
+<span class="lineNum">     275 </span>                :            : char    *gets(char *);
+<span class="lineNum">     276 </span>                :            : #if !defined(_ANSI_SOURCE) &amp;&amp; (!defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE))
+<span class="lineNum">     277 </span>                :            : extern __const int sys_nerr;            /* perror(3) external variables */
+<span class="lineNum">     278 </span>                :            : extern __const char *__const sys_errlist[];
+<span class="lineNum">     279 </span>                :            : #endif
+<span class="lineNum">     280 </span>                :            : void     perror(const char *);
+<span class="lineNum">     281 </span>                :            : int      printf(const char * __restrict, ...) __DARWIN_LDBL_COMPAT(printf);
+<span class="lineNum">     282 </span>                :            : int      putc(int, FILE *);
+<span class="lineNum">     283 </span>                :            : int      putchar(int);
+<span class="lineNum">     284 </span>                :            : int      puts(const char *);
+<span class="lineNum">     285 </span>                :            : int      remove(const char *);
+<span class="lineNum">     286 </span>                :            : int      rename (const char *, const char *);
+<span class="lineNum">     287 </span>                :            : void     rewind(FILE *);
+<span class="lineNum">     288 </span>                :            : int      scanf(const char * __restrict, ...) __DARWIN_LDBL_COMPAT(scanf);
+<span class="lineNum">     289 </span>                :            : void     setbuf(FILE * __restrict, char * __restrict);
+<span class="lineNum">     290 </span>                :            : int      setvbuf(FILE * __restrict, char * __restrict, int, size_t);
+<span class="lineNum">     291 </span>                :            : int      sprintf(char * __restrict, const char * __restrict, ...) __DARWIN_LDBL_COMPAT(sprintf);
+<span class="lineNum">     292 </span>                :            : int      sscanf(const char * __restrict, const char * __restrict, ...) __DARWIN_LDBL_COMPAT(sscanf);
+<span class="lineNum">     293 </span>                :            : FILE    *tmpfile(void);
+<span class="lineNum">     294 </span>                :            : char    *tmpnam(char *);
+<span class="lineNum">     295 </span>                :            : int      ungetc(int, FILE *);
+<span class="lineNum">     296 </span>                :            : int      vfprintf(FILE * __restrict, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vfprintf);
+<span class="lineNum">     297 </span>                :            : int      vprintf(const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vprintf);
+<span class="lineNum">     298 </span>                :            : int      vsprintf(char * __restrict, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vsprintf);
+<span class="lineNum">     299 </span>                :            : #if !defined(_ANSI_SOURCE) &amp;&amp; (!defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE))
+<span class="lineNum">     300 </span>                :            : int      asprintf(char **, const char *, ...) __DARWIN_LDBL_COMPAT(asprintf);
+<span class="lineNum">     301 </span>                :            : int      vasprintf(char **, const char *, va_list) __DARWIN_LDBL_COMPAT(vasprintf);
+<span class="lineNum">     302 </span>                :            : #endif
+<span class="lineNum">     303 </span>                :            : __END_DECLS
+<span class="lineNum">     304 </span>                :            : 
+<span class="lineNum">     305 </span>                :            : /*
+<span class="lineNum">     306 </span>                :            :  * Functions defined in POSIX 1003.1.
+<span class="lineNum">     307 </span>                :            :  */
+<span class="lineNum">     308 </span>                :            : #ifndef _ANSI_SOURCE
+<span class="lineNum">     309 </span>                :            : #define L_ctermid       1024    /* size for ctermid(); PATH_MAX */
+<span class="lineNum">     310 </span>                :            : 
+<span class="lineNum">     311 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">     312 </span>                :            : char    *ctermid(char *);
+<span class="lineNum">     313 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     314 </span>                :            : char    *ctermid_r(char *);
+<span class="lineNum">     315 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     316 </span>                :            : #if defined(__DARWIN_10_6_AND_LATER) &amp;&amp; (defined(_DARWIN_UNLIMITED_STREAMS) || defined(_DARWIN_C_SOURCE))
+<span class="lineNum">     317 </span>                :            : FILE    *fdopen(int, const char *) __DARWIN_EXTSN(fdopen);
+<span class="lineNum">     318 </span>                :            : #else /* &lt; 10.6 || !_DARWIN_UNLIMITED_STREAMS &amp;&amp; !_DARWIN_C_SOURCE */
+<span class="lineNum">     319 </span>                :            : FILE    *fdopen(int, const char *) __DARWIN_10_6_AND_LATER_ALIAS(__DARWIN_ALIAS(fdopen));
+<span class="lineNum">     320 </span>                :            : #endif /* &gt;= 10.6 &amp;&amp;_(DARWIN_UNLIMITED_STREAMS || _DARWIN_C_SOURCE) */
+<span class="lineNum">     321 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     322 </span>                :            : char    *fgetln(FILE *, size_t *);
+<span class="lineNum">     323 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     324 </span>                :            : int      fileno(FILE *);
+<span class="lineNum">     325 </span>                :            : void     flockfile(FILE *);
+<span class="lineNum">     326 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     327 </span>                :            : __const char
+<span class="lineNum">     328 </span>                :            :         *fmtcheck(const char *, const char *);
+<span class="lineNum">     329 </span>                :            : int      fpurge(FILE *);
+<span class="lineNum">     330 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     331 </span>                :            : int      fseeko(FILE *, off_t, int);
+<span class="lineNum">     332 </span>                :            : off_t    ftello(FILE *);
+<span class="lineNum">     333 </span>                :            : int      ftrylockfile(FILE *);
+<span class="lineNum">     334 </span>                :            : void     funlockfile(FILE *);
+<span class="lineNum">     335 </span>                :            : int      getc_unlocked(FILE *);
+<span class="lineNum">     336 </span>                :            : int      getchar_unlocked(void);
+<span class="lineNum">     337 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     338 </span>                :            : int      getw(FILE *);
+<span class="lineNum">     339 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     340 </span>                :            : int      pclose(FILE *);
+<span class="lineNum">     341 </span>                :            : #if defined(__DARWIN_10_6_AND_LATER) &amp;&amp; (defined(_DARWIN_UNLIMITED_STREAMS) || defined(_DARWIN_C_SOURCE))
+<span class="lineNum">     342 </span>                :            : FILE    *popen(const char *, const char *) __DARWIN_EXTSN(popen);
+<span class="lineNum">     343 </span>                :            : #else /* &lt; 10.6 || !_DARWIN_UNLIMITED_STREAMS &amp;&amp; !_DARWIN_C_SOURCE */
+<span class="lineNum">     344 </span>                :            : FILE    *popen(const char *, const char *) __DARWIN_10_6_AND_LATER_ALIAS(__DARWIN_ALIAS(popen));
+<span class="lineNum">     345 </span>                :            : #endif /* &gt;= 10.6 &amp;&amp;_(DARWIN_UNLIMITED_STREAMS || _DARWIN_C_SOURCE) */
+<span class="lineNum">     346 </span>                :            : int      putc_unlocked(int, FILE *);
+<span class="lineNum">     347 </span>                :            : int      putchar_unlocked(int);
+<span class="lineNum">     348 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     349 </span>                :            : int      putw(int, FILE *);
+<span class="lineNum">     350 </span>                :            : void     setbuffer(FILE *, char *, int);
+<span class="lineNum">     351 </span>                :            : int      setlinebuf(FILE *);
+<span class="lineNum">     352 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     353 </span>                :            : int      snprintf(char * __restrict, size_t, const char * __restrict, ...) __DARWIN_LDBL_COMPAT(snprintf);
+<span class="lineNum">     354 </span>                :            : char    *tempnam(const char *, const char *) __DARWIN_ALIAS(tempnam);
+<span class="lineNum">     355 </span>                :            : int      vfscanf(FILE * __restrict, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vfscanf);
+<span class="lineNum">     356 </span>                :            : int      vscanf(const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vscanf);
+<span class="lineNum">     357 </span>                :            : int      vsnprintf(char * __restrict, size_t, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vsnprintf);
+<span class="lineNum">     358 </span>                :            : int      vsscanf(const char * __restrict, const char * __restrict, va_list) __DARWIN_LDBL_COMPAT(vsscanf);
+<span class="lineNum">     359 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     360 </span>                :            : FILE    *zopen(const char *, const char *, int);
+<span class="lineNum">     361 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     362 </span>                :            : __END_DECLS
+<span class="lineNum">     363 </span>                :            : 
+<span class="lineNum">     364 </span>                :            : /*
+<span class="lineNum">     365 </span>                :            :  * Stdio function-access interface.
+<span class="lineNum">     366 </span>                :            :  */
+<span class="lineNum">     367 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     368 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">     369 </span>                :            : FILE    *funopen(const void *,
+<span class="lineNum">     370 </span>                :            :                 int (*)(void *, char *, int),
+<span class="lineNum">     371 </span>                :            :                 int (*)(void *, const char *, int),
+<span class="lineNum">     372 </span>                :            :                 fpos_t (*)(void *, fpos_t, int),
+<span class="lineNum">     373 </span>                :            :                 int (*)(void *));
+<span class="lineNum">     374 </span>                :            : __END_DECLS
+<span class="lineNum">     375 </span>                :            : #define fropen(cookie, fn) funopen(cookie, fn, 0, 0, 0)
+<span class="lineNum">     376 </span>                :            : #define fwopen(cookie, fn) funopen(cookie, 0, fn, 0, 0)
+<span class="lineNum">     377 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     378 </span>                :            : #endif /* not ANSI */
+<span class="lineNum">     379 </span>                :            : 
+<span class="lineNum">     380 </span>                :            : /*
+<span class="lineNum">     381 </span>                :            :  * Functions internal to the implementation.
+<span class="lineNum">     382 </span>                :            :  */
+<span class="lineNum">     383 </span>                :            : __BEGIN_DECLS
+<span class="lineNum">     384 </span>                :            : int     __srget(FILE *);
+<span class="lineNum">     385 </span>                :            : int     __svfscanf(FILE *, const char *, va_list) __DARWIN_LDBL_COMPAT(__svfscanf);
+<span class="lineNum">     386 </span>                :            : int     __swbuf(int, FILE *);
+<span class="lineNum">     387 </span>                :            : __END_DECLS
+<span class="lineNum">     388 </span>                :            : 
+<span class="lineNum">     389 </span>                :            : /*
+<span class="lineNum">     390 </span>                :            :  * The __sfoo macros are here so that we can
+<span class="lineNum">     391 </span>                :            :  * define function versions in the C library.
+<span class="lineNum">     392 </span>                :            :  */
+<a name="393"><span class="lineNum">     393 </span>                :            : #define __sgetc(p) (--(p)-&gt;_r &lt; 0 ? __srget(p) : (int)(*(p)-&gt;_p++))</a>
+<span class="lineNum">     394 </span>                :            : #if defined(__GNUC__) &amp;&amp; defined(__STDC__)
+<span class="lineNum">     395 </span>                :<span class="lineNoCov">          0 : static __inline int __sputc(int _c, FILE *_p) {</span>
+<span class="lineNum">     396 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (--_p-&gt;_w &gt;= 0 || (_p-&gt;_w &gt;= _p-&gt;_lbfsize &amp;&amp; (char)_c != '\n'))</span>
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]
+<span class="lineNum">     397 </span>                :<span class="lineNoCov">          0 :                 return (*_p-&gt;_p++ = _c);</span>
+<span class="lineNum">     398 </span>                :            :         else
+<span class="lineNum">     399 </span>                :<span class="lineNoCov">          0 :                 return (__swbuf(_c, _p));</span>
+<span class="lineNum">     400 </span>                :            : }
+<span class="lineNum">     401 </span>                :            : #else
+<span class="lineNum">     402 </span>                :            : /*
+<span class="lineNum">     403 </span>                :            :  * This has been tuned to generate reasonable code on the vax using pcc.
+<span class="lineNum">     404 </span>                :            :  */
+<span class="lineNum">     405 </span>                :            : #define __sputc(c, p) \
+<span class="lineNum">     406 </span>                :            :         (--(p)-&gt;_w &lt; 0 ? \
+<span class="lineNum">     407 </span>                :            :                 (p)-&gt;_w &gt;= (p)-&gt;_lbfsize ? \
+<span class="lineNum">     408 </span>                :            :                         (*(p)-&gt;_p = (c)), *(p)-&gt;_p != '\n' ? \
+<span class="lineNum">     409 </span>                :            :                                 (int)*(p)-&gt;_p++ : \
+<span class="lineNum">     410 </span>                :            :                                 __swbuf('\n', p) : \
+<span class="lineNum">     411 </span>                :            :                         __swbuf((int)(c), p) : \
+<span class="lineNum">     412 </span>                :            :                 (*(p)-&gt;_p = (c), (int)*(p)-&gt;_p++))
+<span class="lineNum">     413 </span>                :            : #endif
+<span class="lineNum">     414 </span>                :            : 
+<span class="lineNum">     415 </span>                :            : #define __sfeof(p)      (((p)-&gt;_flags &amp; __SEOF) != 0)
+<span class="lineNum">     416 </span>                :            : #define __sferror(p)    (((p)-&gt;_flags &amp; __SERR) != 0)
+<span class="lineNum">     417 </span>                :            : #define __sclearerr(p)  ((void)((p)-&gt;_flags &amp;= ~(__SERR|__SEOF)))
+<span class="lineNum">     418 </span>                :            : #define __sfileno(p)    ((p)-&gt;_file)
+<span class="lineNum">     419 </span>                :            : 
+<span class="lineNum">     420 </span>                :            : #ifndef _ANSI_SOURCE
+<span class="lineNum">     421 </span>                :            : #if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+<span class="lineNum">     422 </span>                :            : #define feof_unlocked(p)        __sfeof(p)
+<span class="lineNum">     423 </span>                :            : #define ferror_unlocked(p)      __sferror(p)
+<span class="lineNum">     424 </span>                :            : #define clearerr_unlocked(p)    __sclearerr(p)
+<span class="lineNum">     425 </span>                :            : #define fileno_unlocked(p)      __sfileno(p)
+<span class="lineNum">     426 </span>                :            : #endif /* not POSIX */
+<span class="lineNum">     427 </span>                :            : 
+<span class="lineNum">     428 </span>                :            : #ifndef lint
+<span class="lineNum">     429 </span>                :            : #define getc_unlocked(fp)       __sgetc(fp)
+<span class="lineNum">     430 </span>                :            : #define putc_unlocked(x, fp)    __sputc(x, fp)
+<span class="lineNum">     431 </span>                :            : #endif /* lint */
+<span class="lineNum">     432 </span>                :            : 
+<span class="lineNum">     433 </span>                :            : #define getchar_unlocked()      getc_unlocked(stdin)
+<span class="lineNum">     434 </span>                :            : #define putchar_unlocked(x)     putc_unlocked(x, stdout)
+<span class="lineNum">     435 </span>                :            : #endif /* not ANSI */
+<span class="lineNum">     436 </span>                :            : 
+<span class="lineNum">     437 </span>                :            : #ifdef _USE_EXTENDED_LOCALES_
+<span class="lineNum">     438 </span>                :            : #include &lt;xlocale/_stdio.h&gt;
+<span class="lineNum">     439 </span>                :            : #endif /* _USE_EXTENDED_LOCALES_ */
+<span class="lineNum">     440 </span>                :            : 
+<span class="lineNum">     441 </span>                :            : #if defined (__GNUC__) &amp;&amp; _FORTIFY_SOURCE &gt; 0 &amp;&amp; !defined (__cplusplus)
+<span class="lineNum">     442 </span>                :            : /* Security checking functions.  */
+<span class="lineNum">     443 </span>                :            : #include &lt;secure/_stdio.h&gt;
+<span class="lineNum">     444 </span>                :            : #endif
+<span class="lineNum">     445 </span>                :            : 
+<span class="lineNum">     446 </span>                :            : #endif /* _STDIO_H_ */
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.9</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

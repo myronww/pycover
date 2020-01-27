@@ -1,0 +1,936 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>LCOV - branch_counts_ref.info - PyCover/Tests/branch_counts.c</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">PyCover/Tests</a> - branch_counts.c<span style="font-size: 80%;"> (source / <a href="branch_counts.c.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">branch_counts_ref.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">242</td>
+            <td class="headerCovTableEntry">366</td>
+            <td class="headerCovTableEntryLo">66.1 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2012-07-10</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">47</td>
+            <td class="headerCovTableEntry">58</td>
+            <td class="headerCovTableEntryMed">81.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntry">130</td>
+            <td class="headerCovTableEntryLo">33.8 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  ============================================================================
+<span class="lineNum">       3 </span>                :            :  Name        : GcovTest.c
+<span class="lineNum">       4 </span>                :            :  Author      : 
+<span class="lineNum">       5 </span>                :            :  Version     :
+<span class="lineNum">       6 </span>                :            :  Copyright   : Your copyright notice
+<span class="lineNum">       7 </span>                :            :  Description : Hello World in C, Ansi-style
+<span class="lineNum">       8 </span>                :            :  ============================================================================
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &lt;signal.h&gt;
+<span class="lineNum">      12 </span>                :            : 
+<span class="lineNum">      13 </span>                :            : #include &lt;stdio.h&gt;
+<span class="lineNum">      14 </span>                :            : #include &lt;stdlib.h&gt;
+<span class="lineNum">      15 </span>                :            : 
+<span class="lineNum">      16 </span>                :            : int global_value = 0;
+<a name="17"><span class="lineNum">      17 </span>                :            : </a>
+<span class="lineNum">      18 </span>                :            : void graph_simpleblock()
+<span class="lineNum">      19 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">          1 :         global_value = global_value + 1;</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">          1 : }</span>
+<a name="22"><span class="lineNum">      22 </span>                :            : </a>
+<span class="lineNum">      23 </span>                :            : void graph_simplebranch_not_taken(int taken)
+<span class="lineNum">      24 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">      25 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         if(taken &gt; 0)</span>
+<span class="lineNum">      26 </span>                :            :         {
+<span class="lineNum">      27 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">      28 </span>                :            :         }
+<span class="lineNum">      29 </span>                :<span class="lineCov">          1 : }</span>
+<a name="30"><span class="lineNum">      30 </span>                :            : </a>
+<span class="lineNum">      31 </span>                :            : void graph_simplebranch_taken(int taken)
+<span class="lineNum">      32 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">      33 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :         if(taken &gt; 0)</span>
+<span class="lineNum">      34 </span>                :            :         {
+<span class="lineNum">      35 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 1;</span>
+<span class="lineNum">      36 </span>                :            :         }
+<span class="lineNum">      37 </span>                :<span class="lineCov">          2 : }</span>
+<a name="38"><span class="lineNum">      38 </span>                :            : </a>
+<span class="lineNum">      39 </span>                :            : void graph_nestedbranch_simple(int taken)
+<span class="lineNum">      40 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">      41 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (taken &gt; 0)</span>
+<span class="lineNum">      42 </span>                :            :         {
+<span class="lineNum">      43 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + taken;</span>
+<span class="lineNum">      44 </span>                :            : 
+<span class="lineNum">      45 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :                 if (taken &gt; 1)</span>
+<span class="lineNum">      46 </span>                :            :                 {
+<span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + taken;</span>
+<span class="lineNum">      48 </span>                :            :                 }
+<span class="lineNum">      49 </span>                :            :         }
+<span class="lineNum">      50 </span>                :            :         else
+<span class="lineNum">      51 </span>                :            :         {
+<span class="lineNum">      52 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + taken;</span>
+<span class="lineNum">      53 </span>                :            :         }
+<span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="55"><span class="lineNum">      55 </span>                :            : </a>
+<span class="lineNum">      56 </span>                :            : void graph_nestedbranch_complex(int taken)
+<span class="lineNum">      57 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">      58 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if ((taken == 0) || (taken == 1) || (taken == 3))</span>
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]
+<span class="lineNum">      59 </span>                :            :         {
+<span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + taken;</span>
+<span class="lineNum">      61 </span>                :            : 
+<span class="lineNum">      62 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :                 if ((taken == 1) || (taken == 2))</span>
+<span class="lineNum">      63 </span>                :            :                 {
+<span class="lineNum">      64 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + taken;</span>
+<span class="lineNum">      65 </span>                :            :                 }
+<span class="lineNum">      66 </span>                :            :         }
+<span class="lineNum">      67 </span>                :            :         else
+<span class="lineNum">      68 </span>                :            :         {
+<span class="lineNum">      69 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + taken;</span>
+<span class="lineNum">      70 </span>                :            :         }
+<span class="lineNum">      71 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="72"><span class="lineNum">      72 </span>                :            : </a>
+<span class="lineNum">      73 </span>                :            : void graph_simplebranch_withcall_not_taken(int taken)
+<span class="lineNum">      74 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">      75 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         if(func_compare(1, taken))</span>
+<span class="lineNum">      76 </span>                :            :         {
+<span class="lineNum">      77 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">      78 </span>                :            :         }
+<span class="lineNum">      79 </span>                :<span class="lineCov">          1 : }</span>
+<a name="80"><span class="lineNum">      80 </span>                :            : </a>
+<span class="lineNum">      81 </span>                :            : void graph_simplebranch_withcall_taken(int taken)
+<span class="lineNum">      82 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">      83 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :         if(func_compare(1, taken))</span>
+<span class="lineNum">      84 </span>                :            :         {
+<span class="lineNum">      85 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 1;</span>
+<span class="lineNum">      86 </span>                :            :         }
+<span class="lineNum">      87 </span>                :<span class="lineCov">          2 : }</span>
+<a name="88"><span class="lineNum">      88 </span>                :            : </a>
+<span class="lineNum">      89 </span>                :            : void graph_simplebranch_withnestedcalls_not_taken(int taken)
+<span class="lineNum">      90 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">      91 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         if(func_compare(1, func_compare(1, taken)))</span>
+<span class="lineNum">      92 </span>                :            :         {
+<span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">      94 </span>                :            :         }
+<span class="lineNum">      95 </span>                :<span class="lineCov">          1 : }</span>
+<a name="96"><span class="lineNum">      96 </span>                :            : </a>
+<span class="lineNum">      97 </span>                :            : void graph_simplebranch_withnestedcalls_taken(int taken)
+<span class="lineNum">      98 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">      99 </span>        [<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         if(func_compare(1, func_compare(1, taken)))</span>
+<span class="lineNum">     100 </span>                :            :         {
+<span class="lineNum">     101 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     102 </span>                :            :         }
+<span class="lineNum">     103 </span>                :<span class="lineCov">          2 : }</span>
+<a name="104"><span class="lineNum">     104 </span>                :            : </a>
+<span class="lineNum">     105 </span>                :            : int graph_simpleelse(int taken)
+<span class="lineNum">     106 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     107 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         if(taken &gt; 0)</span>
+<span class="lineNum">     108 </span>                :            :         {
+<span class="lineNum">     109 </span>                :<span class="lineCov">          1 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     110 </span>                :            :         }
+<span class="lineNum">     111 </span>                :            :         else
+<span class="lineNum">     112 </span>                :            :         {
+<span class="lineNum">     113 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     114 </span>                :            :         }
+<span class="lineNum">     115 </span>                :<span class="lineCov">          1 : }</span>
+<a name="116"><span class="lineNum">     116 </span>                :            : </a>
+<span class="lineNum">     117 </span>                :            : int graph_simpleelse_withcall(int taken)
+<span class="lineNum">     118 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     119 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         if(taken &gt; 0)</span>
+<span class="lineNum">     120 </span>                :            :         {
+<span class="lineNum">     121 </span>                :<span class="lineCov">          1 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     122 </span>                :            :         }
+<span class="lineNum">     123 </span>                :            :         else
+<span class="lineNum">     124 </span>                :            :         {
+<span class="lineNum">     125 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + func_call(2);</span>
+<span class="lineNum">     126 </span>                :            :         }
+<span class="lineNum">     127 </span>                :<span class="lineCov">          1 : }</span>
+<a name="128"><span class="lineNum">     128 </span>                :            : </a>
+<span class="lineNum">     129 </span>                :            : void graph_simpleelse_taken(int taken)
+<span class="lineNum">     130 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     131 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if(taken &gt; 0)</span>
+<span class="lineNum">     132 </span>                :            :         {
+<span class="lineNum">     133 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     134 </span>                :            :         }
+<span class="lineNum">     135 </span>                :            :         else
+<span class="lineNum">     136 </span>                :            :         {
+<span class="lineNum">     137 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     138 </span>                :<span class="lineNoCov">          0 :                 return;</span>
+<span class="lineNum">     139 </span>                :            :         }
+<span class="lineNum">     140 </span>                :            : 
+<span class="lineNum">     141 </span>                :            : }
+<a name="142"><span class="lineNum">     142 </span>                :            : </a>
+<span class="lineNum">     143 </span>                :            : void graph_simplecall()
+<span class="lineNum">     144 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">          1 :         func_call(0);</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          1 : }</span>
+<a name="147"><span class="lineNum">     147 </span>                :            : </a>
+<span class="lineNum">     148 </span>                :            : void graph_simplecall_throw()
+<span class="lineNum">     149 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     150 </span>                :<span class="lineNoCov">          0 :         func_call(1);</span>
+<span class="lineNum">     151 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="152"><span class="lineNum">     152 </span>                :            : </a>
+<span class="lineNum">     153 </span>                :            : void graph_multiplecall()
+<span class="lineNum">     154 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">          1 :         func_call(0);</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          1 :         func_call(0);</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">          1 :         func_call(0);</span>
+<span class="lineNum">     158 </span>                :<span class="lineCov">          1 : }</span>
+<a name="159"><span class="lineNum">     159 </span>                :            : </a>
+<span class="lineNum">     160 </span>                :            : void graph_multiplepaths_one(int pathSelect)
+<span class="lineNum">     161 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         if(pathSelect == 1)</span>
+<span class="lineNum">     163 </span>                :            :         {
+<span class="lineNum">     164 </span>                :<span class="lineCov">          1 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     165 </span>                :            :         }
+<span class="lineNum">     166 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     167 </span>                :            :         {
+<span class="lineNum">     168 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     169 </span>                :            :         }
+<span class="lineNum">     170 </span>                :            :         else
+<span class="lineNum">     171 </span>                :            :         {
+<span class="lineNum">     172 </span>                :<span class="lineCov">          1 :                 global_value = global_value + 3;</span>
+<span class="lineNum">     173 </span>                :            :         }
+<span class="lineNum">     174 </span>                :            : 
+<span class="lineNum">     175 </span>                :            :         return;
+<span class="lineNum">     176 </span>                :            : }
+<a name="177"><span class="lineNum">     177 </span>                :            : </a>
+<span class="lineNum">     178 </span>                :            : void graph_multiplepaths_two(int pathSelect)
+<span class="lineNum">     179 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">     180 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :         if(pathSelect == 1)</span>
+<span class="lineNum">     181 </span>                :            :         {
+<span class="lineNum">     182 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     183 </span>                :            :         }
+<span class="lineNum">     184 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     185 </span>                :            :         {
+<span class="lineNum">     186 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     187 </span>                :            :         }
+<span class="lineNum">     188 </span>                :            :         else
+<span class="lineNum">     189 </span>                :            :         {
+<span class="lineNum">     190 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 3;</span>
+<span class="lineNum">     191 </span>                :            :         }
+<span class="lineNum">     192 </span>                :            : 
+<span class="lineNum">     193 </span>                :            :         return;
+<span class="lineNum">     194 </span>                :            : }
+<a name="195"><span class="lineNum">     195 </span>                :            : </a>
+<span class="lineNum">     196 </span>                :            : void graph_multiplepaths_three(int pathSelect)
+<span class="lineNum">     197 </span>                :<span class="lineCov">          3 : {</span>
+<span class="lineNum">     198 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         if(pathSelect == 1)</span>
+<span class="lineNum">     199 </span>                :            :         {
+<span class="lineNum">     200 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     201 </span>                :            :         }
+<span class="lineNum">     202 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     203 </span>                :            :         {
+<span class="lineNum">     204 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     205 </span>                :            :         }
+<span class="lineNum">     206 </span>                :            :         else
+<span class="lineNum">     207 </span>                :            :         {
+<span class="lineNum">     208 </span>                :<span class="lineCov">          3 :                 global_value = global_value + 3;</span>
+<span class="lineNum">     209 </span>                :            :         }
+<span class="lineNum">     210 </span>                :            : 
+<span class="lineNum">     211 </span>                :            :         return;
+<span class="lineNum">     212 </span>                :            : }
+<a name="213"><span class="lineNum">     213 </span>                :            : </a>
+<span class="lineNum">     214 </span>                :            : void graph_multiplepaths_decisioncall_one(int pathSelect)
+<span class="lineNum">     215 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :         if(func_compare(1, pathSelect))</span>
+<span class="lineNum">     217 </span>                :            :         {
+<span class="lineNum">     218 </span>                :<span class="lineCov">          1 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     219 </span>                :            :         }
+<span class="lineNum">     220 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(func_compare(2, pathSelect))</span>
+<span class="lineNum">     221 </span>                :            :         {
+<span class="lineNum">     222 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     223 </span>                :            :         }
+<span class="lineNum">     224 </span>                :            :         else
+<span class="lineNum">     225 </span>                :            :         {
+<span class="lineNum">     226 </span>                :<span class="lineCov">          1 :                 global_value = global_value + 3;</span>
+<span class="lineNum">     227 </span>                :            :         }
+<span class="lineNum">     228 </span>                :            :         
+<span class="lineNum">     229 </span>                :            :         return;
+<span class="lineNum">     230 </span>                :            : }
+<a name="231"><span class="lineNum">     231 </span>                :            : </a>
+<span class="lineNum">     232 </span>                :            : void graph_multiplepaths_decisioncall_two(int pathSelect)
+<span class="lineNum">     233 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">     234 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">          2 :         if(func_compare(1, pathSelect))</span>
+<span class="lineNum">     235 </span>                :            :         {
+<span class="lineNum">     236 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     237 </span>                :            :         }
+<span class="lineNum">     238 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :         else if(func_compare(2, pathSelect))</span>
+<span class="lineNum">     239 </span>                :            :         {
+<span class="lineNum">     240 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     241 </span>                :            :         }
+<span class="lineNum">     242 </span>                :            :         else
+<span class="lineNum">     243 </span>                :            :         {
+<span class="lineNum">     244 </span>                :<span class="lineCov">          2 :                 global_value = global_value + 3;</span>
+<span class="lineNum">     245 </span>                :            :         }
+<span class="lineNum">     246 </span>                :            :         
+<span class="lineNum">     247 </span>                :            :         return;
+<span class="lineNum">     248 </span>                :            : }
+<a name="249"><span class="lineNum">     249 </span>                :            : </a>
+<span class="lineNum">     250 </span>                :            : void graph_multiplepaths_decisioncall_three(int pathSelect)
+<span class="lineNum">     251 </span>                :<span class="lineCov">          3 : {</span>
+<span class="lineNum">     252 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         if(func_compare(1, pathSelect))</span>
+<span class="lineNum">     253 </span>                :            :         {
+<span class="lineNum">     254 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     255 </span>                :            :         }
+<span class="lineNum">     256 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         else if(func_compare(2, pathSelect))</span>
+<span class="lineNum">     257 </span>                :            :         {
+<span class="lineNum">     258 </span>                :<span class="lineNoCov">          0 :                 global_value = global_value + 2;</span>
+<span class="lineNum">     259 </span>                :            :         }
+<span class="lineNum">     260 </span>                :            :         else
+<span class="lineNum">     261 </span>                :            :         {
+<span class="lineNum">     262 </span>                :<span class="lineCov">          3 :                 global_value = global_value + 3;</span>
+<span class="lineNum">     263 </span>                :            :         }
+<span class="lineNum">     264 </span>                :            :         
+<span class="lineNum">     265 </span>                :            :         return;
+<span class="lineNum">     266 </span>                :            : }
+<a name="267"><span class="lineNum">     267 </span>                :            : </a>
+<span class="lineNum">     268 </span>                :            : void graph_multiplepaths_withcalls_one(int pathSelect)
+<span class="lineNum">     269 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     270 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         if(pathSelect == 1)</span>
+<span class="lineNum">     271 </span>                :            :         {
+<span class="lineNum">     272 </span>                :<span class="lineCov">          1 :                 func_call(0);</span>
+<span class="lineNum">     273 </span>                :            :         }
+<span class="lineNum">     274 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     275 </span>                :            :         {
+<span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :                 func_call(0);</span>
+<span class="lineNum">     277 </span>                :            :         }
+<span class="lineNum">     278 </span>                :            :         else
+<span class="lineNum">     279 </span>                :            :         {
+<span class="lineNum">     280 </span>                :<span class="lineNoCov">          0 :                 func_call(0);</span>
+<span class="lineNum">     281 </span>                :            :         }
+<span class="lineNum">     282 </span>                :<span class="lineCov">          1 : }</span>
+<a name="283"><span class="lineNum">     283 </span>                :            : </a>
+<span class="lineNum">     284 </span>                :            : void graph_multiplepaths_withcalls_two(int pathSelect)
+<span class="lineNum">     285 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">     286 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :         if(pathSelect == 1)</span>
+<span class="lineNum">     287 </span>                :            :         {
+<span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :                 func_call(0);</span>
+<span class="lineNum">     289 </span>                :            :         }
+<span class="lineNum">     290 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     291 </span>                :            :         {
+<span class="lineNum">     292 </span>                :<span class="lineCov">          2 :                 func_call(0);</span>
+<span class="lineNum">     293 </span>                :            :         }
+<span class="lineNum">     294 </span>                :            :         else
+<span class="lineNum">     295 </span>                :            :         {
+<span class="lineNum">     296 </span>                :<span class="lineNoCov">          0 :                 func_call(0);</span>
+<span class="lineNum">     297 </span>                :            :         }
+<span class="lineNum">     298 </span>                :<span class="lineCov">          2 : }</span>
+<a name="299"><span class="lineNum">     299 </span>                :            : </a>
+<span class="lineNum">     300 </span>                :            : void graph_multiplepaths_withcalls_three(int pathSelect)
+<span class="lineNum">     301 </span>                :<span class="lineCov">          3 : {</span>
+<span class="lineNum">     302 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         if(pathSelect == 1)</span>
+<span class="lineNum">     303 </span>                :            :         {
+<span class="lineNum">     304 </span>                :<span class="lineNoCov">          0 :                 func_call(0);</span>
+<span class="lineNum">     305 </span>                :            :         }
+<span class="lineNum">     306 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     307 </span>                :            :         {
+<span class="lineNum">     308 </span>                :<span class="lineNoCov">          0 :                 func_call(0);</span>
+<span class="lineNum">     309 </span>                :            :         }
+<span class="lineNum">     310 </span>                :            :         else
+<span class="lineNum">     311 </span>                :            :         {
+<span class="lineNum">     312 </span>                :<span class="lineCov">          3 :                 func_call(0);</span>
+<span class="lineNum">     313 </span>                :            :         }
+<span class="lineNum">     314 </span>                :<span class="lineCov">          3 : }</span>
+<a name="315"><span class="lineNum">     315 </span>                :            : </a>
+<span class="lineNum">     316 </span>                :            : void graph_multiplepaths_withcalls_throw_not(int pathSelect)
+<span class="lineNum">     317 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     318 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if(pathSelect == 1)</span>
+<span class="lineNum">     319 </span>                :            :         {
+<span class="lineNum">     320 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     321 </span>                :            :         }
+<span class="lineNum">     322 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     323 </span>                :            :         {
+<span class="lineNum">     324 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     325 </span>                :            :         }
+<span class="lineNum">     326 </span>                :            :         else
+<span class="lineNum">     327 </span>                :            :         {
+<span class="lineNum">     328 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     329 </span>                :            :         }
+<span class="lineNum">     330 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="331"><span class="lineNum">     331 </span>                :            : </a>
+<span class="lineNum">     332 </span>                :            : void graph_multiplepaths_withcalls_throw_one(int pathSelect)
+<span class="lineNum">     333 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     334 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if(pathSelect == 1)</span>
+<span class="lineNum">     335 </span>                :            :         {
+<span class="lineNum">     336 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     337 </span>                :            :         }
+<span class="lineNum">     338 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     339 </span>                :            :         {
+<span class="lineNum">     340 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     341 </span>                :            :         }
+<span class="lineNum">     342 </span>                :            :         else
+<span class="lineNum">     343 </span>                :            :         {
+<span class="lineNum">     344 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     345 </span>                :            :         }
+<span class="lineNum">     346 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="347"><span class="lineNum">     347 </span>                :            : </a>
+<span class="lineNum">     348 </span>                :            : void graph_multiplepaths_withcalls_throw_two(int pathSelect)
+<span class="lineNum">     349 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     350 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if(pathSelect == 1)</span>
+<span class="lineNum">     351 </span>                :            :         {
+<span class="lineNum">     352 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     353 </span>                :            :         }
+<span class="lineNum">     354 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     355 </span>                :            :         {
+<span class="lineNum">     356 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     357 </span>                :            :         }
+<span class="lineNum">     358 </span>                :            :         else
+<span class="lineNum">     359 </span>                :            :         {
+<span class="lineNum">     360 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     361 </span>                :            :         }
+<span class="lineNum">     362 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="363"><span class="lineNum">     363 </span>                :            : </a>
+<span class="lineNum">     364 </span>                :            : void graph_multiplepaths_withcalls_throw_three(int pathSelect)
+<span class="lineNum">     365 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     366 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if(pathSelect == 1)</span>
+<span class="lineNum">     367 </span>                :            :         {
+<span class="lineNum">     368 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     369 </span>                :            :         }
+<span class="lineNum">     370 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         else if(pathSelect == 2)</span>
+<span class="lineNum">     371 </span>                :            :         {
+<span class="lineNum">     372 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     373 </span>                :            :         }
+<span class="lineNum">     374 </span>                :            :         else
+<span class="lineNum">     375 </span>                :            :         {
+<span class="lineNum">     376 </span>                :<span class="lineNoCov">          0 :                 func_call(1);</span>
+<span class="lineNum">     377 </span>                :            :         }
+<span class="lineNum">     378 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="379"><span class="lineNum">     379 </span>                :            : </a>
+<span class="lineNum">     380 </span>                :            : void graph_whilewithgotos_one(int pathSelect)
+<span class="lineNum">     381 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     382 </span>                :            :         do
+<span class="lineNum">     383 </span>                :            :         {
+<span class="lineNum">     384 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :                 if(pathSelect == 1)</span>
+<span class="lineNum">     385 </span>                :            :                 {
+<span class="lineNum">     386 </span>                :<span class="lineCov">          1 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     387 </span>                :<span class="lineCov">          1 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     388 </span>                :            :                 }
+<span class="lineNum">     389 </span>                :            : 
+<span class="lineNum">     390 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :                 if(pathSelect == 2)</span>
+<span class="lineNum">     391 </span>                :            :                 {
+<span class="lineNum">     392 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     393 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     394 </span>                :            :                 }
+<span class="lineNum">     395 </span>                :            : 
+<span class="lineNum">     396 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :                 if(pathSelect == 3)</span>
+<span class="lineNum">     397 </span>                :            :                 {
+<span class="lineNum">     398 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     399 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     400 </span>                :            :                 }
+<span class="lineNum">     401 </span>                :            : 
+<span class="lineNum">     402 </span>                :<span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     403 </span>                :            :         } while(1);
+<span class="lineNum">     404 </span>                :            : 
+<span class="lineNum">     405 </span>                :<span class="lineCov">          1 : GRAPH_WHILEWITHGOTOS_EXIT:</span>
+<span class="lineNum">     406 </span>                :            :         return;
+<span class="lineNum">     407 </span>                :            : }
+<a name="408"><span class="lineNum">     408 </span>                :            : </a>
+<span class="lineNum">     409 </span>                :            : void graph_whilewithgotos_two(int pathSelect)
+<span class="lineNum">     410 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">     411 </span>                :            :         do
+<span class="lineNum">     412 </span>                :            :         {
+<span class="lineNum">     413 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :                 if(pathSelect == 1)</span>
+<span class="lineNum">     414 </span>                :            :                 {
+<span class="lineNum">     415 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     416 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     417 </span>                :            :                 }
+<span class="lineNum">     418 </span>                :            : 
+<span class="lineNum">     419 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :                 if(pathSelect == 2)</span>
+<span class="lineNum">     420 </span>                :            :                 {
+<span class="lineNum">     421 </span>                :<span class="lineCov">          2 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     422 </span>                :<span class="lineCov">          2 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     423 </span>                :            :                 }
+<span class="lineNum">     424 </span>                :            : 
+<span class="lineNum">     425 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :                 if(pathSelect == 3)</span>
+<span class="lineNum">     426 </span>                :            :                 {
+<span class="lineNum">     427 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     428 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     429 </span>                :            :                 }
+<span class="lineNum">     430 </span>                :            : 
+<span class="lineNum">     431 </span>                :<span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     432 </span>                :            :         } while(1);
+<span class="lineNum">     433 </span>                :            : 
+<span class="lineNum">     434 </span>                :<span class="lineCov">          2 : GRAPH_WHILEWITHGOTOS_EXIT:</span>
+<span class="lineNum">     435 </span>                :            :         return;
+<span class="lineNum">     436 </span>                :            : }
+<a name="437"><span class="lineNum">     437 </span>                :            : </a>
+<span class="lineNum">     438 </span>                :            : void graph_whilewithgotos_three(int pathSelect)
+<span class="lineNum">     439 </span>                :<span class="lineCov">          3 : {</span>
+<span class="lineNum">     440 </span>                :            :         do
+<span class="lineNum">     441 </span>                :            :         {
+<span class="lineNum">     442 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :                 if(pathSelect == 1)</span>
+<span class="lineNum">     443 </span>                :            :                 {
+<span class="lineNum">     444 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     445 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     446 </span>                :            :                 }
+<span class="lineNum">     447 </span>                :            : 
+<span class="lineNum">     448 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :                 if(pathSelect == 2)</span>
+<span class="lineNum">     449 </span>                :            :                 {
+<span class="lineNum">     450 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     451 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     452 </span>                :            :                 }
+<span class="lineNum">     453 </span>                :            : 
+<span class="lineNum">     454 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :                 if(pathSelect == 3)</span>
+<span class="lineNum">     455 </span>                :            :                 {
+<span class="lineNum">     456 </span>                :<span class="lineCov">          3 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     457 </span>                :<span class="lineCov">          3 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     458 </span>                :            :                 }
+<span class="lineNum">     459 </span>                :            : 
+<span class="lineNum">     460 </span>                :<span class="lineNoCov">          0 :                 break;</span>
+<span class="lineNum">     461 </span>                :            :         } while(1);
+<span class="lineNum">     462 </span>                :            : 
+<span class="lineNum">     463 </span>                :<span class="lineCov">          3 : GRAPH_WHILEWITHGOTOS_EXIT:</span>
+<span class="lineNum">     464 </span>                :            :         return;
+<span class="lineNum">     465 </span>                :            : }
+<a name="466"><span class="lineNum">     466 </span>                :            : </a>
+<span class="lineNum">     467 </span>                :            : void graph_switchwithbreaks_one(int pathSelect)
+<span class="lineNum">     468 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     469 </span>     [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :         switch(pathSelect)</span>
+<span class="lineNum">     470 </span>                :            :         {
+<span class="lineNum">     471 </span>                :            :                 case 1:
+<span class="lineNum">     472 </span>                :<span class="lineCov">          1 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     473 </span>                :<span class="lineCov">          1 :                         break;</span>
+<span class="lineNum">     474 </span>                :            : 
+<span class="lineNum">     475 </span>                :            :                 case 2:
+<span class="lineNum">     476 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     477 </span>                :<span class="lineNoCov">          0 :                         break;</span>
+<span class="lineNum">     478 </span>                :            : 
+<span class="lineNum">     479 </span>                :            :                 default:
+<span class="lineNum">     480 </span>                :<span class="lineCov">          1 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     481 </span>                :            :                         break;
+<span class="lineNum">     482 </span>                :            :         }
+<span class="lineNum">     483 </span>                :            : 
+<span class="lineNum">     484 </span>                :            :         return;
+<span class="lineNum">     485 </span>                :            : }
+<a name="486"><span class="lineNum">     486 </span>                :            : </a>
+<span class="lineNum">     487 </span>                :            : void graph_switchwithbreaks_two(int pathSelect)
+<span class="lineNum">     488 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">     489 </span>     [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :         switch(pathSelect)</span>
+<span class="lineNum">     490 </span>                :            :         {
+<span class="lineNum">     491 </span>                :            :                 case 1:
+<span class="lineNum">     492 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     493 </span>                :<span class="lineNoCov">          0 :                         break;</span>
+<span class="lineNum">     494 </span>                :            : 
+<span class="lineNum">     495 </span>                :            :                 case 2:
+<span class="lineNum">     496 </span>                :<span class="lineCov">          2 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     497 </span>                :<span class="lineCov">          2 :                         break;</span>
+<span class="lineNum">     498 </span>                :            : 
+<span class="lineNum">     499 </span>                :            :                 default:
+<span class="lineNum">     500 </span>                :<span class="lineCov">          2 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     501 </span>                :            :                         break;
+<span class="lineNum">     502 </span>                :            :         }
+<span class="lineNum">     503 </span>                :            : 
+<span class="lineNum">     504 </span>                :            :         return;
+<span class="lineNum">     505 </span>                :            : }
+<a name="506"><span class="lineNum">     506 </span>                :            : </a>
+<span class="lineNum">     507 </span>                :            : void graph_switchwithbreaks_three(int pathSelect)
+<span class="lineNum">     508 </span>                :<span class="lineCov">          3 : {</span>
+<span class="lineNum">     509 </span>     [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         switch(pathSelect)</span>
+<span class="lineNum">     510 </span>                :            :         {
+<span class="lineNum">     511 </span>                :            :                 case 1:
+<span class="lineNum">     512 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     513 </span>                :<span class="lineNoCov">          0 :                         break;</span>
+<span class="lineNum">     514 </span>                :            : 
+<span class="lineNum">     515 </span>                :            :                 case 2:
+<span class="lineNum">     516 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     517 </span>                :<span class="lineNoCov">          0 :                         break;</span>
+<span class="lineNum">     518 </span>                :            : 
+<span class="lineNum">     519 </span>                :            :                 default:
+<span class="lineNum">     520 </span>                :<span class="lineCov">          3 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     521 </span>                :            :                         break;
+<span class="lineNum">     522 </span>                :            :         }
+<span class="lineNum">     523 </span>                :            : 
+<span class="lineNum">     524 </span>                :            :         return;
+<span class="lineNum">     525 </span>                :            : }
+<a name="526"><span class="lineNum">     526 </span>                :            : </a>
+<span class="lineNum">     527 </span>                :            : void graph_switchwithgotos_one(int pathSelect)
+<span class="lineNum">     528 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     529 </span>     [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :         switch(pathSelect)</span>
+<span class="lineNum">     530 </span>                :            :         {
+<span class="lineNum">     531 </span>                :            :                 case 1:
+<span class="lineNum">     532 </span>                :<span class="lineCov">          1 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     533 </span>                :<span class="lineCov">          1 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     534 </span>                :            : 
+<span class="lineNum">     535 </span>                :            :                 case 2:
+<span class="lineNum">     536 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     537 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     538 </span>                :            : 
+<span class="lineNum">     539 </span>                :            :                 default:
+<span class="lineNum">     540 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     541 </span>                :            :                         goto GRAPH_WHILEWITHGOTOS_EXIT;
+<span class="lineNum">     542 </span>                :            :         }
+<span class="lineNum">     543 </span>                :            : 
+<span class="lineNum">     544 </span>                :<span class="lineCov">          1 : GRAPH_WHILEWITHGOTOS_EXIT:</span>
+<span class="lineNum">     545 </span>                :            :         return;
+<span class="lineNum">     546 </span>                :            : }
+<a name="547"><span class="lineNum">     547 </span>                :            : </a>
+<span class="lineNum">     548 </span>                :            : void graph_switchwithgotos_two(int pathSelect)
+<span class="lineNum">     549 </span>                :<span class="lineCov">          2 : {</span>
+<span class="lineNum">     550 </span>     [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :         switch(pathSelect)</span>
+<span class="lineNum">     551 </span>                :            :         {
+<span class="lineNum">     552 </span>                :            :                 case 1:
+<span class="lineNum">     553 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     554 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     555 </span>                :            : 
+<span class="lineNum">     556 </span>                :            :                 case 2:
+<span class="lineNum">     557 </span>                :<span class="lineCov">          2 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     558 </span>                :<span class="lineCov">          2 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     559 </span>                :            : 
+<span class="lineNum">     560 </span>                :            :                 default:
+<span class="lineNum">     561 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     562 </span>                :            :                         goto GRAPH_WHILEWITHGOTOS_EXIT;
+<span class="lineNum">     563 </span>                :            :         }
+<span class="lineNum">     564 </span>                :            : 
+<span class="lineNum">     565 </span>                :<span class="lineCov">          2 : GRAPH_WHILEWITHGOTOS_EXIT:</span>
+<span class="lineNum">     566 </span>                :            :         return;
+<span class="lineNum">     567 </span>                :            : }
+<a name="568"><span class="lineNum">     568 </span>                :            : </a>
+<span class="lineNum">     569 </span>                :            : void graph_switchwithgotos_three(int pathSelect)
+<span class="lineNum">     570 </span>                :<span class="lineCov">          3 : {</span>
+<span class="lineNum">     571 </span>     [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">          3 :         switch(pathSelect)</span>
+<span class="lineNum">     572 </span>                :            :         {
+<span class="lineNum">     573 </span>                :            :                 case 1:
+<span class="lineNum">     574 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     575 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     576 </span>                :            : 
+<span class="lineNum">     577 </span>                :            :                 case 2:
+<span class="lineNum">     578 </span>                :<span class="lineNoCov">          0 :                         global_value = global_value + 2;</span>
+<span class="lineNum">     579 </span>                :<span class="lineNoCov">          0 :                         goto GRAPH_WHILEWITHGOTOS_EXIT;</span>
+<span class="lineNum">     580 </span>                :            : 
+<span class="lineNum">     581 </span>                :            :                 default:
+<span class="lineNum">     582 </span>                :<span class="lineCov">          3 :                         global_value = global_value + 3;</span>
+<span class="lineNum">     583 </span>                :            :                         goto GRAPH_WHILEWITHGOTOS_EXIT;
+<span class="lineNum">     584 </span>                :            :         }
+<span class="lineNum">     585 </span>                :            : 
+<span class="lineNum">     586 </span>                :<span class="lineCov">          3 : GRAPH_WHILEWITHGOTOS_EXIT:</span>
+<span class="lineNum">     587 </span>                :            :         return;
+<span class="lineNum">     588 </span>                :            : }
+<a name="589"><span class="lineNum">     589 </span>                :            : </a>
+<span class="lineNum">     590 </span>                :            : void graph_loop_dowhile(int stopIndex)
+<span class="lineNum">     591 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     592 </span>                :<span class="lineCov">          1 :         int index = 0;</span>
+<span class="lineNum">     593 </span>                :            :         
+<span class="lineNum">     594 </span>                :            :         do
+<span class="lineNum">     595 </span>                :            :         {
+<span class="lineNum">     596 </span>                :<span class="lineCov">          3 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     597 </span>                :            :                 
+<span class="lineNum">     598 </span>                :<span class="lineCov">          3 :                 index += 1;</span>
+<span class="lineNum">     599 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          3 :         } while (index &lt; stopIndex);</span>
+<span class="lineNum">     600 </span>                :<span class="lineCov">          1 : }</span>
+<a name="601"><span class="lineNum">     601 </span>                :            : </a>
+<span class="lineNum">     602 </span>                :            : void graph_loop_for(int stopIndex)
+<span class="lineNum">     603 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     604 </span>                :<span class="lineCov">          1 :         int index = 0;</span>
+<span class="lineNum">     605 </span>                :            :         
+<span class="lineNum">     606 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :         for (index = 0; index &lt; stopIndex; index += 1)</span>
+<span class="lineNum">     607 </span>                :            :         {
+<span class="lineNum">     608 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          4 :                 if ((index % 2) == 0)</span>
+<span class="lineNum">     609 </span>                :            :                 {
+<span class="lineNum">     610 </span>                :<span class="lineCov">          2 :                         global_value = global_value + 1;</span>
+<span class="lineNum">     611 </span>                :            :                 }
+<span class="lineNum">     612 </span>                :            :         }
+<span class="lineNum">     613 </span>                :<span class="lineCov">          1 : }</span>
+<a name="614"><span class="lineNum">     614 </span>                :            : </a>
+<span class="lineNum">     615 </span>                :            : void graph_loop_while(int stopIndex)
+<span class="lineNum">     616 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     617 </span>                :<span class="lineCov">          1 :         int index = 0;</span>
+<span class="lineNum">     618 </span>                :            :         
+<span class="lineNum">     619 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         while (index &lt; stopIndex) </span>
+<span class="lineNum">     620 </span>                :            :         {
+<span class="lineNum">     621 </span>                :<span class="lineCov">          5 :                 global_value = global_value + 1;</span>
+<span class="lineNum">     622 </span>                :            :                 
+<span class="lineNum">     623 </span>                :<span class="lineCov">          5 :                 index += 1;</span>
+<span class="lineNum">     624 </span>                :            :         }
+<span class="lineNum">     625 </span>                :<span class="lineCov">          1 : }</span>
+<span class="lineNum">     626 </span>                :            : 
+<span class="lineNum">     627 </span>                :            : 
+<span class="lineNum">     628 </span>                :            : typedef void (*branchFuncPtr)(int);
+<a name="629"><span class="lineNum">     629 </span>                :            : </a>
+<span class="lineNum">     630 </span>                :            : int main(void)
+<span class="lineNum">     631 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     632 </span>                :<span class="lineCov">          1 :         puts(&quot;!!! Starting Probes !!!&quot;);</span>
+<span class="lineNum">     633 </span>                :            : 
+<span class="lineNum">     634 </span>                :<span class="lineCov">          1 :         probe_simpleblock();</span>
+<span class="lineNum">     635 </span>                :            : 
+<span class="lineNum">     636 </span>                :<span class="lineCov">          1 :         probe_simplebranch();</span>
+<span class="lineNum">     637 </span>                :            : 
+<span class="lineNum">     638 </span>                :<span class="lineCov">          1 :         probe_simplebranch_withcalls();</span>
+<span class="lineNum">     639 </span>                :            : 
+<span class="lineNum">     640 </span>                :<span class="lineCov">          1 :         probe_simplecall();</span>
+<span class="lineNum">     641 </span>                :            : 
+<span class="lineNum">     642 </span>                :<span class="lineCov">          1 :         probe_simpleelse();</span>
+<span class="lineNum">     643 </span>                :            : 
+<span class="lineNum">     644 </span>                :<span class="lineCov">          1 :         probe_multiplecall();</span>
+<span class="lineNum">     645 </span>                :            : 
+<span class="lineNum">     646 </span>                :<span class="lineCov">          1 :         probe_multiplepaths();</span>
+<span class="lineNum">     647 </span>                :            :         
+<span class="lineNum">     648 </span>                :<span class="lineCov">          1 :         probe_multiplepaths_decisioncall();</span>
+<span class="lineNum">     649 </span>                :            : 
+<span class="lineNum">     650 </span>                :<span class="lineCov">          1 :         probe_multiplepaths_withcalls();</span>
+<span class="lineNum">     651 </span>                :            : 
+<span class="lineNum">     652 </span>                :<span class="lineCov">          1 :         probe_whilewithgotos();</span>
+<span class="lineNum">     653 </span>                :            : 
+<span class="lineNum">     654 </span>                :<span class="lineCov">          1 :         probe_switchwithbreaks();</span>
+<span class="lineNum">     655 </span>                :            : 
+<span class="lineNum">     656 </span>                :<span class="lineCov">          1 :         probe_switchwithgotos();</span>
+<span class="lineNum">     657 </span>                :            :         
+<span class="lineNum">     658 </span>                :<span class="lineCov">          1 :         graph_loop_dowhile(3);</span>
+<span class="lineNum">     659 </span>                :            :         
+<span class="lineNum">     660 </span>                :<span class="lineCov">          1 :         graph_loop_for(4);</span>
+<span class="lineNum">     661 </span>                :            :         
+<span class="lineNum">     662 </span>                :<span class="lineCov">          1 :         graph_loop_while(5);</span>
+<span class="lineNum">     663 </span>                :            : 
+<span class="lineNum">     664 </span>                :<span class="lineCov">          1 :         puts(&quot;!!! Finished Probes !!!&quot;);</span>
+<span class="lineNum">     665 </span>                :            : 
+<span class="lineNum">     666 </span>                :<span class="lineCov">          1 :         return EXIT_SUCCESS;</span>
+<span class="lineNum">     667 </span>                :            : }
+<a name="668"><span class="lineNum">     668 </span>                :            : </a>
+<span class="lineNum">     669 </span>                :            : void func_call(int throw)
+<span class="lineNum">     670 </span>                :<span class="lineCov">         10 : {</span>
+<span class="lineNum">     671 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :         if(throw)</span>
+<span class="lineNum">     672 </span>                :            :         {
+<span class="lineNum">     673 </span>                :<span class="lineNoCov">          0 :                 puts(&quot;Called 'func_call' with throw.&quot;);</span>
+<span class="lineNum">     674 </span>                :            : 
+<span class="lineNum">     675 </span>                :            :                 //Cause a memory access violation
+<span class="lineNum">     676 </span>                :<span class="lineNoCov">          0 :                 int* ptr = 0;</span>
+<span class="lineNum">     677 </span>                :<span class="lineNoCov">          0 :                 *ptr = 5;</span>
+<span class="lineNum">     678 </span>                :            :         }
+<span class="lineNum">     679 </span>                :            :         else
+<span class="lineNum">     680 </span>                :<span class="lineCov">         10 :                 puts(&quot;Called 'func_call' with no-throw.&quot;);</span>
+<span class="lineNum">     681 </span>                :<span class="lineCov">         10 : }</span>
+<a name="682"><span class="lineNum">     682 </span>                :            : </a>
+<span class="lineNum">     683 </span>                :            : int func_echo(int val)
+<span class="lineNum">     684 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     685 </span>                :<span class="lineNoCov">          0 :         return val;</span>
+<span class="lineNum">     686 </span>                :            : }
+<a name="687"><span class="lineNum">     687 </span>                :            : </a>
+<span class="lineNum">     688 </span>                :            : int func_compare(int eval, int aval)
+<span class="lineNum">     689 </span>                :<span class="lineCov">         20 : {</span>
+<span class="lineNum">     690 </span>                :<span class="lineCov">         20 :         return eval == aval ? 1 : 0;</span>
+<span class="lineNum">     691 </span>                :            : }
+<a name="692"><span class="lineNum">     692 </span>                :            : </a>
+<span class="lineNum">     693 </span>                :            : void memory_access_signal_handler(int signum)
+<span class="lineNum">     694 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     695 </span>                :            :         //Reset the signal handler
+<span class="lineNum">     696 </span>                :<span class="lineNoCov">          0 :         signal(SIGSEGV, memory_access_signal_handler);</span>
+<span class="lineNum">     697 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="698"><span class="lineNum">     698 </span>                :            : </a>
+<span class="lineNum">     699 </span>                :            : void probe_simpleblock()
+<span class="lineNum">     700 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     701 </span>                :<span class="lineCov">          1 :         graph_simpleblock();</span>
+<span class="lineNum">     702 </span>                :<span class="lineCov">          1 : }</span>
+<a name="703"><span class="lineNum">     703 </span>                :            : </a>
+<span class="lineNum">     704 </span>                :            : void probe_simplebranch()
+<span class="lineNum">     705 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     706 </span>                :            :         //Probe branch count for the 'Simple Branch' case
+<span class="lineNum">     707 </span>                :<span class="lineCov">          1 :         graph_simplebranch_not_taken(0);</span>
+<span class="lineNum">     708 </span>                :            : 
+<span class="lineNum">     709 </span>                :<span class="lineCov">          1 :         graph_simplebranch_taken(1);</span>
+<span class="lineNum">     710 </span>                :<span class="lineCov">          1 :         graph_simplebranch_taken(1);</span>
+<span class="lineNum">     711 </span>                :<span class="lineCov">          1 : }</span>
+<a name="712"><span class="lineNum">     712 </span>                :            : </a>
+<span class="lineNum">     713 </span>                :            : void probe_simplebranch_withcalls()
+<span class="lineNum">     714 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     715 </span>                :<span class="lineCov">          1 :         graph_simplebranch_withcall_not_taken(0);</span>
+<span class="lineNum">     716 </span>                :            : 
+<span class="lineNum">     717 </span>                :<span class="lineCov">          1 :         graph_simplebranch_withcall_taken(1);</span>
+<span class="lineNum">     718 </span>                :<span class="lineCov">          1 :         graph_simplebranch_withcall_taken(1);</span>
+<span class="lineNum">     719 </span>                :            : 
+<span class="lineNum">     720 </span>                :<span class="lineCov">          1 :         graph_simplebranch_withnestedcalls_not_taken(0);</span>
+<span class="lineNum">     721 </span>                :            : 
+<span class="lineNum">     722 </span>                :<span class="lineCov">          1 :         graph_simplebranch_withnestedcalls_taken(1);</span>
+<span class="lineNum">     723 </span>                :<span class="lineCov">          1 :         graph_simplebranch_withnestedcalls_taken(1);</span>
+<span class="lineNum">     724 </span>                :<span class="lineCov">          1 : }</span>
+<a name="725"><span class="lineNum">     725 </span>                :            : </a>
+<span class="lineNum">     726 </span>                :            : void probe_simpleelse()
+<span class="lineNum">     727 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     728 </span>                :<span class="lineCov">          1 :         graph_simpleelse(1);</span>
+<span class="lineNum">     729 </span>                :<span class="lineCov">          1 :         graph_simpleelse_withcall(2);</span>
+<span class="lineNum">     730 </span>                :<span class="lineCov">          1 : }</span>
+<a name="731"><span class="lineNum">     731 </span>                :            : </a>
+<span class="lineNum">     732 </span>                :            : void probe_multiplepaths()
+<span class="lineNum">     733 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     734 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_one(1);</span>
+<span class="lineNum">     735 </span>                :            : 
+<span class="lineNum">     736 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_two(2);</span>
+<span class="lineNum">     737 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_two(2);</span>
+<span class="lineNum">     738 </span>                :            : 
+<span class="lineNum">     739 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_three(3);</span>
+<span class="lineNum">     740 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_three(3);</span>
+<span class="lineNum">     741 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_three(3);</span>
+<span class="lineNum">     742 </span>                :<span class="lineCov">          1 : }</span>
+<a name="743"><span class="lineNum">     743 </span>                :            : </a>
+<span class="lineNum">     744 </span>                :            : void probe_multiplepaths_withcalls_nothrow()
+<span class="lineNum">     745 </span>                :<span class="lineNoCov">          0 : {</span>
+<span class="lineNum">     746 </span>                :<span class="lineNoCov">          0 :         graph_multiplepaths_one(1);</span>
+<span class="lineNum">     747 </span>                :            : 
+<span class="lineNum">     748 </span>                :<span class="lineNoCov">          0 :         graph_multiplepaths_two(2);</span>
+<span class="lineNum">     749 </span>                :<span class="lineNoCov">          0 :         graph_multiplepaths_two(2);</span>
+<span class="lineNum">     750 </span>                :            : 
+<span class="lineNum">     751 </span>                :<span class="lineNoCov">          0 :         graph_multiplepaths_three(3);</span>
+<span class="lineNum">     752 </span>                :<span class="lineNoCov">          0 :         graph_multiplepaths_three(3);</span>
+<span class="lineNum">     753 </span>                :<span class="lineNoCov">          0 :         graph_multiplepaths_three(3);</span>
+<span class="lineNum">     754 </span>                :<span class="lineNoCov">          0 : }</span>
+<a name="755"><span class="lineNum">     755 </span>                :            : </a>
+<span class="lineNum">     756 </span>                :            : void probe_multiplepaths_decisioncall()
+<span class="lineNum">     757 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     758 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_decisioncall_one(1);</span>
+<span class="lineNum">     759 </span>                :            :         
+<span class="lineNum">     760 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_decisioncall_two(2);</span>
+<span class="lineNum">     761 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_decisioncall_two(2);</span>
+<span class="lineNum">     762 </span>                :            :         
+<span class="lineNum">     763 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_decisioncall_three(3);</span>
+<span class="lineNum">     764 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_decisioncall_three(3);</span>
+<span class="lineNum">     765 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_decisioncall_three(3);</span>
+<span class="lineNum">     766 </span>                :<span class="lineCov">          1 : }</span>
+<a name="767"><span class="lineNum">     767 </span>                :            : </a>
+<span class="lineNum">     768 </span>                :            : void probe_simplecall()
+<span class="lineNum">     769 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     770 </span>                :<span class="lineCov">          1 :         graph_simplecall();</span>
+<span class="lineNum">     771 </span>                :            : 
+<span class="lineNum">     772 </span>                :            :         /*
+<span class="lineNum">     773 </span>                :            :         signal(SIGSEGV, memory_access_signal_handler); // initial set of signal handler
+<span class="lineNum">     774 </span>                :            : 
+<span class="lineNum">     775 </span>                :            :         graph_simplecall_throw();
+<span class="lineNum">     776 </span>                :            :         graph_simplecall_throw();
+<span class="lineNum">     777 </span>                :            : 
+<span class="lineNum">     778 </span>                :            :         signal(SIGSEGV, SIG_DFL);  // restore default behavior
+<span class="lineNum">     779 </span>                :            :          */
+<span class="lineNum">     780 </span>                :<span class="lineCov">          1 : }</span>
+<a name="781"><span class="lineNum">     781 </span>                :            : </a>
+<span class="lineNum">     782 </span>                :            : void probe_multiplecall()
+<span class="lineNum">     783 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     784 </span>                :<span class="lineCov">          1 :         graph_multiplecall();</span>
+<span class="lineNum">     785 </span>                :<span class="lineCov">          1 : }</span>
+<a name="786"><span class="lineNum">     786 </span>                :            : </a>
+<span class="lineNum">     787 </span>                :            : void probe_multiplepaths_withcalls()
+<span class="lineNum">     788 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     789 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_withcalls_one(1);</span>
+<span class="lineNum">     790 </span>                :            : 
+<span class="lineNum">     791 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_withcalls_two(2);</span>
+<span class="lineNum">     792 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_withcalls_two(2);</span>
+<span class="lineNum">     793 </span>                :            : 
+<span class="lineNum">     794 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_withcalls_three(3);</span>
+<span class="lineNum">     795 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_withcalls_three(3);</span>
+<span class="lineNum">     796 </span>                :<span class="lineCov">          1 :         graph_multiplepaths_withcalls_three(3);</span>
+<span class="lineNum">     797 </span>                :            : 
+<span class="lineNum">     798 </span>                :            :         /*
+<span class="lineNum">     799 </span>                :            :         signal(SIGSEGV, memory_access_signal_handler); // initial set of signal handler
+<span class="lineNum">     800 </span>                :            : 
+<span class="lineNum">     801 </span>                :            :         graph_multiplepaths_withcalls_throw_not(0);
+<span class="lineNum">     802 </span>                :            : 
+<span class="lineNum">     803 </span>                :            :         graph_multiplepaths_withcalls_throw_one(1);
+<span class="lineNum">     804 </span>                :            : 
+<span class="lineNum">     805 </span>                :            :         graph_multiplepaths_withcalls_throw_two(2);
+<span class="lineNum">     806 </span>                :            :         graph_multiplepaths_withcalls_throw_two(2);
+<span class="lineNum">     807 </span>                :            : 
+<span class="lineNum">     808 </span>                :            :         graph_multiplepaths_withcalls_throw_three(3);
+<span class="lineNum">     809 </span>                :            :         graph_multiplepaths_withcalls_throw_three(3);
+<span class="lineNum">     810 </span>                :            :         graph_multiplepaths_withcalls_throw_three(3);
+<span class="lineNum">     811 </span>                :            : 
+<span class="lineNum">     812 </span>                :            :         signal(SIGSEGV, SIG_DFL);  // restore default behavior
+<span class="lineNum">     813 </span>                :            :          */
+<span class="lineNum">     814 </span>                :<span class="lineCov">          1 : }</span>
+<a name="815"><span class="lineNum">     815 </span>                :            : </a>
+<span class="lineNum">     816 </span>                :            : void probe_whilewithgotos()
+<span class="lineNum">     817 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     818 </span>                :<span class="lineCov">          1 :         graph_whilewithgotos_one(1);</span>
+<span class="lineNum">     819 </span>                :            : 
+<span class="lineNum">     820 </span>                :<span class="lineCov">          1 :         graph_whilewithgotos_two(2);</span>
+<span class="lineNum">     821 </span>                :<span class="lineCov">          1 :         graph_whilewithgotos_two(2);</span>
+<span class="lineNum">     822 </span>                :            : 
+<span class="lineNum">     823 </span>                :<span class="lineCov">          1 :         graph_whilewithgotos_three(3);</span>
+<span class="lineNum">     824 </span>                :<span class="lineCov">          1 :         graph_whilewithgotos_three(3);</span>
+<span class="lineNum">     825 </span>                :<span class="lineCov">          1 :         graph_whilewithgotos_three(3);</span>
+<span class="lineNum">     826 </span>                :<span class="lineCov">          1 : }</span>
+<a name="827"><span class="lineNum">     827 </span>                :            : </a>
+<span class="lineNum">     828 </span>                :            : void probe_switchwithbreaks()
+<span class="lineNum">     829 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     830 </span>                :<span class="lineCov">          1 :         graph_switchwithbreaks_one(1);</span>
+<span class="lineNum">     831 </span>                :            : 
+<span class="lineNum">     832 </span>                :<span class="lineCov">          1 :         graph_switchwithbreaks_two(2);</span>
+<span class="lineNum">     833 </span>                :<span class="lineCov">          1 :         graph_switchwithbreaks_two(2);</span>
+<span class="lineNum">     834 </span>                :            : 
+<span class="lineNum">     835 </span>                :<span class="lineCov">          1 :         graph_switchwithbreaks_three(3);</span>
+<span class="lineNum">     836 </span>                :<span class="lineCov">          1 :         graph_switchwithbreaks_three(3);</span>
+<span class="lineNum">     837 </span>                :<span class="lineCov">          1 :         graph_switchwithbreaks_three(3);</span>
+<span class="lineNum">     838 </span>                :<span class="lineCov">          1 : }</span>
+<a name="839"><span class="lineNum">     839 </span>                :            : </a>
+<span class="lineNum">     840 </span>                :            : void probe_switchwithgotos()
+<span class="lineNum">     841 </span>                :<span class="lineCov">          1 : {</span>
+<span class="lineNum">     842 </span>                :<span class="lineCov">          1 :         graph_switchwithgotos_one(1);</span>
+<span class="lineNum">     843 </span>                :            : 
+<span class="lineNum">     844 </span>                :<span class="lineCov">          1 :         graph_switchwithgotos_two(2);</span>
+<span class="lineNum">     845 </span>                :<span class="lineCov">          1 :         graph_switchwithgotos_two(2);</span>
+<span class="lineNum">     846 </span>                :            : 
+<span class="lineNum">     847 </span>                :<span class="lineCov">          1 :         graph_switchwithgotos_three(3);</span>
+<span class="lineNum">     848 </span>                :<span class="lineCov">          1 :         graph_switchwithgotos_three(3);</span>
+<span class="lineNum">     849 </span>                :<span class="lineCov">          1 :         graph_switchwithgotos_three(3);</span>
+<span class="lineNum">     850 </span>                :<span class="lineCov">          1 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.9</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
