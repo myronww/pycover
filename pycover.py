@@ -1,5 +1,4 @@
 #!/usr/bin/python -Wignore
-# Myron Walker , April 2012
 """
 This file contains documentation about the GCC compiler and the code coverage file formats that were taken
 from the 'filename' that is part of the GCC source.  I re-wrote the documentation some to attempt to clarify
@@ -186,6 +185,16 @@ Following is a quick description of the tracefile  format  as  used  by genhtml,
        to a link.  This approach  is  necessary  for  the mechanism to work with the /proc/gcov files.
 
 """
+
+
+__author__ = "Myron Walker"
+__copyright__ = "Copyright 2012-2020, Myron W Walker"
+__credits__ = []
+__version__ = "1.0.0"
+__maintainer__ = "Myron Walker"
+__email__ = "myron.walker@automationmojo.com"
+__status__ = "Development" # Prototype, Development or Production
+__license__ = "MIT"
 
 # Base64 encoded PNGs to use when generating HTML reports code coverage 
 class GenHTMLResources:
