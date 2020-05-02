@@ -1006,12 +1006,12 @@ class GCovInfoFileWriter:
 
                     vprint ("        PRED ARCS:")
 
-                    collectionLen = len(block.arcs_Predecessors)
+                    collectionLen = len(block.arcs_predecessors)
                     cindex = 0
 
                     if collectionLen > 0:
                         while cindex < collectionLen:
-                            arc = block.arcs_Predecessors[cindex]
+                            arc = block.arcs_predecessors[cindex]
                             vprint ("            (%d) - DestBlockNo=%d Fake=%s FallThru=%s OnTree=%s IsRelevantBranch=%s IsExceptionBranch=%s" % \
                                     (cindex, arc.dest_block, arc.has_flag_fake, arc.has_flag_fall_through, arc.has_flag_on_tree, arc.is_relevant_branch, arc.is_exception_branch))
                             cindex += 1
@@ -1406,11 +1406,10 @@ class GCovIO():
         version = GCovIO.read_quad_char(fileHandle)
         stamp = GCovIO.read_uint32(fileHandle)
 
-        current_working_dir = GCovIO.read_string(fileHandle, strip=True)
-
         cwd = None
         unexc_blocks = None
         if self.is_notes:
+            cwd = GCovIO.read_string(fileHandle, strip=True)
             unexc_blocks = GCovIO.read_uint32(fileHandle)
 
         self.header = GCovIOFileHeader(magic, version, stamp, cwd=cwd, unexec_blocks=unexc_blocks)
@@ -1705,13 +1704,9 @@ class GCovDataFunctionAnnouncementRecord():
 
 class GCovDataObjectSummaryRecord():
     """"""
-    def __init__(self, header, checksum, num, runs, sum, max, summax):
+    def __init__(self, header, runs, summax):
         self.header = header
-        self.check_sum = checksum
-        self.num = num
         self.runs = runs
-        self.sum = sum
-        self.max = max
         self.sum_max = summax
         return
 
@@ -1731,23 +1726,22 @@ class GCovDataFile(GCovIO):
     """
     The data file contains the following records.
 
-    [TranslationUnit] [FunctionData]* [Summary:object] [Summary:program*]
+    [TranslationUnit] [Summary:object] [FunctionData]*
 
         data: {unit function-data* summary:object summary:program*}*
 
     TranslationUnit: header uint32:checksum
 
-        function-data:    announce_function arc_counts
-    announce_function: header uint32:ident uint32:checksum
-    arc_counts: header uint64:count*
+    FunctionData: announce_function present arc_counts
 
-    summary: uint32:checksum {count-summary}GCOV_COUNTERS
-    count-summary:    uint32:num uint32:runs uint64:sum
-            uint64:max uint64:sum_max
+        announce_function: header uint32:ident uint32:lineno_checksum uint32:cfg_checksum
+        present: header uint32: present
+        arc_counts: header uint64:count*
+
     """
 
     def __init__(self, filename=None):
-        GCovIO.__init__(self, filename)
+        GCovIO.__init__(self, filename, is_notes=False)
 
         self.trace_summary = None
         return
@@ -1898,14 +1892,10 @@ class GCovDataFile(GCovIO):
         """
         cpos = pos
 
-        checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
-        num, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
         runs, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
-        sum, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
-        max, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
-        summax, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
+        summax, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
-        rval = GCovDataObjectSummaryRecord(header, checksum, num, runs, sum, max, summax)
+        rval = GCovDataObjectSummaryRecord(header, runs, summax)
 
         return rval
 
@@ -1919,7 +1909,7 @@ class GCovDataFile(GCovIO):
         checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
         num, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
         runs, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
-        sum, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
+        sum_max, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
         max, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
         summax, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
 
@@ -1983,7 +1973,7 @@ class GCovGraphBlock():
         self.line_no = 0
 
         self.arcs_successors = []
-        self.arcs_Predecessors = []
+        self.arcs_predecessors = []
 
         self.is_branch_landing = False
         self.is_call_site = False
@@ -2059,7 +2049,7 @@ class GCovGraphFunction():
 
             toBlockNumber = arcTo.dest_block
             toBlock = self.blocks[toBlockNumber]
-            toBlock.arcs_Predecessors.append(arcTo)
+            toBlock.arcs_predecessors.append(arcTo)
 
         return nextArcId
 
@@ -2141,14 +2131,14 @@ class GCovGraphFunction():
         blockIndex = 0
 
         fakePredCount = 0
-        for parc in lastBlock.arcs_Predecessors:
+        for parc in lastBlock.arcs_predecessors:
             if parc.has_flag_fake:
                 fakePredCount = fakePredCount + 1
 
         exceptionBlock = None
         exceptionBlockNo = None
 
-        if fakePredCount >= (len(lastBlock.arcs_Predecessors) - 1):
+        if fakePredCount >= (len(lastBlock.arcs_predecessors) - 1):
             exceptionBlock = lastBlock
             exceptionBlock.is_exception_landing = True
             exceptionBlockNo = lastBlockNo
@@ -2173,7 +2163,7 @@ class GCovGraphFunction():
             nxtBlock = blocksList[blockIndex]
 
             succLen = len(nxtBlock.arcs_successors)
-            predLen = len(nxtBlock.arcs_Predecessors)
+            predLen = len(nxtBlock.arcs_predecessors)
 
             setCallBranch = False
 
@@ -2188,7 +2178,7 @@ class GCovGraphFunction():
                     sarc.is_return_branch = True
 
             noFakePredArcs = True
-            for parc in nxtBlock.arcs_Predecessors:
+            for parc in nxtBlock.arcs_predecessors:
                 if parc.has_flag_fake:
                     noFakePredArcs = False
 
@@ -2323,10 +2313,10 @@ class GCovGraphFunction():
             predecessorUnknown = 0
             successorUnknown = 0
 
-            predecessorCount = len(block.arcs_Predecessors)
+            predecessorCount = len(block.arcs_predecessors)
             successorCount = len(block.arcs_successors)
 
-            for arc in block.arcs_Predecessors:
+            for arc in block.arcs_predecessors:
                 if arc.counter is None:
                     predecessorUnknown += 1
 
@@ -2351,7 +2341,7 @@ class GCovGraphFunction():
                 predSum = 0
 
                 unknownArc = None
-                for arc in block.arcs_Predecessors:
+                for arc in block.arcs_predecessors:
                     if arc.counter is None:
                         unknownArc = arc
                     else:
@@ -2362,7 +2352,7 @@ class GCovGraphFunction():
             # If a block only has one unknown and it is an unknown successsor then solve it here
             elif successorUnknown == 1:
                 predSum = 0
-                for arc in block.arcs_Predecessors:
+                for arc in block.arcs_predecessors:
                     predSum += arc.counter
 
                 succSum = 0
@@ -2529,6 +2519,21 @@ class GCovNotesFile(GCovIO):
         the LINES records are stored in the file, *not* the ordering of the
         blocks they are for.
 
+        The notes file contains the following records
+        
+        note: unit function-graph*
+        unit: header int32:checksum string:source
+        function-graph: announce_function basic_blocks {arcs | lines}*
+        announce_function: header int32:ident
+            int32:lineno_checksum int32:cfg_checksum
+            string:name string:source int32:start_lineno int32:start_column int32:end_lineno
+        basic_block: header int32:flags*
+        arcs: header int32:block_no arc*
+        arc:  int32:dest_block int32:flags
+            lines: header int32:block_no line*
+                    int32:0 string:NULL
+        line:  int32:line_no | int32:0 string:filename
+
     """
 
     def __init__(self, filename=None):
@@ -2547,7 +2552,7 @@ class GCovNotesFile(GCovIO):
 
     def pull_record_at_index(self, index):
         if self.records is None:
-            raise LookupError("GCovNotesFile.pull_record_at_index: You must call GCovDataFile.Load before attempting to pull a record.")
+            raise LookupError("GCovNotesFile.pull_record_at_index: You must call GCovNotesFile.load before attempting to pull a record.")
 
         recCount = len(self.records)
         if index >= recCount:
@@ -2831,7 +2836,7 @@ class GCovProcessor:
                 for funcGraph in coverageitem.function_graphs.values():
                     try:
                         funcGraph.solve_graph()
-                    except:
+                    except Exception as xcpt:
                         pass
 
         return
@@ -3087,7 +3092,7 @@ def operation_capture(cmdOptions, cmdArgs):
     if not os.path.exists(traceDir):
         os.makedirs(traceDir)
 
-    gcov_proc = GCovProcessor(dataBasePathList, graphBasePathList, sourceBasePathList, None, includeFilter, excludeFilter)#
+    gcov_proc = GCovProcessor(dataBasePathList, graphBasePathList, sourceBasePathList, None, includeFilter, excludeFilter)
 
     gcov_proc.populate_coverage_map()
 
