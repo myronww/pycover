@@ -1001,8 +1001,8 @@ class GCovInfoFileWriter:
                 while blockIndex < lastBlockIndex:
                     block = funcGraph.blocks[blockIndex]
 
-                    vprint ("    Block (%d): LineNo=%s Flags=%s IsBranchLanding=%s IsCallSite=%s IsExceptionLanding=%s IsReturnLanding=%s HasRelevantBranches=%s" % \
-                        (blockIndex, block.line_no, block.flags, block.is_branch_landing, block.is_call_site, block.is_exception_landing, block.is_return_landing, block.has_relevant_branches))
+                    vprint ("    Block (%d): LineNo=%s IsBranchLanding=%s IsCallSite=%s IsExceptionLanding=%s IsReturnLanding=%s HasRelevantBranches=%s" % \
+                        (blockIndex, block.line_no, block.is_branch_landing, block.is_call_site, block.is_exception_landing, block.is_return_landing, block.has_relevant_branches))
 
                     vprint ("        PRED ARCS:")
 
