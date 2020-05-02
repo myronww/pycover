@@ -812,7 +812,7 @@ class GCovInfoBranch:
         self.branch_number = branchno
         self.taken_counter = taken
 
-    def IncrementTakenCount(self, incVal):
+    def increment_taken_count(self, incVal):
         if self.taken_counter is None:
             self.taken_counter = incVal
         else:
@@ -825,7 +825,7 @@ class GCovInfoFunction:
         self.line_number = lineno
         self.execution_count = executionCount
 
-    def IncrementExecutionCount(self, incVal):
+    def increment_execution_count(self, incVal):
         self.execution_count = self.execution_count + incVal
         return
 
@@ -835,7 +835,7 @@ class GCovInfoLine:
         self.execution_count = executionCount
         self.check_sum = checkSum
 
-    def IncrementExecutionCount(self, incVal):
+    def increment_execution_count(self, incVal):
         self.execution_count = self.execution_count + incVal
         return
 
@@ -855,23 +855,23 @@ class GCovInfoSourcefileWriter:
 
         return
 
-    def AddBranchTrace(self, lineno, blockno, branchno, taken=None):
+    def add_branch_trace(self, lineno, blockno, branchno, taken=None):
         branchTrace = GCovInfoBranch(lineno, blockno, branchno, taken)
         self.branch_traces.append(branchTrace)
         return branchTrace
 
-    def AddFunctionTrace(self, funcname, lineno, executionCount=0):
+    def add_function_trace(self, funcname, lineno, executionCount=0):
         funcTrace = GCovInfoFunction(funcname, lineno, executionCount)
         self.function_traces.append(funcTrace)
 
         return funcTrace
 
-    def AddLineTrace(self, lineno, executionCount=0, checkSum=None):
+    def add_line_trace(self, lineno, executionCount=0, checkSum=None):
         lineTrace = GCovInfoLine(lineno, executionCount, checkSum)
         self.line_traces.append(lineTrace)
         return lineTrace
 
-    def WriteTo(self, fileHandle):
+    def write_to(self, fileHandle):
         """
         """
         # --------------------------------------------------
@@ -953,7 +953,7 @@ class GCovInfoFileWriter:
         return
 
     @staticmethod
-    def GetSortedKeys(coverageMapItem):
+    def get_sorted_keys(coverageMapItem):
         sortedKeys = []
 
         keyLookupDictionary = {}
@@ -981,7 +981,7 @@ class GCovInfoFileWriter:
                  "graph_nestedbranch_simple"]
 
     @staticmethod
-    def TraceGraph(funcGraph, dumpinfo=False):
+    def trace_graph(funcGraph, dumpinfo=False):
 
         funcName = funcGraph.name
 
@@ -1090,7 +1090,7 @@ class GCovInfoFileWriter:
 
         return
 
-    def WriteSourcefileSection(self, coverageMapItem, testname=None):
+    def write_sourcefile_section(self, coverageMapItem, testname=None):
         """
             Takes a coverage map item and writes a source file section to the output tracefile. 
         """
@@ -1101,7 +1101,7 @@ class GCovInfoFileWriter:
 
         sourcesMap = coverageMapItem.sources_map
 
-        sourcesMapKeys = GCovInfoFileWriter.GetSortedKeys(coverageMapItem)
+        sourcesMapKeys = GCovInfoFileWriter.get_sorted_keys(coverageMapItem)
 
         writableFileCount = 0
         for sourcefile in sourcesMapKeys:
@@ -1125,9 +1125,9 @@ class GCovInfoFileWriter:
                 for funcGraph in sourceGraphs.values():
 
                     if funcGraph.solved:
-                        GCovInfoFileWriter.TraceGraph(funcGraph)
+                        GCovInfoFileWriter.trace_graph(funcGraph)
 
-                        sourcefileWriter.AddFunctionTrace(funcGraph.name, funcGraph.line_no, funcGraph.execution_count)
+                        sourcefileWriter.add_function_trace(funcGraph.name, funcGraph.line_no, funcGraph.execution_count)
 
                         blockWithLinesCounter = 0
 
@@ -1156,7 +1156,7 @@ class GCovInfoFileWriter:
                                     if lineNumber > 0:
                                         branchLineNo = lineNumber
                                         checksum = None
-                                        sourcefileWriter.AddLineTrace(line.number, blockExecCount, checksum)
+                                        sourcefileWriter.add_line_trace(line.number, blockExecCount, checksum)
 
                                 relevantBlockIndex = 0
                                 relevantBranchIndex = 0
@@ -1170,9 +1170,9 @@ class GCovInfoFileWriter:
                                     for arc in block.arcs_successors:
                                         takenCounter = arc.counter
                                         if blockExecCount > 0:
-                                            sourcefileWriter.AddBranchTrace(branchLineNo, relevantBlockIndex, relevantBranchIndex, takenCounter)
+                                            sourcefileWriter.add_branch_trace(branchLineNo, relevantBlockIndex, relevantBranchIndex, takenCounter)
                                         else:
-                                            sourcefileWriter.AddBranchTrace(branchLineNo, relevantBlockIndex, relevantBranchIndex, None)
+                                            sourcefileWriter.add_branch_trace(branchLineNo, relevantBlockIndex, relevantBranchIndex, None)
 
                                         relevantBranchIndex += 1
                                     relevantBlockIndex += 1
@@ -1191,9 +1191,9 @@ class GCovInfoFileWriter:
                                         for arc in block.arcs_successors:
                                             takenCounter = arc.counter
                                             if blockExecCount > 0:
-                                                sourcefileWriter.AddBranchTrace(branchLineNo, relevantBlockIndex, relevantBranchIndex, takenCounter)
+                                                sourcefileWriter.add_branch_trace(branchLineNo, relevantBlockIndex, relevantBranchIndex, takenCounter)
                                             else:
-                                                sourcefileWriter.AddBranchTrace(branchLineNo, relevantBlockIndex, relevantBranchIndex, None)
+                                                sourcefileWriter.add_branch_trace(branchLineNo, relevantBlockIndex, relevantBranchIndex, None)
 
                                             relevantBranchIndex += 1
                                         relevantBlockIndex += 1
@@ -1201,9 +1201,9 @@ class GCovInfoFileWriter:
                             blockIndex += 1
                             #end while(blockIndex < lastBlockIndex)
                     else:
-                        GCovInfoFileWriter.TraceGraph(funcGraph, True)
+                        GCovInfoFileWriter.trace_graph(funcGraph, True)
 
-                sourcefileWriter.WriteTo(self.trace_file)
+                sourcefileWriter.write_to(self.trace_file)
 
         return
 
@@ -1214,12 +1214,12 @@ class GCovIOConst:
     GCOV_VERSION_3_4_0    = 0x30400
     GCOV_VERSION_3_3_0    = 0x30300
 
-    BBG_FILE_MAGIC    = 0x67626267    #gbbg
-    GCNO_FILE_MAGIC   = 0x67636e6f    #gcno
-    GCDA_FILE_MAGIC   = 0x67636461    #gcda
+    BBG_FILE_MAGIC    = b'gbbg'
+    GCNO_FILE_MAGIC   = b'oncg'
+    GCDA_FILE_MAGIC   = b'adcg'
 
-    GCNO_FILE_MAGIC_BIGENDIAN   = 0x6f6e6367    #oncg
-    GCDA_FILE_MAGIC_BIGENDIAN   = 0x61646367    #adcg
+    GCNO_FILE_MAGIC_BIGENDIAN   = b'gcno'
+    GCDA_FILE_MAGIC_BIGENDIAN   = b'gcda'
 
     GCOV_TAG_FUNCTION         = 0x01000000
     GCOV_TAG_BLOCKS           = 0x01410000
@@ -1240,8 +1240,8 @@ class GCovIOConst:
                            GCOV_TAG_OBJECT_SUMMARY: "GCOV_TAG_OBJECT_SUMMARY", 
                            GCOV_TAG_PROGRAM_SUMMARY: "GCOV_TAG_PROGRAM_SUMMARY" }
 
-    PACKUINT32="=I"
-    PACKUINT32_BIGENDIAN="=I"
+    PACKUINT32="<I"
+    PACKUINT32_BIGENDIAN=">I"
 
     LOWORDERMASK =  0x00000000ffffffff
     HIGHORDERMASK = 0xffffffff00000000
@@ -1255,11 +1255,14 @@ class GCovIOFileHeader():
         uint32:magic 
         uint32:version 
         uint32:stamp
+        uint32:unexec_blocks
     """
-    def __init__(self, magic, version, stamp):
+    def __init__(self, magic, version, stamp, cwd=None, unexec_blocks=None):
         self.magic = magic
         self.version = version
         self.stamp = stamp
+        self.cwd = cwd
+        self.unexec_blocks = unexec_blocks
         return
 
 class GCovIORecordHeader():
@@ -1306,7 +1309,7 @@ class GCovIORecord():
         tagType = str(tagKey)
         if tagKey in GCovIOConst.GCOVIO_TAGTYPE_STR:
             tagType = GCovIOConst.GCOVIO_TAGTYPE_STR[tagKey]
-        strval = "Type=%s Length=%d" % (tagType, self.header.length)
+        strval = "Type=%s Length=%d Data=%r" % (tagType, self.header.length, self.items_data)
         return strval
 
 class GCovIO():
@@ -1336,20 +1339,21 @@ class GCovIO():
 
         Padding: '' | 'x00' | 'x00x00' | 'x00x00x00'
     """
-    def __init__(self, filename=None, header=None, records=None):
+    def __init__(self, filename=None, header=None, records=None, is_notes=False):
         self.pack_str32 = GCovIOConst.PACKUINT32
 
         self.filename = filename
         self.header = header
         self.records = records
+        self.is_notes = is_notes
         return
 
-    def Load(self, filename=None, detectEndianess=True):
+    def load(self, filename=None, detectEndianess=True, ):
         if filename is not None:
             self.filename = filename
 
         if self.filename is None:
-            raise IOError("GCovIO: Load 'Filename' not set")
+            raise IOError("GCovIO: load 'Filename' not set")
 
         fileHandle = None
 
@@ -1358,48 +1362,62 @@ class GCovIO():
 
             fileSize = os.fstat(fileHandle.fileno()).st_size
 
-            self._LoadFileHeader(fileHandle, fileSize, detectEndianess)
-            self._LoadRecords(fileHandle, fileSize)
+            self._load_file_header(fileHandle, fileSize, detectEndianess)
+            self._load_records(fileHandle, fileSize)
         finally:
             if fileHandle is not None:
                 fileHandle.close()
         return
 
-    def Save(self, filename=None):
+    def save(self, filename=None):
         if filename is not None:
             self.filename = filename
 
         if self.filename is None:
-            raise IOError("GCovIO: Save 'Filename' not set")
+            raise IOError("GCovIO: save 'Filename' not set")
 
         try:
             fileHandle = open(self.filename, 'w')
 
-            self._SaveHeader(fileHandle)
-            self._SaveRecords(fileHandle)
+            self._save_header(fileHandle)
+            self._save_records(fileHandle)
         finally:
             if fileHandle is not None:
                 fileHandle.close()
 
         return
 
-    def _LoadFileHeader(self, fileHandle, fileSize, detectEndianess):
+    def _load_file_header(self, fileHandle, fileSize, detectEndianess):
 
-        magic = GCovIO.ReadUInt32(fileHandle)
+        magic = GCovIO.read_quad_char(fileHandle)
 
         if detectEndianess:
-            if (magic == GCovIOConst.GCDA_FILE_MAGIC_BIGENDIAN) or \
-               (magic == GCovIOConst.GCNO_FILE_MAGIC_BIGENDIAN):
+            if (magic == GCovIOConst.GCDA_FILE_MAGIC_BIGENDIAN):
+                print ("Big Endian GCDA")
                 self.pack_str32 = GCovIOConst.PACKUINT32_BIGENDIAN
+            elif magic == GCovIOConst.GCNO_FILE_MAGIC_BIGENDIAN:
+                print ("Big Endian GCNO")
+                self.pack_str32 = GCovIOConst.PACKUINT32_BIGENDIAN
+            elif magic == GCovIOConst.GCDA_FILE_MAGIC:
+                print ("Little Endian GCDA")
+            elif magic == GCovIOConst.GCNO_FILE_MAGIC:
+                print ("Little Endian GCNO")
 
-        version = GCovIO.ReadUInt32(fileHandle)
-        stamp = GCovIO.ReadUInt32(fileHandle)
+        version = GCovIO.read_quad_char(fileHandle)
+        stamp = GCovIO.read_uint32(fileHandle)
 
-        self.header = GCovIOFileHeader(magic, version, stamp)
+        current_working_dir = GCovIO.read_string(fileHandle, strip=True)
+
+        cwd = None
+        unexc_blocks = None
+        if self.is_notes:
+            unexc_blocks = GCovIO.read_uint32(fileHandle)
+
+        self.header = GCovIOFileHeader(magic, version, stamp, cwd=cwd, unexec_blocks=unexc_blocks)
 
         return
 
-    def _LoadRecords(self, fileHandle, fileSize):
+    def _load_records(self, fileHandle, fileSize):
 
         self.records = []
 
@@ -1423,7 +1441,7 @@ class GCovIO():
 
                 break
 
-            nxtRecord = GCovIO.ReadRecord(fileHandle)
+            nxtRecord = GCovIO.read_record(fileHandle)
 
             if nxtRecord is None:
                 break
@@ -1434,27 +1452,38 @@ class GCovIO():
 
         return
 
-    def _SaveHeader(self, fileHandle):
+    def _save_header(self, fileHandle):
 
         magic = self.header.magic
         version = self.header.version
         stamp = self.header.stamp
 
-        GCovIO.WriteUInt32(fileHandle, magic)
-        GCovIO.WriteUInt32(fileHandle, version)
-        GCovIO.WriteUInt32(fileHandle, stamp)
+        GCovIO.write_quad_char(fileHandle, magic)
+        GCovIO.write_quad_char(fileHandle, version)
+        GCovIO.write_uint32(fileHandle, stamp)
 
         return
 
-    def _SaveRecords(self, fileHandle):
+    def _save_records(self, fileHandle):
 
         for record in self.records:
-            GCovIO.WriteRecord(fileHandle, record)
+            GCovIO.write_record(fileHandle, record)
 
         return
 
     @staticmethod
-    def ReadUInt32(fileHandle, packStr=GCovIOConst.PACKUINT32):
+    def read_quad_char(fileHandle):
+        """
+            uint32:  byte3 byte2 byte1 byte0 | byte0 byte1 byte2 byte3
+        """
+        quadByte = fileHandle.read(4)
+        if len(quadByte) < 4:
+            vprint ("ERROR: Problem reading UInt32, not enough bytes left in record. quadByte=%s" % quadByte)
+
+        return quadByte
+
+    @staticmethod
+    def read_uint32(fileHandle, packStr=GCovIOConst.PACKUINT32):
         """
             uint32:  byte3 byte2 byte1 byte0 | byte0 byte1 byte2 byte3
         """
@@ -1463,43 +1492,44 @@ class GCovIO():
             vprint ("ERROR: Problem reading UInt32, not enough bytes left in record. quadByte=%s" % quadByte)
 
         val, = struct.unpack(packStr, quadByte)
+
         return val
 
     @staticmethod
-    def ReadUInt64(fileHandle, packStr=GCovIOConst.PACKUINT32):
+    def read_uint64(fileHandle, packStr=GCovIOConst.PACKUINT32):
         """
             uint64:  uint32:low uint32:high
         """
-        lowOrder = GCovIO.ReadUInt32(fileHandle, packStr)
-        highOrder = GCovIO.ReadUInt32(fileHandle, packStr)
+        lowOrder = GCovIO.read_uint32(fileHandle, packStr)
+        highOrder = GCovIO.read_uint32(fileHandle, packStr)
 
         val = (highOrder << 32) | lowOrder
 
         return val
 
     @staticmethod
-    def ReadString(fileHandle, packStr=GCovIOConst.PACKUINT32):
+    def read_string(fileHandle, packStr=GCovIOConst.PACKUINT32, strip=True):
         """
             string: uint32:0 | uint32:length char* char:0 padding
             padding: | char:0 | char:0 char:0 | char:0 char:0 char:0
         """
 
-        wordLength = GCovIO.ReadUInt32(fileHandle, packStr)
+        wordLength = GCovIO.read_uint32(fileHandle, packStr)
         strLen = wordLength * 4
 
-        strVal = fileHandle.read(strLen)
+        strVal = fileHandle.read(strLen).rstrip(b"\0")
 
         return strVal
 
     @staticmethod
-    def ReadRecord(fileHandle, packStr=GCovIOConst.PACKUINT32):
+    def read_record(fileHandle, packStr=GCovIOConst.PACKUINT32):
         """
             record: header data
             header: uint32:tag uint32:length
               data: item*
         """
-        recordTag = GCovIO.ReadUInt32(fileHandle, packStr)
-        recordLength = GCovIO.ReadUInt32(fileHandle, packStr)
+        recordTag = GCovIO.read_uint32(fileHandle, packStr)
+        recordLength = GCovIO.read_uint32(fileHandle, packStr)
 
         byteLen = recordLength * 4
         recordItemsData = fileHandle.read(byteLen)
@@ -1507,7 +1537,7 @@ class GCovIO():
         return GCovIORecord(recordTag, recordLength, recordItemsData)
 
     @staticmethod
-    def UnpackUInt32(buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_uint32(buffer, pos, packStr=GCovIOConst.PACKUINT32):
 
         #Note: The comma is important because the return type from struct.unpack_from is a tuple
         val, = struct.unpack_from(packStr, buffer, pos)
@@ -1515,7 +1545,7 @@ class GCovIO():
         return val, cpos
 
     @staticmethod
-    def UnpackUInt64(buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_uint64(buffer, pos, packStr=GCovIOConst.PACKUINT32):
 
         cpos = pos
 
@@ -1531,7 +1561,7 @@ class GCovIO():
         return val, cpos
 
     @staticmethod
-    def UnpackString(buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_string(buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
         """
         #Note: The comma is important because the return type from struct.unpack_from is a tuple
@@ -1552,7 +1582,15 @@ class GCovIO():
         return val, cpos
 
     @staticmethod
-    def WriteUInt32(fileHandle, val, packStr=GCovIOConst.PACKUINT32):
+    def write_quad_char(fileHandle, quad_char):
+        """
+            uint32 in quad char format
+        """
+        fileHandle.write(quad_char)
+        return
+
+    @staticmethod
+    def write_uint32(fileHandle, val, packStr=GCovIOConst.PACKUINT32):
         """
             uint32:  byte3 byte2 byte1 byte0 | byte0 byte1 byte2 byte3
         """
@@ -1560,7 +1598,7 @@ class GCovIO():
         return
 
     @staticmethod
-    def WriteUInt64(fileHandle, val, packStr=GCovIOConst.PACKUINT32):
+    def write_uint64(fileHandle, val, packStr=GCovIOConst.PACKUINT32):
         """
             uint64:  uint32:low uint32:high
         """
@@ -1568,15 +1606,15 @@ class GCovIO():
         highOrder = (val & GCovIOConst.HIGHORDERMASK) >> 32
 
         # Write the low order word
-        GCovIO.WriteUInt32(fileHandle, lowOrder)
+        GCovIO.write_uint32(fileHandle, lowOrder)
 
         # Write the high order word
-        GCovIO.WriteUInt32(fileHandle, highOrder)
+        GCovIO.write_uint32(fileHandle, highOrder)
 
         return
 
     @staticmethod
-    def WriteString(fileHandle, val):
+    def write_string(fileHandle, val):
         """
             string: uint32:0 | uint32:length char* char:0 padding
             padding: | char:0 | char:0 char:0 | char:0 char:0 char:0
@@ -1594,20 +1632,20 @@ class GCovIO():
         return
 
     @staticmethod
-    def WriteRecord(fileHandle, record):
+    def write_record(fileHandle, record):
         """
             record: header data
             header: uint32:tag uint32:length
               data: item*
         """
         recordTag = record.tag
-        GCovIO.WriteUInt32(fileHandle, recordTag)
+        GCovIO.write_uint32(fileHandle, recordTag)
 
         recordLength = record.length
-        GCovIO.WriteUInt32(fileHandle, recordLength)
+        GCovIO.write_uint32(fileHandle, recordLength)
 
         recordItemsData = record.items_data
-        GCovIO.WriteUInt32(fileHandle, recordItemsData)
+        GCovIO.write_uint32(fileHandle, recordItemsData)
 
         return
 
@@ -1644,7 +1682,7 @@ class GCovFunctionTrace:
         self.counters = counters
         return
 
-    def ApplyArcCounters(self, counters):
+    def apply_arc_counters(self, counters):
         self.counters = counters
         return
 
@@ -1714,32 +1752,32 @@ class GCovDataFile(GCovIO):
         self.trace_summary = None
         return
 
-    def PullRecords(self):
+    def pull_records(self):
         """
         """
         recordCount = len(self.records)
         rindex = 0
 
         while rindex < recordCount:
-            self.PullRecordAtIndex(rindex)
+            self.pull_record_at_index(rindex)
             rindex += 1
 
-    def PullRecordAtIndex(self, index):
+    def pull_record_at_index(self, index):
         """
         """
         if self.records is None:
-            raise LookupError("GCovNotesFile.PullRecord: You must call GCovDataFile.Load before attempting to pull a record.")
+            raise LookupError("GCovDataFile.pull_record_at_index: You must call GCovDataFile.Load before attempting to pull a record.")
 
         recCount = len(self.records)
         if index >= recCount:
-            raise IndexError("GCovNotesFile.PullRecord: The specified index was out of range.")
+            raise IndexError("GCovDataFile.pull_record_at_index: The specified index was out of range.")
 
         record = self.records[index]
         if isinstance(record, GCovIORecord):
             cpos = 0
             buffer = record.items_data
 
-            swapRecord = GCovDataFile.UnpackRecord(record, self.pack_str32)
+            swapRecord = GCovDataFile.unpack_record(record, self.pack_str32)
 
             self.records[index] = swapRecord
             del(record)
@@ -1747,7 +1785,7 @@ class GCovDataFile(GCovIO):
 
         return record
 
-    def CreateTraceSummary(self):
+    def create_trace_summary(self):
         """
         """
         if self.trace_summary is None:
@@ -1761,7 +1799,7 @@ class GCovDataFile(GCovIO):
             currentTrace = None
 
             while recordIndex < recordsLength:
-                record = self.PullRecordAtIndex(recordIndex)
+                record = self.pull_record_at_index(recordIndex)
 
                 tag = record.header.tag
 
@@ -1785,7 +1823,7 @@ class GCovDataFile(GCovIO):
                     programTraces.append(record)
 
                 elif tag == GCovIOConst.GCOV_TAG_COUNTER_BASE:
-                    currentTrace.ApplyArcCounters(record.counters)
+                    currentTrace.apply_arc_counters(record.counters)
                 else:
                     print("Skipping Unknown record type tag=0x%x" % tag)
 
@@ -1796,7 +1834,7 @@ class GCovDataFile(GCovIO):
         return self.trace_summary
 
     @staticmethod
-    def UnpackRecord(record, packStr=GCovIOConst.PACKUINT32):
+    def unpack_record(record, packStr=GCovIOConst.PACKUINT32):
         swapRecord = None
         cpos = 0
 
@@ -1805,20 +1843,20 @@ class GCovDataFile(GCovIO):
         buffer = record.items_data
 
         if tag == GCovIOConst.GCOV_TAG_FUNCTION:
-            swapRecord = GCovDataFile.UnpackFunctionAnnouncement(header, buffer, cpos, packStr)
+            swapRecord = GCovDataFile.unpack_function_announcement(header, buffer, cpos, packStr)
         elif tag == GCovIOConst.GCOV_TAG_COUNTER_BASE:
-            swapRecord = GCovDataFile.UnpackCounterBase(header, buffer, cpos, packStr)
+            swapRecord = GCovDataFile.unpack_counter_base(header, buffer, cpos, packStr)
         elif tag == GCovIOConst.GCOV_TAG_OBJECT_SUMMARY:
-            swapRecord = GCovDataFile.UnpackObjectSummary(header, buffer, cpos, packStr)
+            swapRecord = GCovDataFile.unpack_object_summary(header, buffer, cpos, packStr)
         elif tag == GCovIOConst.GCOV_TAG_PROGRAM_SUMMARY:
-            swapRecord = GCovDataFile.UnpackProgramSummary(header, buffer, cpos, packStr)
+            swapRecord = GCovDataFile.unpack_program_summary(header, buffer, cpos, packStr)
         else:
             raise IOError("Un-recognized tag (0x%x) found at record index in file." % (tag))
 
         return swapRecord
 
     @staticmethod
-    def UnpackCounterBase(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_counter_base(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
             announce_function: header uint32:ident uint32:checksum string:name string:source uint32:lineno
         """
@@ -1830,7 +1868,7 @@ class GCovDataFile(GCovIO):
         counters = []
 
         while counterIndex < counterLength:
-            nextValue, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
+            nextValue, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
             if nextValue == 386547056640:
                 pass
             counters.append(nextValue)
@@ -1841,49 +1879,49 @@ class GCovDataFile(GCovIO):
         return rval
 
     @staticmethod
-    def UnpackFunctionAnnouncement(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_function_announcement(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
             announce_function: header uint32:ident uint32:checksum string:name string:source uint32:lineno
         """
         cpos = pos
 
-        ident, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        checksum, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+        ident, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
         rval = GCovDataFunctionAnnouncementRecord(header, ident, checksum)
 
         return rval
 
     @staticmethod
-    def UnpackObjectSummary(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_object_summary(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
         """
         cpos = pos
 
-        checksum, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        num, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        runs, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        sum, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
-        max, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
-        summax, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
+        checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        num, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        runs, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        sum, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
+        max, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
+        summax, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
 
         rval = GCovDataObjectSummaryRecord(header, checksum, num, runs, sum, max, summax)
 
         return rval
 
     @staticmethod
-    def UnpackProgramSummary(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_program_summary(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
         """
         cpos = pos
         eob = len(buffer)
 
-        checksum, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        num, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        runs, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        sum, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
-        max, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
-        summax, cpos = GCovIO.UnpackUInt64(buffer, cpos, packStr)
+        checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        num, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        runs, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        sum, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
+        max, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
+        summax, cpos = GCovIO.unpack_uint64(buffer, cpos, packStr)
 
         rval = GCovDataProgramSummaryRecord(header, checksum, num, runs, sum, max, summax)
 
@@ -1901,7 +1939,7 @@ class GCovGraphArc():
         self.counter = None
 
         self.has_flag_fake = ((flags & GCovIOConst.GCOV_FLAG_ARC_FAKE) > 0)
-        self.has_flag_fall_through = ((flags & GCovIOConst.GCOV_FLAG_ARC_FALLTHROUGH) > 0);
+        self.has_flag_fall_through = ((flags & GCovIOConst.GCOV_FLAG_ARC_FALLTHROUGH) > 0)
         self.has_flag_on_tree = ((flags & GCovIOConst.GCOV_FLAG_ARC_ON_TREE) > 0)
 
         self.is_relevant_branch = False
@@ -1939,9 +1977,8 @@ class GCovGraphLine():
 class GCovGraphBlock():
     """
     """
-    def __init__(self, blockNumber, flags):
+    def __init__(self, blockNumber):
         self.block_number = blockNumber
-        self.flags = flags
         self.lines = None
         self.line_no = 0
 
@@ -1954,11 +1991,11 @@ class GCovGraphBlock():
         self.is_exception_landing = False
         self.is_return_landing = False
         self.has_relevant_branches = False
+        return
 
     def Print(self):
         print("    GCovGraphBlock (%d):" % self.block_number)
-        print("        Flags=%x" % self.flags)
-        print("        HasRelevantBranches=" + self.has_relevant_branches)
+        print("        HasRelevantBranches=%r" % self.has_relevant_branches)
 
         if self.lines is not None:
             for line in self.lines:
@@ -1975,8 +2012,10 @@ class GCovGraphFunction():
     """
     def __init__(self, functionAnnouncement):
         self.indent = functionAnnouncement.indent
-        self.check_sum = functionAnnouncement.check_sum
+        self.lineno_checksum = functionAnnouncement.lineno_checksum
+        self.cfg_checksum = functionAnnouncement.cfg_checksum
         self.name = functionAnnouncement.name
+        self.artificial = functionAnnouncement.artificial
         self.source = functionAnnouncement.source
         self.orig_source = self.source
         self.line_no = functionAnnouncement.line_no
@@ -1994,7 +2033,8 @@ class GCovGraphFunction():
         print("===================================================================")
         print("GCovGraphFunction:")
         print("    Ident=%d" % self.indent)
-        print("    CheckSum=0x%x" % self.check_sum)
+        print("    LineNoCheckSum=0x%x" % self.lineno_checksum)
+        print("    CfgCheckSum=0x%x" % self.cfg_checksum)
         print("    Name=%s" % self.name)
         print("    Source=%s" % self.source)
         print("    LineNo=%d" % self.line_no)
@@ -2006,7 +2046,7 @@ class GCovGraphFunction():
         print("===================================================================")
         print("")
 
-    def ApplyArcSet(self, arcset, nextArcId):
+    def apply_arc_set(self, arcset, nextArcId):
 
         fromBlockNumber = arcset.block_number
 
@@ -2023,7 +2063,7 @@ class GCovGraphFunction():
 
         return nextArcId
 
-    def ApplyCounters(self, counters):
+    def apply_counters(self, counters):
         counterIndex = 0
         for block in self.blocks:
             for arc in block.arcs_successors:
@@ -2040,7 +2080,7 @@ class GCovGraphFunction():
 
         return
 
-    def ApplyLineSet(self, lineset):
+    def apply_line_set(self, lineset):
 
         blockNumber = lineset.block_number
 
@@ -2049,36 +2089,29 @@ class GCovGraphFunction():
 
         return
 
-    def ApplyBasicBlock(self, basicBlock):
-
-        blockNumber = 0
-        blockCount = len(basicBlock.flagset)
+    def apply_basic_block(self, basicBlock):
 
         self.blocks = []
 
-        while(blockNumber < blockCount):
-            blockFlags = basicBlock.flagset[blockNumber]
-
-            block = GCovGraphBlock(blockNumber, blockFlags)
+        blockCount = basicBlock.block_count
+        blockIndex = 0
+        while(blockIndex < blockCount):
+            blockNumber = blockIndex + 1
+            block = GCovGraphBlock(blockNumber)
             self.blocks.append(block)
 
-            blockNumber += 1
-
-        self.block_count = blockCount
-
-        if self.block_count > 0:
-            pass
+            blockIndex += 1
 
         return
 
-    def ResetCounters(self):
+    def reset_counters(self):
         counterIndex = 0
         for block in self.blocks:
             for arc in block.arcs_successors:
                 arc.counter = None
         return
 
-    def ResetUnknowns(self):
+    def reset_unknowns(self):
         counterIndex = 0
         for block in self.blocks:
             for arc in block.arcs_successors:
@@ -2092,7 +2125,7 @@ class GCovGraphFunction():
 
     WALKSTATE_STRINGS = ["WALKSTATE_NONE", "WALKSTATE_BRANCHCHAIN"]
 
-    def SetPostProcessedFields(self):
+    def set_post_processed_fields(self):
 
         vprint ("Post Processing Graph for '%s'" % self.name)
 
@@ -2252,12 +2285,12 @@ class GCovGraphFunction():
 
         return
 
-    def SolveGraph(self):
+    def solve_graph(self):
         """
-                 Solves the function graph for the missing arc counts using the counts provided to ApplyCounters.  SolveGraph 
-            requires that at least one call to ApplyCounters has been made with the correct counter data.  You can make reapeated
-            calls to ApplyCounters to apply multiple counter data sets.  Then call SolveGraph to solve the graph.  To empty the
-            graph counters use ResetCounters.
+                 Solves the function graph for the missing arc counts using the counts provided to apply_counters.  solve_graph 
+            requires that at least one call to apply_counters has been made with the correct counter data.  You can make reapeated
+            calls to apply_counters to apply multiple counter data sets.  Then call solve_graph to solve the graph.  To empty the
+            graph counters use reset_counters.
         """
 
         block = None
@@ -2366,7 +2399,7 @@ class GCovGraphFunction():
         return sum
 
     @staticmethod
-    def HasRelevantDescendantBlock_CallChain(blockList, blockListLen, block, blockIndex):
+    def has_relevant_descendant_block_call_chain(blockList, blockListLen, block, blockIndex):
 
         isRelevant = False
 
@@ -2381,7 +2414,7 @@ class GCovGraphFunction():
         if (followOnBlock is not None):
             if followOnBlock.is_call_site:
                 if (followOnBlock.lines is None) or (len(followOnBlock.lines) == 0):
-                    isRelevant = GCovGraphFunction.HasRelevantDescendantBlock_CallChain(blockList, blockListLen, followOnBlock, followOnBlockNo)
+                    isRelevant = GCovGraphFunction.has_relevant_descendant_block_call_chain(blockList, blockListLen, followOnBlock, followOnBlockNo)
             else:
                 if len(followOnBlock.arcs_successors) > 1:
                     isRelevant = True
@@ -2394,7 +2427,7 @@ class GCovGraphFunction():
         return isRelevant
 
     @staticmethod
-    def HasRelevantDescendantBlock_Else(blockList, blockListLen, block, blockIndex):
+    def has_relevant_descendant_block_else(blockList, blockListLen, block, blockIndex):
 
         isRelevant = False
 
@@ -2409,7 +2442,7 @@ class GCovGraphFunction():
         if (followOnBlock is not None):
             if followOnBlock.is_call_site:
                 if (followOnBlock.lines is None) or (len(followOnBlock.lines) == 0):
-                    isRelevant = GCovGraphFunction.HasRelevantDescendantBlock_CallChain(blockList, blockListLen, followOnBlock, followOnBlockNo)
+                    isRelevant = GCovGraphFunction.has_relevant_descendant_block_call_chain(blockList, blockListLen, followOnBlock, followOnBlockNo)
             else:
                 if len(followOnBlock.arcs_successors) > 1:
                     isRelevant = True
@@ -2450,31 +2483,32 @@ class GCovNotesLineSetRecord():
         return
 
 class GCovNotesBasicBlocksRecord():
-    def __init__(self, header, flagSet):
+    def __init__(self, header, block_count):
         self.header = header
-        self.flagset = flagSet
+        self.block_count = block_count
         return
 
     def Print(self):
-        blockCount = len(self.flagset)
-        print("BasicBlock: BlockCount=%d" % (blockCount))
+        print("BasicBlock: BlockCount=%d" % (self.block_count))
         return
 
 class GCovNotesFunctionAnnouncementRecord():
     """
         header uint32:ident uint32:checksum string:name string:source uint32:lineno
     """
-    def __init__(self, header, ident, checksum, name, source, lineno):
+    def __init__(self, header, ident, lineno_checksum, cfg_checksum, name, artificial, source, lineno):
         self.header = header
         self.indent = ident
-        self.check_sum = checksum
+        self.lineno_checksum = lineno_checksum
+        self.cfg_checksum = cfg_checksum
         self.name = name
+        self.artificial = artificial
         self.source = source
         self.line_no = lineno
         return
 
     def Print(self):
-        print("Function: Ident=%d CheckSum=%d LineNo=%d Name=%s Source%s" % (self.indent, self.check_sum, self.line_no, self.name, self.source))
+        print("Function: Ident=%d LineNoCheckSum%d CfgCheckSum=%d LineNo=%d Name=%s Source%s" % (self.indent, self.lineno_checksum, self.cfg_checksum, self.line_no, self.name, self.source))
         return
 
 class GCovNotesFile(GCovIO):
@@ -2498,33 +2532,33 @@ class GCovNotesFile(GCovIO):
     """
 
     def __init__(self, filename=None):
-        GCovIO.__init__(self, filename)
+        GCovIO.__init__(self, filename, is_notes=True)
         self.graphs = None
         return
 
-    def PullRecords(self):
+    def pull_records(self):
 
         recordCount = len(self.records)
         rindex = 0
 
         while(rindex < recordCount):
-            self.PullRecordAtIndex(rindex)
+            self.pull_record_at_index(rindex)
             rindex += 1
 
-    def PullRecordAtIndex(self, index):
+    def pull_record_at_index(self, index):
         if self.records is None:
-            raise LookupError("GCovNotesFile.PullRecord: You must call GCovDataFile.Load before attempting to pull a record.")
+            raise LookupError("GCovNotesFile.pull_record_at_index: You must call GCovDataFile.Load before attempting to pull a record.")
 
         recCount = len(self.records)
         if index >= recCount:
-            raise IndexError("GCovNotesFile.PullRecord: The specified index was out of range.")
+            raise IndexError("GCovNotesFile.pull_record_at_index: The specified index was out of range.")
 
         record = self.records[index]
         if isinstance(record, GCovIORecord):
             cpos = 0
             buffer = record.items_data
 
-            swapRecord = GCovNotesFile.UnpackRecord(record, self.pack_str32)
+            swapRecord = GCovNotesFile.unpack_record(record, self.pack_str32)
 
             self.records[index] = swapRecord
             del(record)
@@ -2532,18 +2566,18 @@ class GCovNotesFile(GCovIO):
 
         return record
 
-    def PullGraphs(self, refresh=False):
+    def pull_graphs(self, refresh=False):
 
         if self.graphs is None or refresh == True:
-            recordIndex = 0
-            recordsLength = len(self.records)
 
             functionGraphs = []
             currentGraph = None
             nextArcId = 0
 
+            recordIndex = 0
+            recordsLength = len(self.records)
             while(recordIndex < recordsLength):
-                record = self.PullRecordAtIndex(recordIndex)
+                record = self.pull_record_at_index(recordIndex)
 
                 tag = record.header.tag
 
@@ -2558,11 +2592,11 @@ class GCovNotesFile(GCovIO):
                 else:
                     if currentGraph is not None:
                         if tag == GCovIOConst.GCOV_TAG_BLOCKS:
-                            currentGraph.ApplyBasicBlock(record)
+                            currentGraph.apply_basic_block(record)
                         elif tag == GCovIOConst.GCOV_TAG_ARCS:
-                            nextArcId = currentGraph.ApplyArcSet(record, nextArcId)
+                            nextArcId = currentGraph.apply_arc_set(record, nextArcId)
                         elif tag == GCovIOConst.GCOV_TAG_LINES:
-                            currentGraph.ApplyLineSet(record)
+                            currentGraph.apply_line_set(record)
                         else:
                             print("WARNING: Skipping Unknown record type tag=0x%x" % tag)
                     else:
@@ -2572,14 +2606,14 @@ class GCovNotesFile(GCovIO):
 
             # Go through the function graphs and set the context inferred fields
             for currentGraph in functionGraphs:
-                currentGraph.SetPostProcessedFields()
+                currentGraph.set_post_processed_fields()
 
             self.graphs = functionGraphs
 
         return self.graphs
 
     @staticmethod
-    def UnpackRecord(record, packStr=GCovIOConst.PACKUINT32):
+    def unpack_record(record, packStr=GCovIOConst.PACKUINT32):
         swapRecord = record
         cpos = 0
 
@@ -2588,35 +2622,34 @@ class GCovNotesFile(GCovIO):
         buffer = record.items_data
 
         if tag == GCovIOConst.GCOV_TAG_FUNCTION:
-            swapRecord = GCovNotesFile.UnpackFunctionAnnouncement(header, buffer, cpos, packStr)
+            swapRecord = GCovNotesFile.unpack_function_announcement(header, buffer, cpos, packStr)
         elif tag == GCovIOConst.GCOV_TAG_ARCS:
-            swapRecord = GCovNotesFile.UnpackArcSet(header, buffer, cpos, packStr)
+            swapRecord = GCovNotesFile.unpack_arc_set(header, buffer, cpos, packStr)
         elif tag == GCovIOConst.GCOV_TAG_LINES:
-            swapRecord = GCovNotesFile.UnpackLineSet(header, buffer, cpos, packStr)
+            swapRecord = GCovNotesFile.unpack_line_set(header, buffer, cpos, packStr)
         elif tag == GCovIOConst.GCOV_TAG_BLOCKS:
-            swapRecord = GCovNotesFile.UnpackBasicBlock(header, buffer, cpos, packStr)
+            swapRecord = GCovNotesFile.unpack_basic_block(header, buffer, cpos, packStr)
         else:
             raise IOError("Un-recognized tag (0x%x) found in file." % (tag))
 
         return swapRecord
 
     @staticmethod
-    def UnpackArcSet(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_arc_set(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
             arcs: header uint32:block_no arc*
                 arc:  uint32:dest_block uint32:flags
         """
         cpos = pos
-        eob = len(buffer)
 
-        blockNumber, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+        blockNumber, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
-        arcCount = (eob - 4) / 8
+        arcCount = int((header.length - 1) / 2)
         arcSet = []
 
         while arcCount > 0:
-            destblock, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-            flags, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+            destblock, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+            flags, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
             arcEntry = GCovGraphArc(destblock, flags)
             arcSet.append(arcEntry)
@@ -2628,46 +2661,40 @@ class GCovNotesFile(GCovIO):
         return rval
 
     @staticmethod
-    def UnpackBasicBlock(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_basic_block(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
             header uint32:flags*
         """
         cpos = pos
-        eob = len(buffer)
 
-        flagCount = header.length
-        flagSet = []
-        while flagCount > 0:
-            flags, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-            flagSet.append(flags)
-
-            flagCount -= 1
-
-        rval = GCovNotesBasicBlocksRecord(header, flagSet)
+        blockCount, _ = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        rval = GCovNotesBasicBlocksRecord(header, blockCount)
 
         return rval
 
     @staticmethod
-    def UnpackFunctionAnnouncement(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_function_announcement(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
             announce_function: header uint32:ident uint32:checksum string:name string:source uint32:lineno
         """
         cpos = pos
 
-        ident, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
-        checksum, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+        ident, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        lineno_checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        cfg_checksum, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
-        name, cpos = GCovIO.UnpackString(buffer, cpos, packStr)
-        source, cpos = GCovIO.UnpackString(buffer, cpos, packStr)
+        name, cpos = GCovIO.unpack_string(buffer, cpos, packStr)
+        artificial, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
+        source, cpos = GCovIO.unpack_string(buffer, cpos, packStr)
 
-        lineno, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+        lineno, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
-        rval = GCovNotesFunctionAnnouncementRecord(header, ident, checksum, name, source, lineno)
+        rval = GCovNotesFunctionAnnouncementRecord(header, ident, lineno_checksum, cfg_checksum, name, artificial, source, lineno)
 
         return rval
 
     @staticmethod
-    def UnpackLineSet(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
+    def unpack_line_set(header, buffer, pos, packStr=GCovIOConst.PACKUINT32):
         """
                 lines: header uint32:block_no line* => termline
 
@@ -2679,15 +2706,15 @@ class GCovNotesFile(GCovIO):
         """
         cpos = pos
 
-        blockNumber, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+        blockNumber, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
         lineset = []
 
         while True:
-            lineno, cpos = GCovIO.UnpackUInt32(buffer, cpos, packStr)
+            lineno, cpos = GCovIO.unpack_uint32(buffer, cpos, packStr)
 
             if lineno == 0:
-                linestr, cpos = GCovIO.UnpackString(buffer, cpos, packStr)
+                linestr, cpos = GCovIO.unpack_string(buffer, cpos, packStr)
 
             if (lineno == 0) and (linestr is None):
                 break
@@ -2727,7 +2754,7 @@ class GCovProcessor:
 
         return
 
-    def AddBasePathCode(self, path):
+    def add_base_path_code(self, path):
         if self.base_path_code_list is None:
             self.base_path_code_list = []
 
@@ -2735,7 +2762,7 @@ class GCovProcessor:
 
         return
 
-    def AddBasePathData(self, path):
+    def add_base_path_data(self, path):
         if self.base_path_data_list is None:
             self.base_path_data_list = []
 
@@ -2743,7 +2770,7 @@ class GCovProcessor:
 
         return
 
-    def AddBasePathGraph(self, path):
+    def add_base_path_graph(self, path):
         if self.base_path_graph_list is None:
             self.base_path_graph_list = []
 
@@ -2751,7 +2778,7 @@ class GCovProcessor:
 
         return
 
-    def AddBasePathInclude(self, path):
+    def add_base_path_include(self, path):
         if self.base_path_include_list is None:
             self.base_path_include_list = []
 
@@ -2759,7 +2786,7 @@ class GCovProcessor:
 
         return
 
-    def GenerateTraceFile(self, traceFilename, testname=None):
+    def generate_trace_file(self, traceFilename, testname=None):
         """
             TODO: Code the generate output method
         """
@@ -2771,7 +2798,7 @@ class GCovProcessor:
             infoWriter = GCovInfoFileWriter(traceFile, testname)
 
             for coverageMapItem in self.coverage_map.values():
-                infoWriter.WriteSourcefileSection(coverageMapItem)
+                infoWriter.write_sourcefile_section(coverageMapItem)
 
         finally:
             if traceFile is not None:
@@ -2779,10 +2806,10 @@ class GCovProcessor:
 
         return
 
-    def PopulateCoverageMap(self, reset=True):
+    def populate_coverage_map(self, reset=True):
 
         if reset:
-            self.Reset()
+            self.reset()
 
         for basePathData in self.base_path_data_list:
             absBasePathData = os.path.abspath(basePathData)
@@ -2790,26 +2817,26 @@ class GCovProcessor:
             scanContext = GCovScanContext(self.include_filters, self.exclude_filters)
 
             for currentDir, dirList, fileList in os.walk(absBasePathData):
-                self._Scan_For_DataFiles(scanContext, currentDir, fileList)
+                self._scan_for_data_files(scanContext, currentDir, fileList)
 
             dataFileList = scanContext.files_found
 
             #Process all the data files
             for dataFilePath, dataFileName in dataFileList:
-                self._Process_DataFile(absBasePathData, dataFilePath, dataFileName)
+                self._process_data_file(absBasePathData, dataFilePath, dataFileName)
 
             #Go through all of the coverage map items and resolve the unknown counts
             for key in self.coverage_map.keys():
                 coverageitem = self.coverage_map[key]
                 for funcGraph in coverageitem.function_graphs.values():
                     try:
-                        funcGraph.SolveGraph()
+                        funcGraph.solve_graph()
                     except:
                         pass
 
         return
 
-    def Reset(self):
+    def reset(self):
 
         for key in self.coverage_map.keys():
             item = self.coverage_map.pop(key)
@@ -2817,28 +2844,29 @@ class GCovProcessor:
 
         return
 
-    def _Export_TraceFile(self, dataFileLeaf):
+    def _export_trace_file(self, dataFileLeaf):
         """
             TODO: Continue implementing this method
         """
         df_leaf, df_ext = os.path.splitext(dataFileLeaf)
 
         #Open the .info file
-        infoFilePath = os.path.join(self._BasePathData, df_leaf + ".info")
-        info_fh = None
+        for base_path in self.base_path_data_list:
+            infoFilePath = os.path.join(base_path, df_leaf + ".info")
+            info_fh = None
 
-        coverageMap = None
+            coverageMap = None
 
-        with open(infoFilePath, 'w') as info_fh:
-            #Go through the coverage map items and write the information to the info file
-            for cmitem in coverageMap.Items:
-                traceWriter = GCovInfoFileWriter("NA")
+            with open(infoFilePath, 'w') as info_fh:
+                #Go through the coverage map items and write the information to the info file
+                for cmitem in coverageMap.Items:
+                    info_writer = GCovInfoFileWriter("NA")
 
-                traceWriter.WriteTo(info_fh)
+                    info_writer.write_to(info_fh)
 
         return
 
-    def _LocateGraphFile(self, df_fullbase, df_leafbase):
+    def _locate_graph_file(self, df_fullbase, df_leafbase):
         foundfile = None
 
         if self.base_path_graph_list is not None:
@@ -2857,7 +2885,7 @@ class GCovProcessor:
 
         return foundfile
 
-    def _LocateSourceFile(self, df_fullbase, df_leafbase, c_file):
+    def _locate_source_file(self, df_fullbase, df_leafbase, c_file):
         foundfile = None
 
         if os.path.isabs(c_file) and os.path.exists(c_file) and os.path.isfile(c_file):
@@ -2931,7 +2959,7 @@ class GCovProcessor:
 
         return foundfile
 
-    def _Process_DataFile(self, basePathData, dataFileDir, dataFileName):
+    def _process_data_file(self, basePathData, dataFileDir, dataFileName):
 
         #Break the dataFileLeaf path into its components
         df_base, df_ext = os.path.splitext(dataFileName)
@@ -2946,16 +2974,16 @@ class GCovProcessor:
 
         if df_leafpathfile not in self.coverage_map:
             #Pull in the GCNO graph for the data file
-            graphFilename = self._LocateGraphFile(df_fullbasefile, df_leafbasefile)
+            graphFilename = self._locate_graph_file(df_fullbasefile, df_leafbasefile)
             if graphFilename is not None:
                 gf = GCovNotesFile(graphFilename)
-                gf.Load()
+                gf.load()
 
-                funcGraphs = gf.PullGraphs()
+                funcGraphs = gf.pull_graphs()
 
                 #Go through the function graphs and locate the source files
                 for fgraph in funcGraphs:
-                    sourceFile = self._LocateSourceFile(df_fullbasefile, df_leafbasefile, fgraph.source)
+                    sourceFile = self._locate_source_file(df_fullbasefile, df_leafbasefile, fgraph.source)
                     if (sourceFile is not None) and os.path.exists(sourceFile):
                         fgraph.source = sourceFile
 
@@ -2972,9 +3000,9 @@ class GCovProcessor:
         if coverageItem is not None:
             #Process the data file and store the counters in coverage map
             df = GCovDataFile(df_fullpathfile)
-            df.Load()
+            df.load()
 
-            traceSummary = df.CreateTraceSummary()
+            traceSummary = df.create_trace_summary()
 
             functionGraphs = coverageItem.function_graphs
 
@@ -2983,7 +3011,7 @@ class GCovProcessor:
 
                 if funcIdent in functionGraphs:
                     funcGraph = functionGraphs[funcIdent]
-                    funcGraph.ApplyCounters(funcTrace.counters)
+                    funcGraph.apply_counters(funcTrace.counters)
                 else:
                     print("Function Identity (%s) not found..." % funcIdent)
 
@@ -2992,7 +3020,7 @@ class GCovProcessor:
 
         return
 
-    def _Scan_For_DataFiles(self, scanContext, currentDir, fileList):
+    def _scan_for_data_files(self, scanContext, currentDir, fileList):
 
         filesFound = scanContext.files_found
 
@@ -3003,7 +3031,7 @@ class GCovProcessor:
 
         return True
 
-    def _Scan_For_GraphFiles(self, scanContext, currentDir, fileList):
+    def _scan_for_graph_files(self, scanContext, currentDir, fileList):
 
         filesFound = scanContext.files_found
 
@@ -3061,9 +3089,9 @@ def operation_capture(cmdOptions, cmdArgs):
 
     gcov_proc = GCovProcessor(dataBasePathList, graphBasePathList, sourceBasePathList, None, includeFilter, excludeFilter)#
 
-    gcov_proc.PopulateCoverageMap()
+    gcov_proc.populate_coverage_map()
 
-    gcov_proc.GenerateTraceFile(tracefileName)
+    gcov_proc.generate_trace_file(tracefileName)
 
     print("")
     print("Capture Completed...")
@@ -3087,14 +3115,14 @@ def operation_parse(cmdOptions, cmdArgs):
             print("Processing .gcno file...")
 
             gcnoFile = GCovNotesFile()
-            gcnoFile.Load(filePath)
+            gcnoFile.load(filePath)
 
-            gcnoFile.PullRecords()
+            gcnoFile.pull_records()
 
             for record in gcnoFile.records:
                 record.Print()
 
-            graphSet = gcnoFile.PullGraphs()
+            graphSet = gcnoFile.pull_graphs()
 
             for graph in graphSet:
                 graph.Print()
@@ -3105,9 +3133,9 @@ def operation_parse(cmdOptions, cmdArgs):
             print("Processing .gcda file...")
 
             gcdaFile = GCovDataFile()
-            gcdaFile.Load(filePath)
+            gcdaFile.load(filePath)
 
-            gcdaFile.PullRecords()
+            gcdaFile.pull_records()
 
             for record in gcdaFile.records:
                 print(str(record))

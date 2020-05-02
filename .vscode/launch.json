@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Python: Coverage",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/pycover.py",
             "args": [
                 "-c",
                 "--data-path",
@@ -19,6 +19,17 @@
                 "${workspaceFolder}/tests/",
                 "--output-file",
                 "${workspaceFolder}/tests/branch_counts_capture.info"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Parse GCNO",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pycover.py",
+            "args": [
+                "--parse",
+                "${workspaceFolder}/tests/branch_counts.gcno"
             ],
             "console": "integratedTerminal"
         }
