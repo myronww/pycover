@@ -2285,104 +2285,121 @@ class GCovGraphFunction():
 
         block = None
 
-        #Next solve the graph for the unknown counters
-        revisitList = []
-        revisitList.extend(self.blocks)
+        # If the there is a counter value for the first block, then the block was entered
+        # and we can solve the graph
+        zeroBlock = self.blocks[0]
+        if zeroBlock.arcs_successors[0].counter is not None:
 
-        lastRevisitCount = 0
-        blocksToSolve = []
+            #Next solve the graph for the unknown counters
+            revisitList = []
+            revisitList.extend(self.blocks)
 
-        while(True):
+            lastRevisitCount = 0
+            blocksToSolve = []
 
-            if (len(blocksToSolve) == 0):
-                revisitCount = len(revisitList)
+            while(True):
 
-                if (revisitCount > 0):
-                    if (revisitCount == lastRevisitCount):
-                        raise IndexError("ERROR: Unsolvable function graph.")
+                if (len(blocksToSolve) == 0):
+                    revisitCount = len(revisitList)
 
-                    lastRevisitCount = revisitCount
+                    if (revisitCount > 0):
+                        if (revisitCount == lastRevisitCount):
+                            raise IndexError("ERROR: Unsolvable function graph.")
 
-                    blocksToSolve = revisitList
-                    revisitList = []
-                else:
-                    break
+                        lastRevisitCount = revisitCount
 
-            block = blocksToSolve.pop()
+                        blocksToSolve = revisitList
+                        revisitList = []
+                    else:
+                        break
 
-            predecessorUnknown = 0
-            successorUnknown = 0
+                block = blocksToSolve.pop()
 
-            predecessorCount = len(block.arcs_predecessors)
-            successorCount = len(block.arcs_successors)
+                predecessorUnknown = 0
+                successorUnknown = 0
 
-            for arc in block.arcs_predecessors:
-                if arc.counter is None:
-                    predecessorUnknown += 1
+                predecessorCount = len(block.arcs_predecessors)
+                successorCount = len(block.arcs_successors)
 
-            for arc in block.arcs_successors:
-                if arc.counter is None:
-                    successorUnknown += 1
-
-            # If a block has no predecessors or no successors we have to solve its arc counts from another block, no need to revisit
-            if (predecessorCount == 0) or (successorCount == 0):
-                pass
-
-            # If a block has an unknown on both sides then put the block in the revisit list
-            elif ((predecessorUnknown > 0) and (successorUnknown > 0)):
-                revisitList.append(block)
-
-            # If a block only has one unknown and it is an unknown predecessor then solve it here
-            elif (predecessorUnknown == 1):
-                succSum = 0
-                for arc in block.arcs_successors:
-                    succSum += arc.counter
-
-                predSum = 0
-
-                unknownArc = None
                 for arc in block.arcs_predecessors:
                     if arc.counter is None:
-                        unknownArc = arc
-                    else:
-                        predSum += arc.counter
+                        predecessorUnknown += 1
 
-                unknownArc.counter = succSum - predSum
-
-            # If a block only has one unknown and it is an unknown successsor then solve it here
-            elif successorUnknown == 1:
-                predSum = 0
-                for arc in block.arcs_predecessors:
-                    predSum += arc.counter
-
-                succSum = 0
-
-                unknownArc = None
                 for arc in block.arcs_successors:
                     if arc.counter is None:
-                        unknownArc = arc
-                    else:
+                        successorUnknown += 1
+
+                # If a block has no predecessors or no successors we have to solve its arc counts from another block, no need to revisit
+                if (predecessorCount == 0) or (successorCount == 0):
+                    pass
+
+                # If a block has an unknown on both sides then put the block in the revisit list
+                elif ((predecessorUnknown > 0) and (successorUnknown > 0)):
+                    revisitList.append(block)
+
+                # If a block only has one unknown and it is an unknown predecessor then solve it here
+                elif (predecessorUnknown == 1):
+                    succSum = 0
+                    for arc in block.arcs_successors:
                         succSum += arc.counter
 
-                unknownArc.counter = predSum - succSum
+                    predSum = 0
 
-            # Otherwise the block has two unsolved arcs on one side of the block, push it to the revisit list
-            else:
-                revisitList.append(block)
+                    unknownArc = None
+                    for arc in block.arcs_predecessors:
+                        if arc.counter is None:
+                            unknownArc = arc
+                        else:
+                            predSum += arc.counter
 
-            #end while(True)
-        blocksLen = len(self.blocks)
-        if blocksLen > 0:
-            self.execution_count = 0
+                    unknownArc.counter = succSum - predSum
 
-            executionCount = 0
+                # If a block only has one unknown and it is an unknown successsor then solve it here
+                elif successorUnknown == 1:
+                    predSum = 0
+                    for arc in block.arcs_predecessors:
+                        predSum += arc.counter
 
-            entryBlock = self.blocks[0]
-            for arc in entryBlock.arcs_successors:
-                arcCounter = arc.counter
-                executionCount += arcCounter
+                    succSum = 0
 
-            self.execution_count = executionCount
+                    unknownArc = None
+                    for arc in block.arcs_successors:
+                        if arc.counter is None:
+                            unknownArc = arc
+                        else:
+                            succSum += arc.counter
+
+                    unknownArc.counter = predSum - succSum
+
+                # Otherwise the block has two unsolved arcs on one side of the block, push it to the revisit list
+                else:
+                    revisitList.append(block)
+
+                #end while(True)
+            blocksLen = len(self.blocks)
+            if blocksLen > 0:
+                self.execution_count = 0
+
+                executionCount = 0
+
+                entryBlock = self.blocks[0]
+                for arc in entryBlock.arcs_successors:
+                    arcCounter = arc.counter
+                    executionCount += arcCounter
+
+                self.execution_count = executionCount
+        
+        else:
+            # If there was no counter on the zeroBlock then the method has not been entered
+            # so we can just zero all the couters.
+            for nxtBlock in self.blocks:
+                for arc in nxtBlock.arcs_predecessors:
+                    arc.counter = 0
+                for arc in nxtBlock.arcs_successors:
+                    arc.counter = 0
+
+
+        
 
         self.solved = True
 
@@ -2837,7 +2854,8 @@ class GCovProcessor:
                     try:
                         funcGraph.solve_graph()
                     except Exception as xcpt:
-                        pass
+                        err_msg = str(xcpt)
+                        print(err_msg, file=sys.stderr)
 
         return
 
