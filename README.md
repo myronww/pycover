@@ -1,7 +1,59 @@
 # Description
-This repository contains information about the pycover.py script which is used to process gcov based code coverage results.
+This repository contains information about the pycover.py script which is used to process gcov based code coverage results.  The code in this file only understands the gcc-11 gcov file formats.
+
+# Progress
+
+   * Generates .info files
+   * Currently working on html summary generation
+
+# GCC Options
+The GCC commandline options described below, are utilized for instrumenting code for code coverage analysis.  These descriptions are pull directly from the gcc commandline option documentation.
+
+https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+
+*-fprofile-arcs*
+Add code so that program flow args are instrumented.  During execution, the program records how many times each branch and call is executed and how many times it is taken or returns.  On targets that support constructors with priority support, profiling properly handles constructors, destructors and C++ constructors (and descructors) of classes which are used as a type of a global variable.
+
+When the compiled program exits it saves this data to a file called auxname.gcda for each source file.  The data may be used for profile-directed optimizations (-fbranch-probabilities), or for test coverage analysis (-ftest-coverage).  Each object file's auxname is generated for the name of the output file, if explicitly specified and it is not the final executable, otherwise it is the basename of the source file.  In both cases any suffix is removed (e.g. foo.gcda for input file dir/foo.c, or dir/foo.gcda for output file specified as -o dir/foo.o)
+
+*--coverage*
+This option is used to compile and link code instrumented for coverage analysis. The option is a synonym for -fprofile-arcs -ftest-coverage (when compiling) and -lgcov (when linking). See the documentation for those options for more details.
+
+* Compile the source files with -fprofile-arcs plus optimization and code generation options. For test coverage analysis, use the additional -ftest-coverage option. You do not need to profile every source file in a program.
+
+* Compile the source files additionally with -fprofile-abs-path to create absolute path names in the .gcno files. This allows gcov to find the correct sources in projects where compilations occur with different working directories.
+
+* Link your object files with -lgcov or -fprofile-arcs (the latter implies the former).
+
+* Run the program on a representative workload to generate the arc profile information. This may be repeated any number of times. You can run concurrent instances of your program, and provided that the file system supports locking, the data files will be correctly updated. Unless a strict ISO C dialect option is in effect, fork calls are detected and correctly handled without double counting.
+
+* For profile-directed optimizations, compile the source files again with the same optimization and code generation options plus -fbranch-probabilities (see Options that Control Optimization).
+
+* For test coverage analysis, use gcov to produce human readable information from the .gcno and .gcda files. Refer to the gcov documentation for further information.
+
+With -fprofile-arcs, for each function of your program GCC creates a program flow graph, then finds a spanning tree for the graph. Only arcs that are not on the spanning tree have to be instrumented: the compiler adds code to count the number of times that these arcs are executed. When an arc is the only exit or only entrance to a block, the instrumentation code can be added to the block; otherwise, a new basic block must be created to hold the instrumentation code.
+
+*-ftest-coverage*
+
+Produce a notes file that the gcov code-coverage utility (see gcov—a Test Coverage Program) can use to show program coverage. Each source file’s note file is called auxname.gcno. Refer to the -fprofile-arcs option above for a description of auxname and instructions on how to generate test coverage data. Coverage data matches the source files more closely if you do not optimize.
 
 
+# GCov Cross Profiling
+
+Running the program will cause profile output to be generated. For each source file compiled with *-fprofile-arcs*, an accompanying .gcda file will be placed in the object file directory. That implicitly requires running the program on the same system as it was built or having the same absolute directory structure on the target system. The program will try to create the needed directory structure, if it is not already present.
+
+To support cross-profiling, a program compiled with *-fprofile-arcs* can relocate the data files based on two environment variables:
+
+* GCOV_PREFIX contains the prefix to add to the absolute paths in the object file. Prefix can be absolute, or relative. The default is no prefix.
+* GCOV_PREFIX_STRIP indicates the how many initial directory names to strip off the hardwired absolute paths. Default value is 0.
+
+Note: If GCOV_PREFIX_STRIP is set without GCOV_PREFIX is undefined, then a relative path is made out of the hardwired absolute paths.
+
+For example, if the object file /user/build/foo.o was built with -fprofile-arcs, the final executable will try to create the data file /user/build/foo.gcda when running on the target system. This will fail if the corresponding directory does not exist and it is unable to create it. This can be overcome by, for example, setting the environment as ‘GCOV_PREFIX=/target/run’ and ‘GCOV_PREFIX_STRIP=1’. Such a setting will name the data file /target/run/build/foo.gcda.
+
+You must move the data files to the expected directory tree in order to use them for profile directed optimizations (*-fprofile-use*), or to use the gcov tool.
+
+https://gcc.gnu.org/onlinedocs/gcc/Cross-profiling.html#Cross-profiling
 
 # File Format Descriptions
 GCov utilizes two different file formats in the processing of code coverage information.  GCov uses a **Notes** file or **.gcno** file to record information about the branches, arcs and blocks that are associate with a source file and a **Data** file or **.gcda** file.  There is also a third file format **.info** file which is historically generated by **geninfo** and processed by **lcov** in order to be able to generate code coverage reports.
@@ -9,9 +61,6 @@ GCov utilizes two different file formats in the processing of code coverage info
 The **pycover.py** script can perform the function of geninfo and process data sources from varying locations in order to generate a **.info** file that combines all the information captured for a given code coverage run.  The **pycover.py** script can then also process the **.info** file in order to create HTML reports that show detailed information about the coverage associated with the captured code coverage data.
 
 The following section describes the **.gcno** and **.gcda** that the **pycover.py** script consumes in order to generate the intermediate **.info** file and also describes the format of the **.info** file that it processes in order to create the HTML coverage report.
-
-
-
 
 ## Notes (.gcno) and Data (.gcda) Common File Format
 
@@ -317,4 +366,8 @@ void graph_multiplebranches_withcalls(int pathSelect)
 
 ![Multiple Branches with Calls](images/multiple-branches-with-calls.gif)
 
+
+# References
+
+* https://gcc.gnu.org/onlinedocs/gcc/Gcov.html#Gcov
 

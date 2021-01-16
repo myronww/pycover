@@ -1,0 +1,1044 @@
+        -:    0:Source:branch_counts.c
+        -:    0:Graph:branch_counts.gcno
+        -:    0:Data:branch_counts.gcda
+        -:    0:Runs:1
+        -:    1:/*
+        -:    2: ============================================================================
+        -:    3: Name        : GcovTest.c
+        -:    4: Author      : 
+        -:    5: Version     :
+        -:    6: Copyright   : Your copyright notice
+        -:    7: Description : Hello World in C, Ansi-style
+        -:    8: ============================================================================
+        -:    9: */
+        -:   10:
+        -:   11:#include <signal.h>
+        -:   12:
+        -:   13:#include <stdio.h>
+        -:   14:#include <stdlib.h>
+        -:   15:
+        -:   16:int global_value = 0;
+        -:   17:
+        1:   18:void graph_simpleblock()
+        -:   19:{
+        1:   20:	global_value = global_value + 1;
+        1:   21:}
+        -:   22:
+        1:   23:void graph_simplebranch_not_taken(int taken)
+        -:   24:{
+        1:   25:	if(taken > 0)
+        1:   25-block  0
+        -:   26:	{
+    #####:   27:		global_value = global_value + 1;
+    %%%%%:   27-block  0
+        -:   28:	}
+        1:   29:}
+        -:   30:
+        2:   31:void graph_simplebranch_taken(int taken)
+        -:   32:{
+        2:   33:	if(taken > 0)
+        2:   33-block  0
+        -:   34:	{
+        2:   35:		global_value = global_value + 1;
+        2:   35-block  0
+        -:   36:	}
+        2:   37:}
+        -:   38:
+    #####:   39:void graph_nestedbranch_simple(int taken)
+        -:   40:{
+    #####:   41:	if (taken > 0)
+    %%%%%:   41-block  0
+        -:   42:	{
+    #####:   43:		global_value = global_value + taken;
+        -:   44:
+    #####:   45:		if (taken > 1)
+    %%%%%:   45-block  0
+        -:   46:		{
+    #####:   47:			global_value = global_value + taken;
+    %%%%%:   47-block  0
+        -:   48:		}
+        -:   49:	}
+        -:   50:	else
+        -:   51:	{
+    #####:   52:		global_value = global_value + taken;
+    %%%%%:   52-block  0
+        -:   53:	}
+    #####:   54:}
+        -:   55:
+    #####:   56:void graph_nestedbranch_complex(int taken)
+        -:   57:{
+    #####:   58:	if ((taken == 0) || (taken == 1) || (taken == 3))
+    %%%%%:   58-block  0
+    %%%%%:   58-block  1
+    %%%%%:   58-block  2
+        -:   59:	{
+    #####:   60:		global_value = global_value + taken;
+        -:   61:
+    #####:   62:		if ((taken == 1) || (taken == 2))
+    %%%%%:   62-block  0
+    %%%%%:   62-block  1
+        -:   63:		{
+    #####:   64:			global_value = global_value + taken;
+    %%%%%:   64-block  0
+        -:   65:		}
+        -:   66:	}
+        -:   67:	else
+        -:   68:	{
+    #####:   69:		global_value = global_value + taken;
+    %%%%%:   69-block  0
+        -:   70:	}
+    #####:   71:}
+        -:   72:
+        1:   73:void graph_simplebranch_withcall_not_taken(int taken)
+        -:   74:{
+        1:   75:	if(func_compare(1, taken))
+        1:   75-block  0
+        -:   76:	{
+    #####:   77:		global_value = global_value + 1;
+    %%%%%:   77-block  0
+        -:   78:	}
+        1:   79:}
+        -:   80:
+        2:   81:void graph_simplebranch_withcall_taken(int taken)
+        -:   82:{
+        2:   83:	if(func_compare(1, taken))
+        2:   83-block  0
+        -:   84:	{
+        2:   85:		global_value = global_value + 1;
+        2:   85-block  0
+        -:   86:	}
+        2:   87:}
+        -:   88:
+        1:   89:void graph_simplebranch_withnestedcalls_not_taken(int taken)
+        -:   90:{
+        1:   91:	if(func_compare(1, func_compare(1, taken)))
+        1:   91-block  0
+        -:   92:	{
+    #####:   93:		global_value = global_value + 1;
+    %%%%%:   93-block  0
+        -:   94:	}
+        1:   95:}
+        -:   96:
+        2:   97:void graph_simplebranch_withnestedcalls_taken(int taken)
+        -:   98:{
+        2:   99:	if(func_compare(1, func_compare(1, taken)))
+        2:   99-block  0
+        -:  100:	{
+        2:  101:		global_value = global_value + 1;
+        2:  101-block  0
+        -:  102:	}
+        2:  103:}
+        -:  104:
+        1:  105:int graph_simpleelse(int taken)
+        -:  106:{
+        1:  107:	if(taken > 0)
+        1:  107-block  0
+        -:  108:	{
+        1:  109:		global_value = global_value + 1;
+        1:  109-block  0
+        -:  110:	}
+        -:  111:	else
+        -:  112:	{
+    #####:  113:		global_value = global_value + 2;
+    %%%%%:  113-block  0
+        -:  114:	}
+        1:  115:}
+        -:  116:
+        1:  117:int graph_simpleelse_withcall(int taken)
+        -:  118:{
+        1:  119:	if(taken > 0)
+        1:  119-block  0
+        -:  120:	{
+        1:  121:		global_value = global_value + 1;
+        1:  121-block  0
+        -:  122:	}
+        -:  123:	else
+        -:  124:	{
+    #####:  125:		global_value = global_value + func_call(2);
+    %%%%%:  125-block  0
+        -:  126:	}
+        1:  127:}
+        -:  128:
+    #####:  129:void graph_simpleelse_taken(int taken)
+        -:  130:{
+    #####:  131:	if(taken > 0)
+    %%%%%:  131-block  0
+        -:  132:	{
+    #####:  133:		global_value = global_value + 1;
+    %%%%%:  133-block  0
+        -:  134:	}
+        -:  135:	else
+        -:  136:	{
+    #####:  137:		global_value = global_value + 2;
+    #####:  138:		return;
+    %%%%%:  138-block  0
+        -:  139:	}
+        -:  140:
+        -:  141:}
+        -:  142:
+        1:  143:void graph_simplecall()
+        -:  144:{
+        1:  145:	func_call(0);
+        1:  145-block  0
+        1:  146:}
+        -:  147:
+    #####:  148:void graph_simplecall_throw()
+        -:  149:{
+    #####:  150:	func_call(1);
+    %%%%%:  150-block  0
+    #####:  151:}
+        -:  152:
+        1:  153:void graph_multiplecall()
+        -:  154:{
+        1:  155:	func_call(0);
+        1:  155-block  0
+        1:  156:	func_call(0);
+        1:  157:	func_call(0);
+        1:  158:}
+        -:  159:
+        1:  160:void graph_multiplepaths_one(int pathSelect)
+        -:  161:{
+        1:  162:	if(pathSelect == 1)
+        1:  162-block  0
+        -:  163:	{
+        1:  164:		global_value = global_value + 1;
+        1:  164-block  0
+        -:  165:	}
+    #####:  166:	else if(pathSelect == 2)
+    %%%%%:  166-block  0
+        -:  167:	{
+    #####:  168:		global_value = global_value + 2;
+    %%%%%:  168-block  0
+        -:  169:	}
+        -:  170:	else
+        -:  171:	{
+    #####:  172:		global_value = global_value + 3;
+    %%%%%:  172-block  0
+        -:  173:	}
+        -:  174:
+        1:  175:	return;
+        1:  175-block  0
+        -:  176:}
+        -:  177:
+        2:  178:void graph_multiplepaths_two(int pathSelect)
+        -:  179:{
+        2:  180:	if(pathSelect == 1)
+        2:  180-block  0
+        -:  181:	{
+    #####:  182:		global_value = global_value + 1;
+    %%%%%:  182-block  0
+        -:  183:	}
+        2:  184:	else if(pathSelect == 2)
+        2:  184-block  0
+        -:  185:	{
+        2:  186:		global_value = global_value + 2;
+        2:  186-block  0
+        -:  187:	}
+        -:  188:	else
+        -:  189:	{
+    #####:  190:		global_value = global_value + 3;
+    %%%%%:  190-block  0
+        -:  191:	}
+        -:  192:
+        2:  193:	return;
+        2:  193-block  0
+        -:  194:}
+        -:  195:
+        3:  196:void graph_multiplepaths_three(int pathSelect)
+        -:  197:{
+        3:  198:	if(pathSelect == 1)
+        3:  198-block  0
+        -:  199:	{
+    #####:  200:		global_value = global_value + 1;
+    %%%%%:  200-block  0
+        -:  201:	}
+        3:  202:	else if(pathSelect == 2)
+        3:  202-block  0
+        -:  203:	{
+    #####:  204:		global_value = global_value + 2;
+    %%%%%:  204-block  0
+        -:  205:	}
+        -:  206:	else
+        -:  207:	{
+        3:  208:		global_value = global_value + 3;
+        3:  208-block  0
+        -:  209:	}
+        -:  210:
+        3:  211:	return;
+        3:  211-block  0
+        -:  212:}
+        -:  213:
+        1:  214:void graph_multiplepaths_decisioncall_one(int pathSelect)
+        -:  215:{
+        1:  216:	if(func_compare(1, pathSelect))
+        1:  216-block  0
+        -:  217:	{
+        1:  218:		global_value = global_value + 1;
+        1:  218-block  0
+        -:  219:	}
+    #####:  220:	else if(func_compare(2, pathSelect))
+    %%%%%:  220-block  0
+        -:  221:	{
+    #####:  222:		global_value = global_value + 2;
+    %%%%%:  222-block  0
+        -:  223:	}
+        -:  224:	else
+        -:  225:	{
+    #####:  226:		global_value = global_value + 3;
+    %%%%%:  226-block  0
+        -:  227:	}
+        -:  228:	
+        1:  229:	return;
+        1:  229-block  0
+        -:  230:}
+        -:  231:
+        2:  232:void graph_multiplepaths_decisioncall_two(int pathSelect)
+        -:  233:{
+        2:  234:	if(func_compare(1, pathSelect))
+        2:  234-block  0
+        -:  235:	{
+    #####:  236:		global_value = global_value + 1;
+    %%%%%:  236-block  0
+        -:  237:	}
+        2:  238:	else if(func_compare(2, pathSelect))
+        2:  238-block  0
+        -:  239:	{
+        2:  240:		global_value = global_value + 2;
+        2:  240-block  0
+        -:  241:	}
+        -:  242:	else
+        -:  243:	{
+    #####:  244:		global_value = global_value + 3;
+    %%%%%:  244-block  0
+        -:  245:	}
+        -:  246:	
+        2:  247:	return;
+        2:  247-block  0
+        -:  248:}
+        -:  249:
+        3:  250:void graph_multiplepaths_decisioncall_three(int pathSelect)
+        -:  251:{
+        3:  252:	if(func_compare(1, pathSelect))
+        3:  252-block  0
+        -:  253:	{
+    #####:  254:		global_value = global_value + 1;
+    %%%%%:  254-block  0
+        -:  255:	}
+        3:  256:	else if(func_compare(2, pathSelect))
+        3:  256-block  0
+        -:  257:	{
+    #####:  258:		global_value = global_value + 2;
+    %%%%%:  258-block  0
+        -:  259:	}
+        -:  260:	else
+        -:  261:	{
+        3:  262:		global_value = global_value + 3;
+        3:  262-block  0
+        -:  263:	}
+        -:  264:	
+        3:  265:	return;
+        3:  265-block  0
+        -:  266:}
+        -:  267:
+        1:  268:void graph_multiplepaths_withcalls_one(int pathSelect)
+        -:  269:{
+        1:  270:	if(pathSelect == 1)
+        1:  270-block  0
+        -:  271:	{
+        1:  272:		func_call(0);
+        1:  272-block  0
+        -:  273:	}
+    #####:  274:	else if(pathSelect == 2)
+    %%%%%:  274-block  0
+        -:  275:	{
+    #####:  276:		func_call(0);
+    %%%%%:  276-block  0
+        -:  277:	}
+        -:  278:	else
+        -:  279:	{
+    #####:  280:		func_call(0);
+    %%%%%:  280-block  0
+        -:  281:	}
+        1:  282:}
+        -:  283:
+        2:  284:void graph_multiplepaths_withcalls_two(int pathSelect)
+        -:  285:{
+        2:  286:	if(pathSelect == 1)
+        2:  286-block  0
+        -:  287:	{
+    #####:  288:		func_call(0);
+    %%%%%:  288-block  0
+        -:  289:	}
+        2:  290:	else if(pathSelect == 2)
+        2:  290-block  0
+        -:  291:	{
+        2:  292:		func_call(0);
+        2:  292-block  0
+        -:  293:	}
+        -:  294:	else
+        -:  295:	{
+    #####:  296:		func_call(0);
+    %%%%%:  296-block  0
+        -:  297:	}
+        2:  298:}
+        -:  299:
+        3:  300:void graph_multiplepaths_withcalls_three(int pathSelect)
+        -:  301:{
+        3:  302:	if(pathSelect == 1)
+        3:  302-block  0
+        -:  303:	{
+    #####:  304:		func_call(0);
+    %%%%%:  304-block  0
+        -:  305:	}
+        3:  306:	else if(pathSelect == 2)
+        3:  306-block  0
+        -:  307:	{
+    #####:  308:		func_call(0);
+    %%%%%:  308-block  0
+        -:  309:	}
+        -:  310:	else
+        -:  311:	{
+        3:  312:		func_call(0);
+        3:  312-block  0
+        -:  313:	}
+        3:  314:}
+        -:  315:
+    #####:  316:void graph_multiplepaths_withcalls_throw_not(int pathSelect)
+        -:  317:{
+    #####:  318:	if(pathSelect == 1)
+    %%%%%:  318-block  0
+        -:  319:	{
+    #####:  320:		func_call(1);
+    %%%%%:  320-block  0
+        -:  321:	}
+    #####:  322:	else if(pathSelect == 2)
+    %%%%%:  322-block  0
+        -:  323:	{
+    #####:  324:		func_call(1);
+    %%%%%:  324-block  0
+        -:  325:	}
+        -:  326:	else
+        -:  327:	{
+    #####:  328:		func_call(1);
+    %%%%%:  328-block  0
+        -:  329:	}
+    #####:  330:}
+        -:  331:
+    #####:  332:void graph_multiplepaths_withcalls_throw_one(int pathSelect)
+        -:  333:{
+    #####:  334:	if(pathSelect == 1)
+    %%%%%:  334-block  0
+        -:  335:	{
+    #####:  336:		func_call(1);
+    %%%%%:  336-block  0
+        -:  337:	}
+    #####:  338:	else if(pathSelect == 2)
+    %%%%%:  338-block  0
+        -:  339:	{
+    #####:  340:		func_call(1);
+    %%%%%:  340-block  0
+        -:  341:	}
+        -:  342:	else
+        -:  343:	{
+    #####:  344:		func_call(1);
+    %%%%%:  344-block  0
+        -:  345:	}
+    #####:  346:}
+        -:  347:
+    #####:  348:void graph_multiplepaths_withcalls_throw_two(int pathSelect)
+        -:  349:{
+    #####:  350:	if(pathSelect == 1)
+    %%%%%:  350-block  0
+        -:  351:	{
+    #####:  352:		func_call(1);
+    %%%%%:  352-block  0
+        -:  353:	}
+    #####:  354:	else if(pathSelect == 2)
+    %%%%%:  354-block  0
+        -:  355:	{
+    #####:  356:		func_call(1);
+    %%%%%:  356-block  0
+        -:  357:	}
+        -:  358:	else
+        -:  359:	{
+    #####:  360:		func_call(1);
+    %%%%%:  360-block  0
+        -:  361:	}
+    #####:  362:}
+        -:  363:
+    #####:  364:void graph_multiplepaths_withcalls_throw_three(int pathSelect)
+        -:  365:{
+    #####:  366:	if(pathSelect == 1)
+    %%%%%:  366-block  0
+        -:  367:	{
+    #####:  368:		func_call(1);
+    %%%%%:  368-block  0
+        -:  369:	}
+    #####:  370:	else if(pathSelect == 2)
+    %%%%%:  370-block  0
+        -:  371:	{
+    #####:  372:		func_call(1);
+    %%%%%:  372-block  0
+        -:  373:	}
+        -:  374:	else
+        -:  375:	{
+    #####:  376:		func_call(1);
+    %%%%%:  376-block  0
+        -:  377:	}
+    #####:  378:}
+        -:  379:
+        1:  380:void graph_whilewithgotos_one(int pathSelect)
+        -:  381:{
+        -:  382:	do
+        -:  383:	{
+        1:  384:		if(pathSelect == 1)
+        1:  384-block  0
+        -:  385:		{
+        1:  386:			global_value = global_value + 1;
+        1:  387:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+        1:  387-block  0
+        -:  388:		}
+        -:  389:
+    #####:  390:		if(pathSelect == 2)
+    %%%%%:  390-block  0
+        -:  391:		{
+    #####:  392:			global_value = global_value + 2;
+    #####:  393:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  393-block  0
+        -:  394:		}
+        -:  395:
+    #####:  396:		if(pathSelect == 3)
+    %%%%%:  396-block  0
+        -:  397:		{
+    #####:  398:			global_value = global_value + 3;
+    #####:  399:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  399-block  0
+        -:  400:		}
+        -:  401:
+    #####:  402:		break;
+    %%%%%:  402-block  0
+        -:  403:	} while(1);
+        -:  404:
+        1:  405:GRAPH_WHILEWITHGOTOS_EXIT:
+        1:  406:	return;
+        1:  406-block  0
+        -:  407:}
+        -:  408:
+        2:  409:void graph_whilewithgotos_two(int pathSelect)
+        -:  410:{
+        -:  411:	do
+        -:  412:	{
+        2:  413:		if(pathSelect == 1)
+        2:  413-block  0
+        -:  414:		{
+    #####:  415:			global_value = global_value + 1;
+    #####:  416:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  416-block  0
+        -:  417:		}
+        -:  418:
+        2:  419:		if(pathSelect == 2)
+        2:  419-block  0
+        -:  420:		{
+        2:  421:			global_value = global_value + 2;
+        2:  422:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+        2:  422-block  0
+        -:  423:		}
+        -:  424:
+    #####:  425:		if(pathSelect == 3)
+    %%%%%:  425-block  0
+        -:  426:		{
+    #####:  427:			global_value = global_value + 3;
+    #####:  428:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  428-block  0
+        -:  429:		}
+        -:  430:
+    #####:  431:		break;
+    %%%%%:  431-block  0
+        -:  432:	} while(1);
+        -:  433:
+        2:  434:GRAPH_WHILEWITHGOTOS_EXIT:
+        2:  435:	return;
+        2:  435-block  0
+        -:  436:}
+        -:  437:
+        3:  438:void graph_whilewithgotos_three(int pathSelect)
+        -:  439:{
+        -:  440:	do
+        -:  441:	{
+        3:  442:		if(pathSelect == 1)
+        3:  442-block  0
+        -:  443:		{
+    #####:  444:			global_value = global_value + 1;
+    #####:  445:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  445-block  0
+        -:  446:		}
+        -:  447:
+        3:  448:		if(pathSelect == 2)
+        3:  448-block  0
+        -:  449:		{
+    #####:  450:			global_value = global_value + 2;
+    #####:  451:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  451-block  0
+        -:  452:		}
+        -:  453:
+        3:  454:		if(pathSelect == 3)
+        3:  454-block  0
+        -:  455:		{
+        3:  456:			global_value = global_value + 3;
+        3:  457:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+        3:  457-block  0
+        -:  458:		}
+        -:  459:
+    #####:  460:		break;
+    %%%%%:  460-block  0
+        -:  461:	} while(1);
+        -:  462:
+        3:  463:GRAPH_WHILEWITHGOTOS_EXIT:
+        3:  464:	return;
+        3:  464-block  0
+        -:  465:}
+        -:  466:
+        1:  467:void graph_switchwithbreaks_one(int pathSelect)
+        -:  468:{
+        1:  469:	switch(pathSelect)
+        1:  469-block  0
+        -:  470:	{
+        1:  471:		case 1:
+        1:  472:			global_value = global_value + 1;
+        1:  473:			break;
+        1:  473-block  0
+        -:  474:
+    #####:  475:		case 2:
+    #####:  476:			global_value = global_value + 2;
+    #####:  477:			break;
+    %%%%%:  477-block  0
+        -:  478:
+    #####:  479:		default:
+    #####:  480:			global_value = global_value + 3;
+    #####:  481:			break;
+    %%%%%:  481-block  0
+        -:  482:	}
+        -:  483:
+        1:  484:	return;
+        1:  484-block  0
+        -:  485:}
+        -:  486:
+        2:  487:void graph_switchwithbreaks_two(int pathSelect)
+        -:  488:{
+        2:  489:	switch(pathSelect)
+        2:  489-block  0
+        -:  490:	{
+    #####:  491:		case 1:
+    #####:  492:			global_value = global_value + 1;
+    #####:  493:			break;
+    %%%%%:  493-block  0
+        -:  494:
+        2:  495:		case 2:
+        2:  496:			global_value = global_value + 2;
+        2:  497:			break;
+        2:  497-block  0
+        -:  498:
+    #####:  499:		default:
+    #####:  500:			global_value = global_value + 3;
+    #####:  501:			break;
+    %%%%%:  501-block  0
+        -:  502:	}
+        -:  503:
+        2:  504:	return;
+        2:  504-block  0
+        -:  505:}
+        -:  506:
+        3:  507:void graph_switchwithbreaks_three(int pathSelect)
+        -:  508:{
+        3:  509:	switch(pathSelect)
+        3:  509-block  0
+        -:  510:	{
+    #####:  511:		case 1:
+    #####:  512:			global_value = global_value + 1;
+    #####:  513:			break;
+    %%%%%:  513-block  0
+        -:  514:
+    #####:  515:		case 2:
+    #####:  516:			global_value = global_value + 2;
+    #####:  517:			break;
+    %%%%%:  517-block  0
+        -:  518:
+        3:  519:		default:
+        3:  520:			global_value = global_value + 3;
+        3:  521:			break;
+        3:  521-block  0
+        -:  522:	}
+        -:  523:
+        3:  524:	return;
+        3:  524-block  0
+        -:  525:}
+        -:  526:
+        1:  527:void graph_switchwithgotos_one(int pathSelect)
+        -:  528:{
+        1:  529:	switch(pathSelect)
+        1:  529-block  0
+        -:  530:	{
+        1:  531:		case 1:
+        1:  532:			global_value = global_value + 1;
+        1:  533:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+        1:  533-block  0
+        -:  534:
+    #####:  535:		case 2:
+    #####:  536:			global_value = global_value + 2;
+    #####:  537:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  537-block  0
+        -:  538:
+    #####:  539:		default:
+    #####:  540:			global_value = global_value + 3;
+    #####:  541:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  541-block  0
+        -:  542:	}
+        -:  543:
+        1:  544:GRAPH_WHILEWITHGOTOS_EXIT:
+        1:  545:	return;
+        1:  545-block  0
+        -:  546:}
+        -:  547:
+        2:  548:void graph_switchwithgotos_two(int pathSelect)
+        -:  549:{
+        2:  550:	switch(pathSelect)
+        2:  550-block  0
+        -:  551:	{
+    #####:  552:		case 1:
+    #####:  553:			global_value = global_value + 1;
+    #####:  554:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  554-block  0
+        -:  555:
+        2:  556:		case 2:
+        2:  557:			global_value = global_value + 2;
+        2:  558:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+        2:  558-block  0
+        -:  559:
+    #####:  560:		default:
+    #####:  561:			global_value = global_value + 3;
+    #####:  562:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  562-block  0
+        -:  563:	}
+        -:  564:
+        2:  565:GRAPH_WHILEWITHGOTOS_EXIT:
+        2:  566:	return;
+        2:  566-block  0
+        -:  567:}
+        -:  568:
+        3:  569:void graph_switchwithgotos_three(int pathSelect)
+        -:  570:{
+        3:  571:	switch(pathSelect)
+        3:  571-block  0
+        -:  572:	{
+    #####:  573:		case 1:
+    #####:  574:			global_value = global_value + 1;
+    #####:  575:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  575-block  0
+        -:  576:
+    #####:  577:		case 2:
+    #####:  578:			global_value = global_value + 2;
+    #####:  579:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+    %%%%%:  579-block  0
+        -:  580:
+        3:  581:		default:
+        3:  582:			global_value = global_value + 3;
+        3:  583:			goto GRAPH_WHILEWITHGOTOS_EXIT;
+        3:  583-block  0
+        -:  584:	}
+        -:  585:
+        3:  586:GRAPH_WHILEWITHGOTOS_EXIT:
+        3:  587:	return;
+        3:  587-block  0
+        -:  588:}
+        -:  589:
+        1:  590:void graph_loop_dowhile(int stopIndex)
+        -:  591:{
+        1:  592:	int index = 0;
+        1:  592-block  0
+        -:  593:	
+        -:  594:	do
+        -:  595:	{
+        3:  596:		global_value = global_value + 1;
+        -:  597:		
+        3:  598:		index += 1;
+        3:  599:	} while (index < stopIndex);
+        3:  599-block  0
+        1:  600:}
+        -:  601:
+        1:  602:void graph_loop_for(int stopIndex)
+        -:  603:{
+        1:  604:	int index = 0;
+        -:  605:	
+        5:  606:	for (index = 0; index < stopIndex; index += 1)
+        1:  606-block  0
+        4:  606-block  1
+        5:  606-block  2
+        -:  607:	{
+        4:  608:		if ((index % 2) == 0)
+        4:  608-block  0
+        -:  609:		{
+        2:  610:			global_value = global_value + 1;
+        2:  610-block  0
+        -:  611:		}
+        -:  612:	}
+        1:  613:}
+        -:  614:
+        1:  615:void graph_loop_while(int stopIndex)
+        -:  616:{
+        1:  617:	int index = 0;
+        -:  618:	
+        6:  619:	while (index < stopIndex) 
+        1:  619-block  0
+        6:  619-block  1
+        -:  620:	{
+        5:  621:		global_value = global_value + 1;
+        -:  622:		
+        5:  623:		index += 1;
+        5:  623-block  0
+        -:  624:	}
+        1:  625:}
+        -:  626:
+        -:  627:
+        -:  628:typedef void (*branchFuncPtr)(int);
+        -:  629:
+        1:  630:int main(void)
+        -:  631:{
+        1:  632:	puts("!!! Starting Probes !!!");
+        1:  632-block  0
+        -:  633:
+        1:  634:	probe_simpleblock();
+        -:  635:
+        1:  636:	probe_simplebranch();
+        -:  637:
+        1:  638:	probe_simplebranch_withcalls();
+        -:  639:
+        1:  640:	probe_simplecall();
+        -:  641:
+        1:  642:	probe_simpleelse();
+        -:  643:
+        1:  644:	probe_multiplecall();
+        -:  645:
+        1:  646:	probe_multiplepaths();
+        -:  647:	
+        1:  648:	probe_multiplepaths_decisioncall();
+        -:  649:
+        1:  650:	probe_multiplepaths_withcalls();
+        -:  651:
+        1:  652:	probe_whilewithgotos();
+        -:  653:
+        1:  654:	probe_switchwithbreaks();
+        -:  655:
+        1:  656:	probe_switchwithgotos();
+        -:  657:	
+        1:  658:	graph_loop_dowhile(3);
+        -:  659:	
+        1:  660:	graph_loop_for(4);
+        -:  661:	
+        1:  662:	graph_loop_while(5);
+        -:  663:
+        1:  664:	puts("!!! Finished Probes !!!");
+        -:  665:
+        1:  666:	return EXIT_SUCCESS;
+        -:  667:}
+        -:  668:
+       10:  669:void func_call(int throw)
+        -:  670:{
+       10:  671:	if(throw)
+       10:  671-block  0
+        -:  672:	{
+    #####:  673:		puts("Called 'func_call' with throw.");
+    %%%%%:  673-block  0
+        -:  674:
+        -:  675:		//Cause a memory access violation
+    #####:  676:		int* ptr = 0;
+    #####:  677:		*ptr = 5;
+        -:  678:	}
+        -:  679:	else
+       10:  680:		puts("Called 'func_call' with no-throw.");
+       10:  680-block  0
+       10:  681:}
+        -:  682:
+    #####:  683:int func_echo(int val)
+        -:  684:{
+    #####:  685:	return val;
+    %%%%%:  685-block  0
+        -:  686:}
+        -:  687:
+       20:  688:int func_compare(int eval, int aval)
+        -:  689:{
+       20:  690:	return eval == aval ? 1 : 0;
+       20:  690-block  0
+        -:  691:}
+        -:  692:
+    #####:  693:void memory_access_signal_handler(int signum)
+        -:  694:{
+        -:  695:	//Reset the signal handler
+    #####:  696:	signal(SIGSEGV, memory_access_signal_handler);
+    %%%%%:  696-block  0
+    #####:  697:}
+        -:  698:
+        1:  699:void probe_simpleblock()
+        -:  700:{
+        1:  701:	graph_simpleblock();
+        1:  701-block  0
+        1:  702:}
+        -:  703:
+        1:  704:void probe_simplebranch()
+        -:  705:{
+        -:  706:	//Probe branch count for the 'Simple Branch' case
+        1:  707:	graph_simplebranch_not_taken(0);
+        1:  707-block  0
+        -:  708:
+        1:  709:	graph_simplebranch_taken(1);
+        1:  710:	graph_simplebranch_taken(1);
+        1:  711:}
+        -:  712:
+        1:  713:void probe_simplebranch_withcalls()
+        -:  714:{
+        1:  715:	graph_simplebranch_withcall_not_taken(0);
+        1:  715-block  0
+        -:  716:
+        1:  717:	graph_simplebranch_withcall_taken(1);
+        1:  718:	graph_simplebranch_withcall_taken(1);
+        -:  719:
+        1:  720:	graph_simplebranch_withnestedcalls_not_taken(0);
+        -:  721:
+        1:  722:	graph_simplebranch_withnestedcalls_taken(1);
+        1:  723:	graph_simplebranch_withnestedcalls_taken(1);
+        1:  724:}
+        -:  725:
+        1:  726:void probe_simpleelse()
+        -:  727:{
+        1:  728:	graph_simpleelse(1);
+        1:  728-block  0
+        1:  729:	graph_simpleelse_withcall(2);
+        1:  730:}
+        -:  731:
+        1:  732:void probe_multiplepaths()
+        -:  733:{
+        1:  734:	graph_multiplepaths_one(1);
+        1:  734-block  0
+        -:  735:
+        1:  736:	graph_multiplepaths_two(2);
+        1:  737:	graph_multiplepaths_two(2);
+        -:  738:
+        1:  739:	graph_multiplepaths_three(3);
+        1:  740:	graph_multiplepaths_three(3);
+        1:  741:	graph_multiplepaths_three(3);
+        1:  742:}
+        -:  743:
+    #####:  744:void probe_multiplepaths_withcalls_nothrow()
+        -:  745:{
+    #####:  746:	graph_multiplepaths_one(1);
+    %%%%%:  746-block  0
+        -:  747:
+    #####:  748:	graph_multiplepaths_two(2);
+    #####:  749:	graph_multiplepaths_two(2);
+        -:  750:
+    #####:  751:	graph_multiplepaths_three(3);
+    #####:  752:	graph_multiplepaths_three(3);
+    #####:  753:	graph_multiplepaths_three(3);
+    #####:  754:}
+        -:  755:
+        1:  756:void probe_multiplepaths_decisioncall()
+        -:  757:{
+        1:  758:	graph_multiplepaths_decisioncall_one(1);
+        1:  758-block  0
+        -:  759:	
+        1:  760:	graph_multiplepaths_decisioncall_two(2);
+        1:  761:	graph_multiplepaths_decisioncall_two(2);
+        -:  762:	
+        1:  763:	graph_multiplepaths_decisioncall_three(3);
+        1:  764:	graph_multiplepaths_decisioncall_three(3);
+        1:  765:	graph_multiplepaths_decisioncall_three(3);
+        1:  766:}
+        -:  767:
+        1:  768:void probe_simplecall()
+        -:  769:{
+        1:  770:	graph_simplecall();
+        1:  770-block  0
+        -:  771:
+        -:  772:	/*
+        -:  773:	signal(SIGSEGV, memory_access_signal_handler); // initial set of signal handler
+        -:  774:
+        -:  775:	graph_simplecall_throw();
+        -:  776:	graph_simplecall_throw();
+        -:  777:
+        -:  778:	signal(SIGSEGV, SIG_DFL);  // restore default behavior
+        -:  779:	 */
+        1:  780:}
+        -:  781:
+        1:  782:void probe_multiplecall()
+        -:  783:{
+        1:  784:	graph_multiplecall();
+        1:  784-block  0
+        1:  785:}
+        -:  786:
+        1:  787:void probe_multiplepaths_withcalls()
+        -:  788:{
+        1:  789:	graph_multiplepaths_withcalls_one(1);
+        1:  789-block  0
+        -:  790:
+        1:  791:	graph_multiplepaths_withcalls_two(2);
+        1:  792:	graph_multiplepaths_withcalls_two(2);
+        -:  793:
+        1:  794:	graph_multiplepaths_withcalls_three(3);
+        1:  795:	graph_multiplepaths_withcalls_three(3);
+        1:  796:	graph_multiplepaths_withcalls_three(3);
+        -:  797:
+        -:  798:	/*
+        -:  799:	signal(SIGSEGV, memory_access_signal_handler); // initial set of signal handler
+        -:  800:
+        -:  801:	graph_multiplepaths_withcalls_throw_not(0);
+        -:  802:
+        -:  803:	graph_multiplepaths_withcalls_throw_one(1);
+        -:  804:
+        -:  805:	graph_multiplepaths_withcalls_throw_two(2);
+        -:  806:	graph_multiplepaths_withcalls_throw_two(2);
+        -:  807:
+        -:  808:	graph_multiplepaths_withcalls_throw_three(3);
+        -:  809:	graph_multiplepaths_withcalls_throw_three(3);
+        -:  810:	graph_multiplepaths_withcalls_throw_three(3);
+        -:  811:
+        -:  812:	signal(SIGSEGV, SIG_DFL);  // restore default behavior
+        -:  813:	 */
+        1:  814:}
+        -:  815:
+        1:  816:void probe_whilewithgotos()
+        -:  817:{
+        1:  818:	graph_whilewithgotos_one(1);
+        1:  818-block  0
+        -:  819:
+        1:  820:	graph_whilewithgotos_two(2);
+        1:  821:	graph_whilewithgotos_two(2);
+        -:  822:
+        1:  823:	graph_whilewithgotos_three(3);
+        1:  824:	graph_whilewithgotos_three(3);
+        1:  825:	graph_whilewithgotos_three(3);
+        1:  826:}
+        -:  827:
+        1:  828:void probe_switchwithbreaks()
+        -:  829:{
+        1:  830:	graph_switchwithbreaks_one(1);
+        1:  830-block  0
+        -:  831:
+        1:  832:	graph_switchwithbreaks_two(2);
+        1:  833:	graph_switchwithbreaks_two(2);
+        -:  834:
+        1:  835:	graph_switchwithbreaks_three(3);
+        1:  836:	graph_switchwithbreaks_three(3);
+        1:  837:	graph_switchwithbreaks_three(3);
+        1:  838:}
+        -:  839:
+        1:  840:void probe_switchwithgotos()
+        -:  841:{
+        1:  842:	graph_switchwithgotos_one(1);
+        1:  842-block  0
+        -:  843:
+        1:  844:	graph_switchwithgotos_two(2);
+        1:  845:	graph_switchwithgotos_two(2);
+        -:  846:
+        1:  847:	graph_switchwithgotos_three(3);
+        1:  848:	graph_switchwithgotos_three(3);
+        1:  849:	graph_switchwithgotos_three(3);
+        1:  850:}

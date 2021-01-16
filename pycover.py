@@ -741,7 +741,7 @@ span.coverLegendCovHi
 """
 
     @staticmethod
-    def WriteCSS(folder, filename="gcov.css"):
+    def write_css(folder, filename="gcov.css"):
 
         cssfile = open(filename, 'w')
         cssfile.write(GenHTMLResources.GCOV_CSS)
@@ -750,7 +750,7 @@ span.coverLegendCovHi
         return
 
     @staticmethod
-    def WritePNG(folder, filename, base64Buffer):
+    def write_png(folder, filename, base64Buffer):
 
         pngfile = open(filename, 'w')
         pngbuffer = base64.b64decode(base64Buffer)
@@ -760,33 +760,33 @@ span.coverLegendCovHi
         return
 
     @staticmethod
-    def WritePNG_Amber(folder, filename="amber.png"):
-        GenHTMLResources.WritePNG(folder, filename, GenHTMLResources.AMBER_PNG)
+    def write_png_amber(folder, filename="amber.png"):
+        GenHTMLResources.write_png(folder, filename, GenHTMLResources.AMBER_PNG)
         return
 
     @staticmethod
-    def WritePNG_Emerald(folder, filename="emerald.png"):
-        GenHTMLResources.WritePNG(folder, filename, GenHTMLResources.EMERALD_PNG)
+    def write_png_emerald(folder, filename="emerald.png"):
+        GenHTMLResources.write_png(folder, filename, GenHTMLResources.EMERALD_PNG)
         return
 
     @staticmethod
-    def WritePNG_Ruby(folder, filename="ruby.png"):
-        GenHTMLResources.WritePNG(folder, filename, GenHTMLResources.RUBY_PNG)
+    def write_png_ruby(folder, filename="ruby.png"):
+        GenHTMLResources.write_png(folder, filename, GenHTMLResources.RUBY_PNG)
         return
 
     @staticmethod
-    def WritePNG_Glass(folder, filename="glass.png"):
-        GenHTMLResources.WritePNG(folder, filename, GenHTMLResources.GLASS_PNG)
+    def write_png_glass(folder, filename="glass.png"):
+        GenHTMLResources.write_png(folder, filename, GenHTMLResources.GLASS_PNG)
         return
 
     @staticmethod
-    def WritePNG_Snow(folder, filename="snow.png"):
-        GenHTMLResources.WritePNG(folder, filename, GenHTMLResources.SNOW_PNG)
+    def write_png_snow(folder, filename="snow.png"):
+        GenHTMLResources.write_png(folder, filename, GenHTMLResources.SNOW_PNG)
         return
 
     @staticmethod
-    def WritePNG_UpDown(folder, filename="updown.png"):
-        GenHTMLResources.WritePNG(folder, filename, GenHTMLResources.UPDOWN_PNG)
+    def write_png_updown(folder, filename="updown.png"):
+        GenHTMLResources.write_png(folder, filename, GenHTMLResources.UPDOWN_PNG)
         return
 
 
@@ -839,7 +839,7 @@ class GCovInfoLine:
         self.execution_count = self.execution_count + incVal
         return
 
-    def SetCheckSum(self, checkSum):
+    def set_check_sum(self, checkSum):
         self.check_sum = checkSum
 
 class GCovInfoSourcefileWriter:
@@ -2882,10 +2882,8 @@ class GCovProcessor:
 
             with open(infoFilePath, 'w') as info_fh:
                 #Go through the coverage map items and write the information to the info file
-                for cmitem in coverageMap.Items:
-                    info_writer = GCovInfoFileWriter("NA")
-
-                    info_writer.write_to(info_fh)
+                info_writer = GCovInfoFileWriter("NA")
+                info_writer.write_sourcefile_section(coverageMap)
 
         return
 
